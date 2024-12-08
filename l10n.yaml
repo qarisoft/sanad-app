@@ -1,0 +1,6 @@
+template-arb-file: intl_en.arb
+output-localization-file: sanad_localizations.dart
+output-class: SL
+preferred-supported-locales:
+  - ar
+use-deferred-loading: true

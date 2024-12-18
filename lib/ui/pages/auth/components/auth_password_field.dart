@@ -7,7 +7,7 @@ class PassField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.label,
-    required this.validator,
+     this.validator,
   });
   final TextEditingController controller;
   final String label;
@@ -45,14 +45,19 @@ class _PassFieldState extends State<PassField> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: Colors.white,
-            // border: Border.all(width: 1, color: AppColor.secondaryExtraSoft),
+            border: Border.all(width: 1, color: AppColor.secondaryExtraSoft),
           ),
           child: Localizations.override(
             context: context,
             // locale: Local('en'),
             child: TextFormField(
               textAlignVertical: TextAlignVertical.center,
-              validator: widget.validator,
+              validator: widget.validator??(e){
+                if(e==null){
+                  return context.tr.rallyLoginPassword;
+                }
+                return null;
+              },
               controller: widget.controller,
               obscureText: !hide,
               decoration: InputDecoration(
@@ -69,10 +74,10 @@ class _PassFieldState extends State<PassField> {
                     hide = !hide;
                   }),
                 ),
-                hintStyle: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.secondarySoft,
-                ),
+                // hintStyle: const TextStyle(
+                //   fontWeight: FontWeight.w500,
+                //   color: AppColor.secondarySoft,
+                // ),
               ),
             ),
           ),

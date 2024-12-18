@@ -12,7 +12,7 @@ class Authhero extends StatelessWidget {
       pinned: true,
       floating: true,
       centerTitle: true,
-      expandedHeight: 200.0,
+      expandedHeight: MediaQuery.of(context).size.height*0.3,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
           decoration: BoxDecoration(

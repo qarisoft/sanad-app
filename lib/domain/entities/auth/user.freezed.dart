@@ -20,11 +20,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
   String get photo => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +41,13 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({int id, String name, String username, String email, String photo});
+  $Res call(
+      {String username,
+      String email,
+      String? name,
+      String type,
+      String photo,
+      int id});
 }
 
 /// @nodoc
@@ -58,21 +65,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
     Object? username = null,
     Object? email = null,
+    Object? name = freezed,
+    Object? type = null,
     Object? photo = null,
+    Object? id = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -81,10 +81,22 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       photo: null == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -96,7 +108,13 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String username, String email, String photo});
+  $Res call(
+      {String username,
+      String email,
+      String? name,
+      String type,
+      String photo,
+      int id});
 }
 
 /// @nodoc
@@ -111,21 +129,14 @@ class __$$UserImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
     Object? username = null,
     Object? email = null,
+    Object? name = freezed,
+    Object? type = null,
     Object? photo = null,
+    Object? id = null,
   }) {
     return _then(_$UserImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -134,10 +145,22 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       photo: null == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -147,31 +170,37 @@ class __$$UserImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$UserImpl implements _User {
   const _$UserImpl(
-      {required this.id,
-      this.name = '',
-      required this.username,
-      required this.email,
-      this.photo = ''});
+      {this.username = '',
+      this.email = '',
+      this.name,
+      this.type = '',
+      this.photo = '',
+      this.id = 0});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
 
   @override
-  final int id;
-  @override
   @JsonKey()
-  final String name;
-  @override
   final String username;
   @override
+  @JsonKey()
   final String email;
+  @override
+  final String? name;
+  @override
+  @JsonKey()
+  final String type;
   @override
   @JsonKey()
   final String photo;
+  @override
+  @JsonKey()
+  final int id;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, username: $username, email: $email, photo: $photo)';
+    return 'User(username: $username, email: $email, name: $name, type: $type, photo: $photo, id: $id)';
   }
 
   @override
@@ -179,18 +208,19 @@ class _$UserImpl implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.photo, photo) || other.photo == photo));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, username, email, photo);
+      Object.hash(runtimeType, username, email, name, type, photo, id);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -210,24 +240,27 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final int id,
-      final String name,
-      required final String username,
-      required final String email,
-      final String photo}) = _$UserImpl;
+      {final String username,
+      final String email,
+      final String? name,
+      final String type,
+      final String photo,
+      final int id}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
-  @override
-  int get id;
-  @override
-  String get name;
   @override
   String get username;
   @override
   String get email;
   @override
+  String? get name;
+  @override
+  String get type;
+  @override
   String get photo;
+  @override
+  int get id;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

@@ -1,25 +1,20 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sanad/data/service/storage/storage_service.dart';
-import 'package:sanad/ui/pages/auth/login.dart';
-// import 'package:sanad/ui/providers/app/app.dart';
-import 'package:sanad/ui/providers/auth/auth_provider.dart';
-import 'package:sanad/ui/providers/locale/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'common.dart';
 
+import 'common.dart';
+import 'ui/providers/index.dart';
+// ChangeNotifier a;
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   }
 
-  await registerSingletons();
-  
-
+  await init();
   runApp(
     ProviderScope(
       child: const MyApp(),
@@ -33,65 +28,126 @@ void main() async {
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context, ref) {
     // final brightness = View.of(context).platformDispatcher.platformBrightness;
-    TextTheme textTheme = createTextTheme(context, "Tajawal", "Tajawal");
-    MaterialTheme theme = MaterialTheme(textTheme);
+    // TextTheme textTheme = createTextTheme(context, "Tajawal", "Tajawal");
+    // MaterialTheme theme = MaterialTheme(textTheme);
+    // final loaded = ref.watch(loadedProvider);
     final local = ref.watch(localProvider);
+    ref.watch(interNetProvider);
     return MaterialApp(
       title: 'Sanad',
+      scrollBehavior: const MaterialScrollBehavior()
+          .copyWith(dragDevices: PointerDeviceKind.values.toSet()),
       themeMode: ThemeMode.system,
       localizationsDelegates: SL.localizationsDelegates,
       supportedLocales: SL.supportedLocales,
-      theme: theme.light(),
+      theme: _buildReplyLightTheme(),
+      darkTheme: _buildReplyDarkTheme(),
       locale: Locale(local),
-      darkTheme: theme.dark(),
       showSemanticsDebugger: false,
       debugShowCheckedModeBanner: false,
-      // onGenerateRoute: RouteGenerator.getRoute,
-      home: const SplashScreen(),
-      // bui
+      initialRoute: Routes.splashRoute,
+      onGenerateRoute: RouteGenerator.getRoute,
     );
   }
 }
 
-class SplashScreen extends HookConsumerWidget {
-  const SplashScreen({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final s = ref.watch(authProvider);
-    return s.when(
-      authinticated: (auth) {
-        return MainPage();
-      },
-      initial: () {
-        return LoginPage();
-      },
-    );
-  }
-}
-
-class MainPage extends ConsumerWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: Text('main page'),
-    );
-  }
-}
-
-final di = GetIt.instance;
-
-void registerSingletons() {
-  GetIt.I.registerLazySingleton<SharedPreferences>(()=>  SharedPreferencesAsync());
-  di.registerSingleton<Storage>(
-    Storage(sh),
-  );
+Future<void> init() async {
+  await registerSingletons();
+  SL.delegate.load(Locale('ar'));
   
 }
 
+ThemeData _buildReplyLightTheme() {
+  final base = ThemeData(fontFamily: 'Tajawal');
+  return base.copyWith(
+    brightness: Brightness.light,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white
+    ),
+    // bottomSheetTheme: BottomSheetThemeData(
+      // backgroundColor: AppColor.blue700,
+      // modalBackgroundColor: Colors.white.withOpacity(0.7),
+    // ),
+    cardColor: AppColor.white50,
+    // chipTheme: _buildChipTheme(
+    //   AppColor.blue700,
+    //   AppColor.lightChipBackground,
+    //   Brightness.light,
+    // ),
+    colorScheme: const ColorScheme.light(
+      primary: AppColor.primary,
+      secondary: AppColor.orange500,
+      surface: AppColor.white50,
+      error: AppColor.red400,
+      onPrimary: AppColor.white50,
+      onSecondary: AppColor.black900,
+      onSurface: AppColor.black900,
+      onError: AppColor.black900,
+    ),
+    // textTheme: _buildReplyLightTextTheme(base.textTheme),
+    scaffoldBackgroundColor: Colors.grey.shade100,
+    bottomAppBarTheme:
+        const BottomAppBarTheme(color: AppColor.blue50, elevation: 2),
+    iconTheme: IconThemeData(
+        // color: AppColor.white50,
+        ),
+  );
+}
 
-// Storage get appStorage => di<Storage>();
+ThemeData _buildReplyDarkTheme() {
+  final base = ThemeData(fontFamily: 'Tajawal');
+  return base.copyWith(
+    brightness: Brightness.dark,
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: AppColor.darkDrawerBackground,
+      modalBackgroundColor: Colors.black.withOpacity(0.7),
+    ),
+    cardColor: AppColor.darkCardBackground,
+    chipTheme: _buildChipTheme(
+      AppColor.blue200,
+      AppColor.darkChipBackground,
+      Brightness.dark,
+    ),
+    colorScheme: const ColorScheme.dark(
+      primary: AppColor.primary,
+      secondary: AppColor.orange300,
+      surface: AppColor.black800,
+      error: AppColor.red200,
+      onPrimary: AppColor.black900,
+      onSecondary: AppColor.black900,
+      onSurface: AppColor.white50,
+      onError: AppColor.black900,
+    ),
+    // textTheme: _buildReplyDarkTextTheme(base.textTheme),
+    scaffoldBackgroundColor: AppColor.black900,
+    bottomAppBarTheme: const BottomAppBarTheme(
+      color: AppColor.darkBottomAppBarBackground,
+    ),
+  );
+}
+
+ChipThemeData _buildChipTheme(
+  Color primaryColor,
+  Color chipBackground,
+  Brightness brightness,
+) {
+  return ChipThemeData(
+    backgroundColor: primaryColor.withOpacity(0.12),
+    disabledColor: primaryColor.withOpacity(0.87),
+    selectedColor: primaryColor.withOpacity(0.05),
+    secondarySelectedColor: chipBackground,
+    padding: const EdgeInsets.all(4),
+    shape: const StadiumBorder(),
+    // labelStyle: GoogleFonts.workSansTextTheme().bodyMedium!.copyWith(
+    //       color: brightness == Brightness.dark
+    //           ? AppColor.white50
+    //           : AppColor.black900,
+    //     ),
+    // secondaryLabelStyle: GoogleFonts.workSansTextTheme().bodyMedium!,
+    brightness: brightness,
+  );
+}

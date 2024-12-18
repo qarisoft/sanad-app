@@ -1,16 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sanad/common.dart';
-import 'package:sanad/ui/pages/auth/components/auth_hero.dart';
+import 'package:sanad/domain/repos/repo.dart';
 
-import 'components/auth_layout.dart';
-import 'components/auth_text_input.dart';
-import 'components/auth_password_field.dart';
+// import 'package:sanad/ui/pages/auth/auth/auth_provider.dart';
+
+import '../../providers/auth_provider/auth_provider.dart';
 import 'components/auth_button.dart';
-
-
-
+import 'components/auth_layout.dart';
+import 'components/auth_password_field.dart';
+import 'components/auth_text_input.dart';
 
 //
 
@@ -19,13 +18,13 @@ class RegisterPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userName = useTextEditingController();
-    final name = useTextEditingController();
-    final email = useTextEditingController();
-    final password = useTextEditingController();
-    final passwordConfirmation = useTextEditingController();
+    final userName = useTextEditingController(text: 'a');
+    final name = useTextEditingController(text: 'a');
+    final email = useTextEditingController(text: 'a@a.a');
+    final password = useTextEditingController(text: 'password');
+    final passwordConfirmation = useTextEditingController(text: 'password');
 
-    final hide = useState<bool>(false);
+    // final hide = useState<bool>(false);
     final isLoading = useState<bool>(false);
     final passwordValidator = useCallback((String? e) {
       if (e == null) {
@@ -35,76 +34,95 @@ class RegisterPage extends HookWidget {
         return context.tr.rallyLoginPassword;
       }
       return null;
-    }, [hide]);
-    final onRegisterClick = useCallback(
-      () {},
+    }, []);
+
+    final k = GlobalKey<FormState>();
+
+    goBack() {
+      Navigator.of(context).maybePop();
+    }
+
+    final onRegisterClick_ = useCallback(
+      () {
+        if (k.currentState!.validate()) {
+          return RegisterRequest(
+            email: email.text,
+            password: password.text,
+            device: '',
+            deviceToken: '',
+            username: userName.text,
+            passwordConfirmation: passwordConfirmation.text,
+          );
+        }
+      },
       [userName, name, email, password, passwordConfirmation],
     );
+    onRegisterClick() {
+      final a = onRegisterClick_();
+      if (a != null) {
+        callActionDialog(
+          context,
+          registerCallProvider(a),
+          yesAction: goBack,
+        );
+      }
+    }
 
-    //   String? passwordValidator(e) {
-
-    // }
-    return AuthLayout(
-            hero: Authhero(
-        text: context.tr.registerAction,
-        image: AssetImage('assets/images/logo2.png'),
+    return Form(
+      key: k,
+      child: AuthLayout(
+        title: context.tr.registerAction,
+        children: [
+          10.vSpace,
+          InputContainer(
+            label: context.tr.name,
+            controller: name,
+          ),
+          InputContainer(
+            label: context.tr.username,
+            controller: userName,
+          ),
+          InputContainer(
+            label: context.tr.email,
+            controller: email,
+          ),
+          PassField(
+            controller: password,
+            label: context.tr.password,
+            validator: passwordValidator,
+          ),
+          PassField(
+            controller: passwordConfirmation,
+            label: context.tr.passwordConfirmation,
+            validator: passwordValidator,
+          ),
+          AuthButton(
+            title: context.tr.registerAction,
+            action: onRegisterClick,
+            isLoading: isLoading.value,
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text(context.tr.or),
+                  TextButton(
+                    onPressed: goBack,
+                    child: Text(context.tr.loginAction),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
-      title: 'Register',
-      children: [
-        InputContainer(
-          label: context.tr.name,
-          controller: name,
-        ),
-        InputContainer(
-          label: context.tr.username,
-          controller: userName,
-        ),
-        InputContainer(
-          label: context.tr.email,
-          controller: email,
-        ),
-        PassField(
-          controller: password,
-          label: context.tr.password,
-          validator: passwordValidator,
-        ),
-        PassField(
-          controller: passwordConfirmation,
-          label: context.tr.passwordConfirmation,
-          validator: passwordValidator,
-        ),
-        AuthButton(
-          title: context.tr.registerAction,
-          action: onRegisterClick,
-          isLoading: isLoading.value,
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () =>
-                  {Navigator.of(context).pushNamed(Routes.loginRoute)},
-              // style: TextButton.styleFrom(
-              //   foregroundColor: AppColor.secondarySoft,
-              // ),
-              child: Text(context.tr.loginAction),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
-
-
-
-
-
-
-
 
 // class RegisterPage2 extends StatefulWidget {
 //   const RegisterPage2({super.key});

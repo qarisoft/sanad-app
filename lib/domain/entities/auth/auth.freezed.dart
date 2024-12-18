@@ -22,6 +22,8 @@ AuthEntity _$AuthEntityFromJson(Map<String, dynamic> json) {
 mixin _$AuthEntity {
   User get user => throw _privateConstructorUsedError;
   String get token => throw _privateConstructorUsedError;
+  List<Company> get companies => throw _privateConstructorUsedError;
+  Employee? get employee => throw _privateConstructorUsedError;
 
   /// Serializes this AuthEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,9 +41,11 @@ abstract class $AuthEntityCopyWith<$Res> {
           AuthEntity value, $Res Function(AuthEntity) then) =
       _$AuthEntityCopyWithImpl<$Res, AuthEntity>;
   @useResult
-  $Res call({User user, String token});
+  $Res call(
+      {User user, String token, List<Company> companies, Employee? employee});
 
   $UserCopyWith<$Res> get user;
+  $EmployeeCopyWith<$Res>? get employee;
 }
 
 /// @nodoc
@@ -61,6 +65,8 @@ class _$AuthEntityCopyWithImpl<$Res, $Val extends AuthEntity>
   $Res call({
     Object? user = null,
     Object? token = null,
+    Object? companies = null,
+    Object? employee = freezed,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -71,6 +77,14 @@ class _$AuthEntityCopyWithImpl<$Res, $Val extends AuthEntity>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      companies: null == companies
+          ? _value.companies
+          : companies // ignore: cast_nullable_to_non_nullable
+              as List<Company>,
+      employee: freezed == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as Employee?,
     ) as $Val);
   }
 
@@ -83,6 +97,20 @@ class _$AuthEntityCopyWithImpl<$Res, $Val extends AuthEntity>
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
+
+  /// Create a copy of AuthEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EmployeeCopyWith<$Res>? get employee {
+    if (_value.employee == null) {
+      return null;
+    }
+
+    return $EmployeeCopyWith<$Res>(_value.employee!, (value) {
+      return _then(_value.copyWith(employee: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -93,10 +121,13 @@ abstract class _$$AuthEntityImplCopyWith<$Res>
       __$$AuthEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user, String token});
+  $Res call(
+      {User user, String token, List<Company> companies, Employee? employee});
 
   @override
   $UserCopyWith<$Res> get user;
+  @override
+  $EmployeeCopyWith<$Res>? get employee;
 }
 
 /// @nodoc
@@ -114,6 +145,8 @@ class __$$AuthEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? token = null,
+    Object? companies = null,
+    Object? employee = freezed,
   }) {
     return _then(_$AuthEntityImpl(
       user: null == user
@@ -124,6 +157,14 @@ class __$$AuthEntityImplCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      companies: null == companies
+          ? _value._companies
+          : companies // ignore: cast_nullable_to_non_nullable
+              as List<Company>,
+      employee: freezed == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as Employee?,
     ));
   }
 }
@@ -132,7 +173,12 @@ class __$$AuthEntityImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$AuthEntityImpl implements _AuthEntity {
-  const _$AuthEntityImpl({required this.user, required this.token});
+  const _$AuthEntityImpl(
+      {required this.user,
+      required this.token,
+      final List<Company> companies = const [],
+      this.employee})
+      : _companies = companies;
 
   factory _$AuthEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthEntityImplFromJson(json);
@@ -141,10 +187,21 @@ class _$AuthEntityImpl implements _AuthEntity {
   final User user;
   @override
   final String token;
+  final List<Company> _companies;
+  @override
+  @JsonKey()
+  List<Company> get companies {
+    if (_companies is EqualUnmodifiableListView) return _companies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_companies);
+  }
+
+  @override
+  final Employee? employee;
 
   @override
   String toString() {
-    return 'AuthEntity(user: $user, token: $token)';
+    return 'AuthEntity(user: $user, token: $token, companies: $companies, employee: $employee)';
   }
 
   @override
@@ -153,12 +210,17 @@ class _$AuthEntityImpl implements _AuthEntity {
         (other.runtimeType == runtimeType &&
             other is _$AuthEntityImpl &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            const DeepCollectionEquality()
+                .equals(other._companies, _companies) &&
+            (identical(other.employee, employee) ||
+                other.employee == employee));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, user, token);
+  int get hashCode => Object.hash(runtimeType, user, token,
+      const DeepCollectionEquality().hash(_companies), employee);
 
   /// Create a copy of AuthEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -179,7 +241,9 @@ class _$AuthEntityImpl implements _AuthEntity {
 abstract class _AuthEntity implements AuthEntity {
   const factory _AuthEntity(
       {required final User user,
-      required final String token}) = _$AuthEntityImpl;
+      required final String token,
+      final List<Company> companies,
+      final Employee? employee}) = _$AuthEntityImpl;
 
   factory _AuthEntity.fromJson(Map<String, dynamic> json) =
       _$AuthEntityImpl.fromJson;
@@ -188,6 +252,10 @@ abstract class _AuthEntity implements AuthEntity {
   User get user;
   @override
   String get token;
+  @override
+  List<Company> get companies;
+  @override
+  Employee? get employee;
 
   /// Create a copy of AuthEntity
   /// with the given fields replaced by the non-null parameter values.

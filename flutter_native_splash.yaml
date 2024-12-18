@@ -1,4 +1,5 @@
 flutter_native_splash:
+  # flutter pub run flutter_native_splash:create 
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
   # Customize the parameters below, and run the following command in the terminal:
@@ -18,7 +19,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/images/sanad-logo.png
+  image: assets/images/logo.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android < v12, iOS and the Web.
@@ -49,9 +50,13 @@ flutter_native_splash:
   # 640 pixels in diameter.
   # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
   # 768 pixels in diameter.
-   image: assets/images/sanad-logo.png
+  #  image: assets/images/logo.png
+  #  image: assets/marketing/app-logo-android12.png
+   image: assets/marketing/sanad-android-12.png
+  #  image: assets/marketing/android12.png
 
   # Splash screen background color.
+   color: "#ffffff"
   #  color: "#272625"
 
   # App icon background color.

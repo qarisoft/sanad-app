@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sanad/common.dart';
 
 const ENGLISH_LOCAL = Locale('en');
 
@@ -26,19 +27,15 @@ class InputContainer extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
         ),
-        // 5.verticalSpace,
         const SizedBox(
           height: 5,
         ),
         Container(
-          // padding: const EdgeInsets.symmetric(horizontal: 14),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -46,7 +43,6 @@ class InputContainer extends StatelessWidget {
             border: Border.all(width: 1, color: AppColor.secondaryExtraSoft),
           ),
           child: Localizations.override(
-            // locale: ENGLISH_LOCAL,
             context: context,
             child: TextFormField(
               validator: (val) {
@@ -55,20 +51,10 @@ class InputContainer extends StatelessWidget {
                 }
                 return null;
               },
-              // style: const TextStyle(fontSize: 14, fontFamily: fontFamily),
-              // maxLines: 1,
               controller: controller,
-              // textAlign: TextAlign.end,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 border: InputBorder.none,
-                hintText: hintLabel ?? label,
-                hintStyle: TextStyle(
-                  // fontSize: 14,
-                  // fontFamily: fontFamily,
-                  fontWeight: FontWeight.w500,
-                  // color: AppColor.secondarySoft,
-                ),
               ),
             ),
           ),

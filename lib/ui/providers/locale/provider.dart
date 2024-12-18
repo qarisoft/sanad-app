@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sanad/main.dart';
+
+import '../../../common.dart';
 part 'provider.g.dart';
 
 const arabic = 'ar';
@@ -13,10 +16,9 @@ class Local extends _$Local {
     // return appStorage.getLocal() ?? arabic;
   }
 
-  setLocal(String local)async{
+  setLocal(String local) async {
     state = local;
-  //  await appStorage.setLocal(local);
-
+    //  await appStorage.setLocal(local);
   }
 
   toggole() {
@@ -27,4 +29,11 @@ class Local extends _$Local {
         setLocal(arabic);
     }
   }
+}
+
+@riverpod
+Future<bool> loaded(Ref ref) async {
+  final a = SL.delegate.load(Locale('ar'));
+  ref.keepAlive();
+  return true;
 }

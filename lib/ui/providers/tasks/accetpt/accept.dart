@@ -6,31 +6,38 @@ import 'package:sanad/data/src/index.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/providers/ex.dart';
 
-import '../../home_provider/task_provider.dart';
-import '../local_tasks/local_tasks.dart';
+// import '../../home_provider/task_provider.dart';
+// import '../local_tasks/local_tasks.dart';
 part 'accept.g.dart';
-@Riverpod(dependencies: [LocalTasks])
+
+@riverpod
 FutureOr<bool> accept(Ref ref, int taskId) async {
   final dio = await ref.getDebouncedDio();
-  final res = await dio.post('$baseUrl/home/accept/$taskId');
-  final tasks = ref.watch(localTasksProvider);
+
+  final res = await dio.post('$baseUrl/tasks/$taskId/accept');
+
+  // final tasks = ref.read(localTasksProvider);
+  final tasks = appStorage().getLocalTasks();
 
   if (res.data['status'] == 1) {
-    final task = TaskEntity.fromJson(res.data['data']);
-    final taskItem = TaskItemEntity.fromJson({
-      ...res.data['data'],
-      'task': task.toJson(),
-    });
+    // final task = TaskEntity.fromJson(res.data['data']);
+    // try {
+    //   print(taskItem);
+    // } catch (e) {
+    //   print(e);
+    // }
+    final taskItem = TaskItemEntity.fromJson(res.data['data']);
 
-    if (task.id != 0) {
+    if (taskItem.task.id != 0) {
       final newList = <TaskItemEntity>{...tasks.tasks, taskItem}.toList();
       await appStorage().setLocalTasks(tasks.copyWith(tasks: newList));
-      ref.invalidate(localTasksProvider);
-      ref.invalidate(homeDataProvider);
+      // ref.invalidate(localTasksProvider);
+      // ref.invalidate(homeDataProvider);
       return true;
     }
   } else {
     throw ServerErrorsWithMsg([res.data['message']]);
   }
   return false;
+  // throw ServerErrorsWithMsg(['sssss']);
 }

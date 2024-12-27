@@ -3,7 +3,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/pages/components.dart';
+import 'package:sanad/ui/providers/home_provider/p.dart';
+import 'package:sanad/ui/providers/index.dart';
 import 'package:sanad/ui/providers/tasks/accetpt/accept.dart';
+import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
 // import 'package:sanad/ui/providers/home_provider/task_provider.dart';
 
 class ItemPage extends ConsumerWidget {
@@ -14,185 +17,193 @@ class ItemPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    go() {
-      Navigator.of(context).pushNamed(Routes.task);
-    }
+    // go() {
+    //   Navigator.of(context).pushNamed(Routes.task);
+    // }
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              10.vSpace,
-              Text(title),
-            ],
-          ),
-        ),
-        centerTitle: true,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(1),
-        child: Container(
-          // decoration: BoxDecoration(
-          //   border: Border.all(color: Colors.grey.shade300),
-          // ),
-
-          child: Padding(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          callActionDialog(
-                            context,
-                            acceptProvider(taskEntity.id),
-                            yesAction: () {},
-                            action: (BuildContext c_) {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'قبول',
-                            style: TextStyle(color: Colors.blue),
+                10.vSpace,
+                Text(title),
+              ],
+            ),
+          ),
+          centerTitle: true,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(1),
+          child: Container(
+            // decoration: BoxDecoration(
+            //   border: Border.all(color: Colors.grey.shade300),
+            // ),
+
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            callActionDialog(
+                              context,
+                              acceptProvider(taskEntity.id),
+                              yesAction: () {
+                                ref.invalidate(homeProvider);
+                                ref.invalidate(localTasksProvider);
+                              },
+                              action: (BuildContext c_) {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'قبول',
+                              style: TextStyle(color: Colors.blue),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: FloatingActionButton(
-                    shape: CircleBorder(),
-                    onPressed: () {
-                      // MapsLauncher.launchCoordinates(
-                      //   // taskEntity.location.lat,
-                      //   // taskEntity.location.lng,
-                      //   37.4220041, -122.0862462,
-                      // );
-                    },
-                    child: Icon(
-                      Icons.reply_all,
+                      ],
                     ),
                   ),
-                ),
-                Expanded(child: SizedBox()),
-              ],
+                  Expanded(
+                    child: FloatingActionButton(
+                      shape: CircleBorder(),
+                      onPressed: () {
+                        // MapsLauncher.launchCoordinates(
+                        //   // taskEntity.location.lat,
+                        //   // taskEntity.location.lng,
+                        //   37.4220041, -122.0862462,
+                        // );
+                      },
+                      child: Icon(
+                        Icons.reply_all,
+                      ),
+                    ),
+                  ),
+                  Expanded(child: SizedBox()),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Column(
-          //       children: [
-          //         // Text(taskEntity.code),
-          //         // 2.vSpace,
-          //         Text(
-          //           taskEntity.publishedAtH,
-          //           style: Theme.of(context).textTheme.labelSmall,
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  taskEntity.publishedAtH,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-                // Text('البيانات'),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: HLine(),
-          ),
-          _ItemContainer(
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Item(
-                title: taskEntity.city,
-                leading: 'المدينة',
-              ),
-              _Item(
-                title: taskEntity.address,
-                leading: 'العنوان',
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: HLine(),
-          ),
-          _ItemContainer(
-            children: [
-              _Item(
-                title: taskEntity.estateType,
-                leading: 'العقار',
-              ),
-              _Item(
-                title: taskEntity.finishedAtH,
-                leading: 'التوقيت',
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: HLine(),
-          ),
-          _ItemContainer(
-            children: [
-              _Item(
-                title: taskEntity.customer,
-                leading: 'العميل',
-              ),
-              _Item(
-                title: '123 123 132',
-                leading: 'الاتصال',
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: HLine(),
-          ),
-          _ItemContainer(
-            children: [
-              _Item(
-                title: taskEntity.code,
-                leading: 'الكود',
-              ),
-              // _Item(
-              //   title: taskEntity.address,
-              //   leading: 'العنوان',
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Column(
+              //       children: [
+              //         // Text(taskEntity.code),
+              //         // 2.vSpace,
+              //         Text(
+              //           taskEntity.publishedAtH,
+              //           style: Theme.of(context).textTheme.labelSmall,
+              //         ),
+              //       ],
+              //     ),
+              //   ],
               // ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      taskEntity.publishedAtH,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    // Text('البيانات'),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: HLine(),
+              ),
+              _ItemContainer(
+                children: [
+                  _Item(
+                    title: taskEntity.city,
+                    leading: 'المدينة',
+                  ),
+                  _Item(
+                    title: taskEntity.address,
+                    leading: 'العنوان',
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: HLine(),
+              ),
+              _ItemContainer(
+                children: [
+                  _Item(
+                    title: taskEntity.estateType,
+                    leading: 'العقار',
+                  ),
+                  _Item(
+                    title: taskEntity.finishedAtH,
+                    leading: 'التوقيت',
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: HLine(),
+              ),
+              _ItemContainer(
+                children: [
+                  _Item(
+                    title: taskEntity.customer,
+                    leading: 'العميل',
+                  ),
+                  _Item(
+                    title: '123 123 132',
+                    leading: 'الاتصال',
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: HLine(),
+              ),
+              _ItemContainer(
+                children: [
+                  _Item(
+                    title: taskEntity.code,
+                    leading: 'الكود',
+                  ),
+                  // _Item(
+                  //   title: taskEntity.address,
+                  //   leading: 'العنوان',
+                  // ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: HLine(),
+              ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: HLine(),
-          ),
-        ],
+        ),
       ),
     );
   }

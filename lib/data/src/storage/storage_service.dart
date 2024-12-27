@@ -14,9 +14,6 @@ class StorageImpl implements Storage {
 
   final SharedPreferences prefs;
 
-  
-
-
   @override
   AuthEntity? getAuth() {
     final res = prefs.getString(authEntityKey);
@@ -62,18 +59,17 @@ class StorageImpl implements Storage {
     }
     return LocalTasksList(tasks: []);
   }
-  
+
   @override
   getData(String k) {
     final res = prefs.getString(k);
-    if (res!=null) {
+    if (res != null) {
       return jsonDecode(res);
     }
   }
-  
+
   @override
-  Future<bool> setData(String k, data) async{
+  Future<bool> setData(String k, data) async {
     return await prefs.setString(k, jsonEncode(data));
-    
   }
 }

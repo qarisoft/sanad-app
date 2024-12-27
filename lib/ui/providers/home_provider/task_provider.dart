@@ -1,20 +1,16 @@
 import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-// import 'package:freezed_annotation/freezed_annotation.dart';
-// import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sanad/app/constants.dart';
 import 'package:sanad/app/errors/failure.dart';
 import 'package:sanad/data/data.dart';
-// import 'package:sanad/data/src/index.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
-import 'package:sanad/ui/providers/auth_provider/auth_provider.dart';
 import 'package:sanad/ui/providers/ex.dart';
 import 'package:sanad/ui/providers/index.dart';
-
 part 'task_provider.g.dart';
+part 'task_provider.freezed.dart';
 
 @Riverpod(dependencies: [])
 class Message extends _$Message {
@@ -28,51 +24,75 @@ class Message extends _$Message {
   }
 }
 
+@freezed
+class HomeTaskState with _$HomeTaskState {
+  const factory HomeTaskState.initial() = InitailState;
+  // const factory HomeTaskState.empty() = EmptyState;
+  const factory HomeTaskState.data({
+    required List<TaskEntity> data,
+  }) = DataState;
+  const factory HomeTaskState.loading() = LoadingState;
+
+  factory HomeTaskState.fromJson(Map<String, dynamic> json) =>
+      _$HomeTaskStateFromJson(json);
+}
+
 @Riverpod(dependencies: [Message])
 class HomeData extends _$HomeData {
+  PaginatedData? _pageData;
   @override
-  FutureOr<List<TaskEntity>> build() async {
-    return ref.watch(authProvider).when(
-          authenticated: (auth) async => await _init(),
-          initial: () => [],
-        );
+  HomeTaskState build() {
+    init();
+    final data = _pageData?.data;
+    if (data != null) {
+      return HomeTaskState.data(data: data);
+    }
+    return HomeTaskState.initial();
   }
 
-  FutureOr<List<TaskEntity>> _init() async {
+  Future<void> init() async {
     final a = ref.keepAlive();
-    Future.delayed(Duration(minutes: 1)).then(
-      (_) {
-        a.close();
-      },
-    );
+    // Future.delayed(Duration(minutes: 1)).then(
+    //   (_) {
+    //     a.close();
+    //   },
+    // );
 
-    return await fetch();
-  }
-
-  Future<void> refresh() async {
-    // final inter
-    final data = await fetch();
-    state = AsyncValue.data(data);
+    await refresh(true);
     return;
   }
 
-  FutureOr<List<TaskEntity>> fetch() async {
+  _updateState(List<TaskEntity> tasks) {
+    final dataState = state.whenOrNull(data: (d) => d) ?? [];
+    state = HomeTaskState.data(data: {...dataState, ...tasks}.toList());
+  }
+
+  Future<void> refresh([bool isInitial = false]) async {
+    final data = await fetch(isInitial ? null : _pageData?.nextPageUrl);
+    // print(data);
+    if (data != null) {
+      _pageData = data;
+      _updateState(data.data);
+    }
+    return;
+  }
+
+  FutureOr<PaginatedData?> fetch([String? path]) async {
     final dio = await ref.getDebouncedDio();
     if (ref.read(interNetProvider).contains(ConnectivityResult.none)) {
+      _pageData = null;
       ref.read(messageProvider.notifier).add(NoInternet());
-      return[];
+      return null;
     }
 
     try {
       final res = await dio.get(
-        '$baseUrl/home',
+        path ?? '$baseUrl/home',
       );
-
       final r = HomeResponse.fromJson(res.data);
-      if (r.data.isNotEmpty) {
-        return r.data;
-      }
+      return r.data;
     } catch (e) {
+      // print(e);
       if (e is DioException) {
         if (e.type == DioExceptionType.badResponse) {
           final c = e.response?.statusCode;
@@ -82,8 +102,6 @@ class HomeData extends _$HomeData {
         }
       }
     }
-    return [];
+    return null;
   }
 }
-
-

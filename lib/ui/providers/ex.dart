@@ -17,7 +17,7 @@ extension WidgetRefExt on WidgetRef {
   logOut_() async {
     await di<Storage>().logOut();
     invalidate(authProvider);
-    invalidate(homeDataProvider);
+    // invalidate(homeDataProvider);
     invalidate(localTasksProvider);
   }
   // callApi
@@ -53,10 +53,8 @@ extension DebounceAndCancelExtension on Ref {
     if (auth != null) {
       headers['Authorization'] = 'Bearer ${auth.token}';
     }
-    client.options = client.options.copyWith(
-      headers: headers,
-      baseUrl: baseUrl
-    );
+    client.options =
+        client.options.copyWith(headers: headers, baseUrl: baseUrl);
     // client.interceptors.add();
     client.interceptors.add(PrettyDioLogger(
         // requestHeader: true,
@@ -79,11 +77,11 @@ extension DebounceAndCancelExtension on Ref {
     // If the provider was disposed during the delay, it means that the user
     // refreshed again. We throw an exception to cancel the request.
     // It is safe to use an exception here, as it will be caught by Riverpod.
-    if (didDispose) {
-      throw Exception('Cancelled');
-    }
-    final client=dioFactory();
+    final client = dioFactory();
 
+    if (didDispose) {
+      invalidateSelf();
+    }
     // We now create the client and close it when the provider is disposed.
 
     onDispose(client.close);

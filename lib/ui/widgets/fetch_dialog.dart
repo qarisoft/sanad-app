@@ -26,9 +26,8 @@ callActionDialog<T>(
             HookConsumer(
               builder: (context, ref, child) {
                 final internet = ref.watch(interNetProvider);
-                final isConnected =
-                    internet.contains(ConnectivityResult.wifi) ||
-                        internet.contains(ConnectivityResult.wifi);
+                final isConnected = !internet.contains(ConnectivityResult.none);
+                // internet.contains(ConnectivityResult.wifi);
                 if (!isConnected) {
                   return StateR(
                     sType: StateType.popupErrorState,

@@ -12,9 +12,9 @@ class TaskEntity with _$TaskEntity {
   @JsonSerializable(explicitToJson: true)
   const factory TaskEntity({
     @Default(0) int id,
-    @Default('no Customer') String customer,
+    @Default('- - - -') String customer,
     @Default(' - - - ') @JsonKey(name: 'company_name') String companyName,
-    @Default('no code') String code,
+    @Default(' - - - ') String code,
     @Default(LocationEntity()) LocationEntity location,
     @Default('') @JsonKey(name: 'finished_at') String finishedAt,
     @Default('') @JsonKey(name: 'finished_at_h') String finishedAtH,
@@ -39,7 +39,7 @@ extension TaskEntityDateTiem on String {
 @freezed
 class TaskPricingEntity with _$TaskPricingEntity {
   const factory TaskPricingEntity({
-    required int id,
+    required String id,
     @JsonKey(name: 'task_id') required int taskId,
     @JsonKey(name: 'total_price') @Default(0) double totalPrice,
     @JsonKey(name: 'meter_square_price') @Default(0) double meterSquarePrice,
@@ -52,11 +52,11 @@ class TaskPricingEntity with _$TaskPricingEntity {
       _$TaskPricingEntityFromJson(json);
 
   factory TaskPricingEntity.empty({
-    int? id,
+    String? id,
     int? taskId,
   }) =>
       TaskPricingEntity(
-          id: id ?? 1, taskId: taskId ?? 1, name: 'name', key: 'key');
+          id: id ?? '1', taskId: taskId ?? 1, name: 'name', key: 'key');
 }
 
 enum UploadState { initail, uploadin, uploaded, faild }
@@ -67,7 +67,7 @@ abstract class MediaItem with _$MediaItem {
   const factory MediaItem({
     required String path,
     required String uuid,
-    @Default(UploadState.initail) UploadState status ,
+    @Default(UploadState.initail) UploadState status,
   }) = _MediaItem;
 
   factory MediaItem.fromJson(Map<String, dynamic> json) =>

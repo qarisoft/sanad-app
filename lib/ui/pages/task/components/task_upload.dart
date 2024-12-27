@@ -10,7 +10,7 @@ class _TaskItemUploadPage extends HookConsumerWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(4.0),
-        child: WithRefresh(
+        child: WithRefreshWidget(
           onRefresh: () async {},
           children: [
             Consumer(
@@ -151,35 +151,6 @@ class _UploadCard extends StatelessWidget {
               )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class WithRefresh extends StatelessWidget {
-  const WithRefresh(
-      {super.key, required this.onRefresh, required this.children});
-
-  final Future Function() onRefresh;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    if (children.isEmpty) {
-      return Center(
-        child: StateR(sType: StateType.fullScreenEmptyState),
-      );
-    }
-    return RefreshIndicator(
-      onRefresh: onRefresh,
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              children: children,
-            ),
-          ),
-        ],
       ),
     );
   }

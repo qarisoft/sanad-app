@@ -1,14 +1,14 @@
 import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'common.dart';
 import 'ui/providers/index.dart';
-// ChangeNotifier a;
+
 void main() async {
+  // flutter pub get && flutter pub run icons_launcher:create
+  // flutter pub run flutter_native_splash:create
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -58,19 +58,16 @@ class MyApp extends ConsumerWidget {
 Future<void> init() async {
   await registerSingletons();
   SL.delegate.load(Locale('ar'));
-  
 }
 
 ThemeData _buildReplyLightTheme() {
   final base = ThemeData(fontFamily: 'Tajawal');
   return base.copyWith(
     brightness: Brightness.light,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white
-    ),
+    appBarTheme: AppBarTheme(backgroundColor: Colors.white),
     // bottomSheetTheme: BottomSheetThemeData(
-      // backgroundColor: AppColor.blue700,
-      // modalBackgroundColor: Colors.white.withOpacity(0.7),
+    // backgroundColor: AppColor.blue700,
+    // modalBackgroundColor: Colors.white.withOpacity(0.7),
     // ),
     cardColor: AppColor.white50,
     // chipTheme: _buildChipTheme(

@@ -27,6 +27,34 @@ class _TaskItemDataPage extends HookConsumerWidget {
       );
     }
 
+    TableRow _TR(TaskPricingEntity row) => TableRow(
+          decoration: _boxDecoration,
+          children: [
+            InkWell(
+              onTap: row.key.startsWith('total') ? null : () => onRowTap(row),
+              child: Padding(
+                padding: _padding,
+                child: Text(
+                  row.name,
+                  maxLines: 3,
+                ),
+              ),
+            ),
+            _TCel(
+              row.meterSquareArea.toString(),
+            ),
+            _TCel(
+              row.meterSquarePrice.toString(),
+            ),
+            _TCel(
+              row.totalPrice.toString(),
+            ),
+          ],
+        );
+    final TaskPricingEntity? total = instance.pricing.firstWhere(
+      (i) => i.key.startsWith('total'),
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: SingleChildScrollView(
@@ -66,35 +94,13 @@ class _TaskItemDataPage extends HookConsumerWidget {
                     ),
                   ],
                 ),
-                ...instance.pricing.map((TaskPricingEntity p) {
+                ...instance.pricing
+                    .where((i) => !i.key.startsWith('total'))
+                    .map((TaskPricingEntity p) {
                   final row = p;
-                  return TableRow(
-                    decoration: _boxDecoration,
-                    children: [
-                      InkWell(
-                        onTap: p.key.startsWith('total')
-                            ? null
-                            : () => onRowTap(row),
-                        child: Padding(
-                          padding: _padding,
-                          child: Text(
-                            row.name,
-                            maxLines: 3,
-                          ),
-                        ),
-                      ),
-                      _TCel(
-                        row.meterSquareArea.toString(),
-                      ),
-                      _TCel(
-                        row.meterSquarePrice.toString(),
-                      ),
-                      _TCel(
-                        row.totalPrice.toString(),
-                      ),
-                    ],
-                  );
-                })
+                  return _TR(row);
+                }),
+                if (total != null) _TR(total)
               ],
             ),
             50.vSpace
@@ -258,6 +264,16 @@ class _Head extends StatelessWidget {
     );
   }
 }
+
+// class _TRow extends StatelessWidget {
+//   const _TRow({super.key, required this.row});
+//   final TaskPricingEntity row;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ;
+//   }
+// }
 
 class _TCel extends StatelessWidget {
   const _TCel(this.text);

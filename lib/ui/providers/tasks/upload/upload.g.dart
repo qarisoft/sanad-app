@@ -54,7 +54,7 @@ Map<String, dynamic> _$$UploadAttemtsImplToJson(_$UploadAttemtsImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$uploadTaskAttemtsHash() => r'e4bf89825ab24373f104acb6294a954c9a757523';
+String _$uploadTaskAttemtsHash() => r'903b430461e3b09c8933e83fae916c1be3d19fe3';
 
 /// Copied from Dart SDK
 class _SystemHash {

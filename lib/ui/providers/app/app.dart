@@ -29,7 +29,6 @@ class InterNet extends _$InterNet {
 
   init() async {
     _connectivity.onConnectivityChanged.asBroadcastStream().listen(_update);
-    // _connectivity.
 
     try {
       final a = await _connectivity.checkConnectivity();
@@ -45,4 +44,3 @@ class InterNet extends _$InterNet {
     }
   }
 }
-

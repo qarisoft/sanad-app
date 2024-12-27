@@ -91,7 +91,7 @@ class _Tasks extends ConsumerWidget {
         builder: (context_) {
           return HookConsumer(builder: (context, ref, c) {
             close() => Navigator.of(context).pop(true);
-            final er=ServerErrorsWithMsg([context.tr.serverError]);
+            final er = ServerErrorsWithMsg([context.tr.serverError]);
 
             onPress() async {
               final res =
@@ -104,17 +104,17 @@ class _Tasks extends ConsumerWidget {
                 throw er;
               });
 
-              if (res == 1)  close();
+              if (res == 1) close();
             }
 
             final obj = ref.watch(callApiProvider);
             final internet = ref.watch(interNetProvider);
             if (internet.contains(ConnectivityResult.none)) {
               return StateR(
-                    sType: StateType.popupErrorState,
-                    message: context.tr.noInternet,
-                    json: JsonAssets.noNet,
-                  );
+                sType: StateType.popupErrorState,
+                message: context.tr.noInternet,
+                json: JsonAssets.noNet,
+              );
             }
             return DeleteDialog(
               onPressed: onPress,
@@ -130,54 +130,60 @@ class _Tasks extends ConsumerWidget {
       return a ?? false;
     }
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          5.vSpace,
-          ...tasks.map(
-            (lTask_) {
-              final lTask = lTask_.task;
-              return Container(
-                color: Colors.grey.shade200,
-                margin: EdgeInsets.symmetric(vertical: 1),
-                child: Dismissible(
-                  key: Key(lTask.id.toString()),
-                  direction: DismissDirection.startToEnd,
-                  confirmDismiss: (d) => confirmDismiss(d, lTask.id),
-                  onDismissed: (dir) {
-                    onDismiss(lTask.id);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('${lTask.id} dismissed'),
-                        duration: Duration(milliseconds: 500),
+    return tasks.isEmpty
+        ? Center(
+            child: StateR(sType: StateType.fullScreenEmptyState),
+          )
+        : SingleChildScrollView(
+            child: Column(
+              children: [
+                // if (tasks.isEmpty)
+                5.vSpace,
+                ...tasks.map(
+                  (lTask_) {
+                    final lTask = lTask_.task;
+                    return Container(
+                      color: Colors.grey.shade200,
+                      margin: EdgeInsets.symmetric(vertical: 1),
+                      child: Dismissible(
+                        key: Key(lTask.id.toString()),
+                        direction: DismissDirection.startToEnd,
+                        confirmDismiss: (d) => confirmDismiss(d, lTask.id),
+                        onDismissed: (dir) {
+                          onDismiss(lTask.id);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${lTask.id} dismissed'),
+                              duration: Duration(milliseconds: 500),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(Routes.task, arguments: lTask.id);
+                          },
+                          subtitle: Text(
+                            lTask.city,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          title: Row(
+                            children: [
+                              Text(lTask.customer),
+                            ],
+                          ),
+                          trailing: Text(
+                            DateFormat.yMd()
+                                .format(DateTime.parse(lTask.finishedAt)),
+                          ),
+                          // contentPadding: EdgeInsets.zero,
+                        ),
                       ),
                     );
                   },
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(Routes.task, arguments: lTask.id);
-                    },
-                    subtitle: Text(
-                      lTask.city,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    title: Row(
-                      children: [
-                        Text(lTask.customer),
-                      ],
-                    ),
-                    trailing: Text(
-                      DateFormat.yMd().format(DateTime.parse(lTask.finishedAt)),
-                    ),
-                    // contentPadding: EdgeInsets.zero,
-                  ),
-                ),
-              );
-            },
-          )
-        ],
-      ),
-    );
+                )
+              ],
+            ),
+          );
   }
 }

@@ -9,9 +9,9 @@ part of 'task_entity.dart';
 _$TaskEntityImpl _$$TaskEntityImplFromJson(Map<String, dynamic> json) =>
     _$TaskEntityImpl(
       id: (json['id'] as num?)?.toInt() ?? 0,
-      customer: json['customer'] as String? ?? 'no Customer',
+      customer: json['customer'] as String? ?? '- - - -',
       companyName: json['company_name'] as String? ?? ' - - - ',
-      code: json['code'] as String? ?? 'no code',
+      code: json['code'] as String? ?? ' - - - ',
       location: json['location'] == null
           ? const LocationEntity()
           : LocationEntity.fromJson(json['location'] as Map<String, dynamic>),
@@ -49,7 +49,7 @@ Map<String, dynamic> _$$TaskEntityImplToJson(_$TaskEntityImpl instance) =>
 _$TaskPricingEntityImpl _$$TaskPricingEntityImplFromJson(
         Map<String, dynamic> json) =>
     _$TaskPricingEntityImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       taskId: (json['task_id'] as num).toInt(),
       totalPrice: (json['total_price'] as num?)?.toDouble() ?? 0,
       meterSquarePrice: (json['meter_square_price'] as num?)?.toDouble() ?? 0,

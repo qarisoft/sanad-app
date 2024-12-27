@@ -8,6 +8,7 @@ import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
 import 'package:sanad/ui/providers/tasks/upload/upload.dart';
+import 'package:sanad/ui/widgets/with_refresh.dart';
 import 'package:uuid/uuid.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -32,29 +33,23 @@ class TaskPage extends StatelessWidget {
       length: 3,
       initialIndex: 0,
       child: Scaffold(
+        appBar: AppBar(),
         backgroundColor: Colors.white,
-        bottomNavigationBar: Row(
-          children: [
-            IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.arrow_back)),
-            Expanded(
-              child: TabBar(
-                unselectedLabelColor: Colors.grey,
-                dividerColor: Colors.transparent,
-                padding: EdgeInsets.zero,
-                automaticIndicatorColorAdjustment: false,
-                indicator: BoxDecoration(),
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.table_chart),
-                  ),
-                  Tab(icon: Icon(Icons.photo_library)),
-                  Tab(icon: Icon(Icons.upload)),
-                ],
+        bottomNavigationBar: SafeArea(
+          child: TabBar(
+            unselectedLabelColor: Colors.grey,
+            dividerColor: Colors.transparent,
+            padding: EdgeInsets.zero,
+            automaticIndicatorColorAdjustment: false,
+            indicator: BoxDecoration(),
+            tabs: [
+              Tab(
+                icon: Icon(Icons.table_chart),
               ),
-            ),
-          ],
+              Tab(icon: Icon(Icons.photo_library)),
+              Tab(icon: Icon(Icons.upload)),
+            ],
+          ),
         ),
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),

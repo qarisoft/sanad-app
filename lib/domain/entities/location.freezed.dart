@@ -20,9 +20,9 @@ LocationEntity _$LocationEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LocationEntity {
-  @JsonKey(readValue: convertJ)
+  @JsonKey(readValue: convertJ, name: 'latitude')
   double get lat => throw _privateConstructorUsedError;
-  @JsonKey(readValue: convertJ)
+  @JsonKey(readValue: convertJ, name: 'longitude')
   double get lng => throw _privateConstructorUsedError;
 
   /// Serializes this LocationEntity to a JSON map.
@@ -42,8 +42,8 @@ abstract class $LocationEntityCopyWith<$Res> {
       _$LocationEntityCopyWithImpl<$Res, LocationEntity>;
   @useResult
   $Res call(
-      {@JsonKey(readValue: convertJ) double lat,
-      @JsonKey(readValue: convertJ) double lng});
+      {@JsonKey(readValue: convertJ, name: 'latitude') double lat,
+      @JsonKey(readValue: convertJ, name: 'longitude') double lng});
 }
 
 /// @nodoc
@@ -86,8 +86,8 @@ abstract class _$$LocationEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(readValue: convertJ) double lat,
-      @JsonKey(readValue: convertJ) double lng});
+      {@JsonKey(readValue: convertJ, name: 'latitude') double lat,
+      @JsonKey(readValue: convertJ, name: 'longitude') double lng});
 }
 
 /// @nodoc
@@ -123,17 +123,17 @@ class __$$LocationEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LocationEntityImpl implements _LocationEntity {
   const _$LocationEntityImpl(
-      {@JsonKey(readValue: convertJ) this.lat = 0.0,
-      @JsonKey(readValue: convertJ) this.lng = 0.0});
+      {@JsonKey(readValue: convertJ, name: 'latitude') this.lat = 0.0,
+      @JsonKey(readValue: convertJ, name: 'longitude') this.lng = 0.0});
 
   factory _$LocationEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocationEntityImplFromJson(json);
 
   @override
-  @JsonKey(readValue: convertJ)
+  @JsonKey(readValue: convertJ, name: 'latitude')
   final double lat;
   @override
-  @JsonKey(readValue: convertJ)
+  @JsonKey(readValue: convertJ, name: 'longitude')
   final double lng;
 
   @override
@@ -173,17 +173,18 @@ class _$LocationEntityImpl implements _LocationEntity {
 
 abstract class _LocationEntity implements LocationEntity {
   const factory _LocationEntity(
-      {@JsonKey(readValue: convertJ) final double lat,
-      @JsonKey(readValue: convertJ) final double lng}) = _$LocationEntityImpl;
+          {@JsonKey(readValue: convertJ, name: 'latitude') final double lat,
+          @JsonKey(readValue: convertJ, name: 'longitude') final double lng}) =
+      _$LocationEntityImpl;
 
   factory _LocationEntity.fromJson(Map<String, dynamic> json) =
       _$LocationEntityImpl.fromJson;
 
   @override
-  @JsonKey(readValue: convertJ)
+  @JsonKey(readValue: convertJ, name: 'latitude')
   double get lat;
   @override
-  @JsonKey(readValue: convertJ)
+  @JsonKey(readValue: convertJ, name: 'longitude')
   double get lng;
 
   /// Create a copy of LocationEntity

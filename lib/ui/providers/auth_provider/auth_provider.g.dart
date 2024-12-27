@@ -32,7 +32,7 @@ Map<String, dynamic> _$$AuthInitialImplToJson(_$AuthInitialImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginCallHash() => r'f39f12d9ddf672089b389bbe9aa21d778eed9ffb';
+String _$loginCallHash() => r'7e9afc4f3667195a8198f281df19a3f753c28760';
 
 /// Copied from Dart SDK
 class _SystemHash {

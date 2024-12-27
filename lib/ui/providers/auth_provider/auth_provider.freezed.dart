@@ -113,12 +113,20 @@ class __$$DeleteAccountStateInitalImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DeleteAccountStateInitalImpl implements DeleteAccountStateInital {
+class _$DeleteAccountStateInitalImpl
+    with DiagnosticableTreeMixin
+    implements DeleteAccountStateInital {
   const _$DeleteAccountStateInitalImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DeleteAccountState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'DeleteAccountState.initial'));
   }
 
   @override
@@ -234,12 +242,20 @@ class __$$DeleteAccountStateErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DeleteAccountStateErrorImpl implements DeleteAccountStateError {
+class _$DeleteAccountStateErrorImpl
+    with DiagnosticableTreeMixin
+    implements DeleteAccountStateError {
   const _$DeleteAccountStateErrorImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DeleteAccountState.error()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'DeleteAccountState.error'));
   }
 
   @override
@@ -355,12 +371,20 @@ class __$$DeleteAccountStateLoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DeleteAccountStateLoadingImpl implements DeleteAccountStateLoading {
+class _$DeleteAccountStateLoadingImpl
+    with DiagnosticableTreeMixin
+    implements DeleteAccountStateLoading {
   const _$DeleteAccountStateLoadingImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DeleteAccountState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'DeleteAccountState.loading'));
   }
 
   @override
@@ -476,12 +500,20 @@ class __$$DeleteAccountStateSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DeleteAccountStateSuccessImpl implements DeleteAccountStateSuccess {
+class _$DeleteAccountStateSuccessImpl
+    with DiagnosticableTreeMixin
+    implements DeleteAccountStateSuccess {
   const _$DeleteAccountStateSuccessImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DeleteAccountState.success()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'DeleteAccountState.success'));
   }
 
   @override
@@ -699,7 +731,9 @@ class __$$AuthinticatedImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$AuthinticatedImpl implements Authinticated {
+class _$AuthinticatedImpl
+    with DiagnosticableTreeMixin
+    implements Authinticated {
   const _$AuthinticatedImpl({required this.auth, final String? $type})
       : $type = $type ?? 'authenticated';
 
@@ -713,8 +747,16 @@ class _$AuthinticatedImpl implements Authinticated {
   final String $type;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthState.authenticated(auth: $auth)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthState.authenticated'))
+      ..add(DiagnosticsProperty('auth', auth));
   }
 
   @override
@@ -844,7 +886,7 @@ class __$$AuthInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AuthInitialImpl implements AuthInitial {
+class _$AuthInitialImpl with DiagnosticableTreeMixin implements AuthInitial {
   const _$AuthInitialImpl({final String? $type}) : $type = $type ?? 'initial';
 
   factory _$AuthInitialImpl.fromJson(Map<String, dynamic> json) =>
@@ -854,8 +896,14 @@ class _$AuthInitialImpl implements AuthInitial {
   final String $type;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthState.initial'));
   }
 
   @override

@@ -17,8 +17,18 @@ class LocalTasks extends _$LocalTasks {
     );
   }
 
+  Future<bool> closeItem(int id) async {
+    return await _updateTasks(
+      state.tasks.map((i) {
+        if (i.task.id == id) {
+          return i.copyWith(isClosed: true);
+        }
+        return i;
+      }).toList(),
+    );
+  }
+
   Future<bool> _updateTasks(List<TaskItemEntity> ss) async {
-    // final rest = ss.where((s)=>s.k);
     try {
       final a = await appStorage().setLocalTasks(state.copyWith(tasks: ss));
       if (a) {

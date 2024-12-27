@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -7,6 +8,7 @@ import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/auth/auth.dart';
 import 'package:sanad/domain/repos/repo.dart';
 import 'package:sanad/domain/service/storage.dart';
+import 'package:sanad/ui/providers/home_provider/p.dart';
 // import 'package:sanad/ui/providers/index.dart';
 import '../ex.dart';
 
@@ -85,18 +87,43 @@ class DeletAccount extends _$DeletAccount {
   }
 }
 
+class DioClassWithData extends DioClass {
+  final String email;
+  final String password;
+
+  DioClassWithData({
+    required super.dio,
+    required super.path,
+    required this.email,
+    required this.password,
+  });
+}
+
+_cal(DioClassWithData params) {
+  return params.dio.post(
+    '$baseUrl/login',
+    data: {
+      'email': params.email,
+      'password': params.password,
+    },
+  );
+}
 
 @riverpod
 Future<bool> loginCall(Ref ref, LoginRequest params) async {
   final dio = await ref.getDebouncedDio();
 
-  final res = await ref.tryCall(() => dio.post(
-        '$baseUrl/login',
-        data: {
-          'email': params.email,
-          'password': params.password,
-        },
-      ));
+  final res = await ref.tryCall(
+    () => compute(
+      _cal,
+      DioClassWithData(
+        dio: dio,
+        path: '$baseUrl/login',
+        email: params.email,
+        password: params.password,
+      ),
+    ),
+  );
 
   final a = AuthResponse.fromJson(res.data);
 

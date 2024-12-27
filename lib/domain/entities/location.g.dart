@@ -8,13 +8,13 @@ part of 'location.dart';
 
 _$LocationEntityImpl _$$LocationEntityImplFromJson(Map<String, dynamic> json) =>
     _$LocationEntityImpl(
-      lat: (convertJ(json, 'lat') as num?)?.toDouble() ?? 0.0,
-      lng: (convertJ(json, 'lng') as num?)?.toDouble() ?? 0.0,
+      lat: (convertJ(json, 'latitude') as num?)?.toDouble() ?? 0.0,
+      lng: (convertJ(json, 'longitude') as num?)?.toDouble() ?? 0.0,
     );
 
 Map<String, dynamic> _$$LocationEntityImplToJson(
         _$LocationEntityImpl instance) =>
     <String, dynamic>{
-      'lat': instance.lat,
-      'lng': instance.lng,
+      'latitude': instance.lat,
+      'longitude': instance.lng,
     };

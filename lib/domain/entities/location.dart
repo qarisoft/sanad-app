@@ -8,8 +8,8 @@ part 'location.g.dart';
 @freezed
 class LocationEntity with _$LocationEntity {
   const factory LocationEntity({
-    @JsonKey(readValue: convertJ) @Default(0.0) double lat,
-    @JsonKey(readValue: convertJ) @Default(0.0) double lng,
+    @JsonKey(readValue: convertJ, name: 'latitude') @Default(0.0) double lat,
+    @JsonKey(readValue: convertJ, name: 'longitude') @Default(0.0) double lng,
   }) = _LocationEntity;
 
   factory LocationEntity.fromJson(Map<String, dynamic> json) =>

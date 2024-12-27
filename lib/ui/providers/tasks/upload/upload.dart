@@ -4,9 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sanad/app/constants.dart';
 import 'package:sanad/data/src/index.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/providers/ex.dart';
+import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
 part 'upload.g.dart';
 part 'upload.freezed.dart';
 
@@ -59,11 +61,22 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
     final current = UploadTaskState.fromItem(item);
     _updateCurrent(current);
 
+    final dio = ref.dioFactory();
+    final res = await dio.post('$baseUrl/tasks/$taskId/upload/create/');
+    final uploadId = res.data['data']['id'] as int?;
+    if (uploadId == null) {
+      print(
+          'object................................$uploadId.............................................');
+      _onDone(false);
+      return false;
+    }
+    // return true;
+
     try {
+      final dio = ref.dioFactory();
       for (var i = 0; i < current.mediaCount; i++) {
-        final media = current.media[i];
-        final dio = ref.dioFactory();
         final data = FormData();
+        final media = current.media[i];
 
         final img = File(media.path);
         data.files.add(
@@ -76,7 +89,7 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
           ),
         );
         final res = await dio.post(
-          '/home/upload/$taskId',
+          '/tasks/uploads/$uploadId',
           data: data,
           onSendProgress: (count, total) {
             if (kDebugMode) {
@@ -91,15 +104,19 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
           _updateCurrentMediaItem(media.uuid, UploadState.faild);
         }
       }
-      _onUploadDone();
-
-      await appStorage().setData(getKey(taskId), state);
+      ref.read(localTasksProvider.notifier).closeItem(taskId);
+      _onDone();
 
       return true;
     } catch (e) {
       state = state.copyWith(current: null);
       return false;
     }
+  }
+
+  _onDone([a = true]) async {
+    _onUploadDone();
+    await appStorage().setData(getKey(taskId), state);
   }
 
   _onUploadDone() {

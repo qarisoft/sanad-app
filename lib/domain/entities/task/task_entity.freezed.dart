@@ -314,9 +314,9 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
 class _$TaskEntityImpl implements _TaskEntity {
   const _$TaskEntityImpl(
       {this.id = 0,
-      this.customer = 'no Customer',
+      this.customer = '- - - -',
       @JsonKey(name: 'company_name') this.companyName = ' - - - ',
-      this.code = 'no code',
+      this.code = ' - - - ',
       this.location = const LocationEntity(),
       @JsonKey(name: 'finished_at') this.finishedAt = '',
       @JsonKey(name: 'finished_at_h') this.finishedAtH = '',
@@ -524,7 +524,7 @@ TaskPricingEntity _$TaskPricingEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TaskPricingEntity {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'task_id')
   int get taskId => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_price')
@@ -553,7 +553,7 @@ abstract class $TaskPricingEntityCopyWith<$Res> {
       _$TaskPricingEntityCopyWithImpl<$Res, TaskPricingEntity>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       @JsonKey(name: 'task_id') int taskId,
       @JsonKey(name: 'total_price') double totalPrice,
       @JsonKey(name: 'meter_square_price') double meterSquarePrice,
@@ -589,7 +589,7 @@ class _$TaskPricingEntityCopyWithImpl<$Res, $Val extends TaskPricingEntity>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       taskId: null == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
@@ -627,7 +627,7 @@ abstract class _$$TaskPricingEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       @JsonKey(name: 'task_id') int taskId,
       @JsonKey(name: 'total_price') double totalPrice,
       @JsonKey(name: 'meter_square_price') double meterSquarePrice,
@@ -661,7 +661,7 @@ class __$$TaskPricingEntityImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       taskId: null == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
@@ -706,7 +706,7 @@ class _$TaskPricingEntityImpl implements _TaskPricingEntity {
       _$$TaskPricingEntityImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   @JsonKey(name: 'task_id')
   final int taskId;
@@ -772,7 +772,7 @@ class _$TaskPricingEntityImpl implements _TaskPricingEntity {
 
 abstract class _TaskPricingEntity implements TaskPricingEntity {
   const factory _TaskPricingEntity(
-      {required final int id,
+      {required final String id,
       @JsonKey(name: 'task_id') required final int taskId,
       @JsonKey(name: 'total_price') final double totalPrice,
       @JsonKey(name: 'meter_square_price') final double meterSquarePrice,
@@ -784,7 +784,7 @@ abstract class _TaskPricingEntity implements TaskPricingEntity {
       _$TaskPricingEntityImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   @JsonKey(name: 'task_id')
   int get taskId;

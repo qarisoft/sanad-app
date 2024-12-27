@@ -6,7 +6,7 @@ part of 'accept.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$acceptHash() => r'c4262e351e6e07ee88786b690c2552373fdc412d';
+String _$acceptHash() => r'69bf39c12338b5fac38b6152453680b766998af6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -56,18 +56,12 @@ class AcceptFamily extends Family<AsyncValue<bool>> {
     );
   }
 
-  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
-    localTasksProvider
-  ];
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
   Iterable<ProviderOrFamily>? get dependencies => _dependencies;
 
-  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
-      <ProviderOrFamily>{
-    localTasksProvider,
-    ...?localTasksProvider.allTransitiveDependencies
-  };
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
   Iterable<ProviderOrFamily>? get allTransitiveDependencies =>

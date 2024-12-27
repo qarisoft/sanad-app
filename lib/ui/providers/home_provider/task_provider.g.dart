@@ -3,6 +3,44 @@
 part of 'task_provider.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$InitailStateImpl _$$InitailStateImplFromJson(Map<String, dynamic> json) =>
+    _$InitailStateImpl(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$InitailStateImplToJson(_$InitailStateImpl instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+_$DataStateImpl _$$DataStateImplFromJson(Map<String, dynamic> json) =>
+    _$DataStateImpl(
+      data: (json['data'] as List<dynamic>)
+          .map((e) => TaskEntity.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$DataStateImplToJson(_$DataStateImpl instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+      'runtimeType': instance.$type,
+    };
+
+_$LoadingStateImpl _$$LoadingStateImplFromJson(Map<String, dynamic> json) =>
+    _$LoadingStateImpl(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$LoadingStateImplToJson(_$LoadingStateImpl instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
@@ -20,12 +58,12 @@ final messageProvider = AutoDisposeNotifierProvider<Message, Failure?>.internal(
 );
 
 typedef _$Message = AutoDisposeNotifier<Failure?>;
-String _$homeDataHash() => r'd0810a1ca4a07679dbec6c7bc25466ec9d0e683b';
+String _$homeDataHash() => r'b45a076fff1173fe29d31f919c2b6e789815bc01';
 
 /// See also [HomeData].
 @ProviderFor(HomeData)
 final homeDataProvider =
-    AutoDisposeAsyncNotifierProvider<HomeData, List<TaskEntity>>.internal(
+    AutoDisposeNotifierProvider<HomeData, HomeTaskState>.internal(
   HomeData.new,
   name: r'homeDataProvider',
   debugGetCreateSourceHash:
@@ -37,6 +75,6 @@ final homeDataProvider =
   },
 );
 
-typedef _$HomeData = AutoDisposeAsyncNotifier<List<TaskEntity>>;
+typedef _$HomeData = AutoDisposeNotifier<HomeTaskState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

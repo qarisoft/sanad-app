@@ -36,8 +36,8 @@ class _LoginPageState extends State<LoginPage> {
     final k = GlobalKey<FormState>();
 
     const space = SizedBox(height: 10);
-    final email = TextEditingController();
-    final password = TextEditingController();
+    final email = TextEditingController(text: 'a');
+    final password = TextEditingController(text: 'password');
     return Form(
       key: k,
       child: AuthLayout(

@@ -55,35 +55,30 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
       addImage(mediaPath);
     }
 
-    Future<bool> askPermission(ImageSource s, [Function()? action]) async {
-      final a = await showDialog<bool>(
+    // onAskPermission(ImageSource s) async {
+    //   final a = s == ImageSource.camera
+    //       ? await Permission.camera.request()
+    //       : Platform.isIOS
+    //           ? await Permission.photos.request()
+    //           : await Permission.mediaLibrary.request();
+    //   if (a.isDenied || a.isPermanentlyDenied) {
+    //     close(false);
+    //   } else {
+    //     // action();
+    //     close(true);
+    //   }
+    // }
+    Future<bool> askPermission(ImageSource s) async {
+      final isCa = s == ImageSource.camera;
+      return await askPermissionDialog(
         context: context,
-        builder: (context) {
-          close(bool b) => Navigator.of(context).maybePop(b);
-          return AlertDialog(
-            title: Text('ask camera permission'),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  final a = s == ImageSource.camera
-                      ? await Permission.camera.request()
-                      : Platform.isIOS
-                          ? await Permission.photos.request()
-                          : await Permission.mediaLibrary.request();
-                  if (a.isDenied || a.isPermanentlyDenied) {
-                    close(false);
-                  } else {
-                    // action();
-                    close(true);
-                  }
-                },
-                child: Text('ask'),
-              )
-            ],
-          );
-        },
+        // icon: Icons.photo,
+        icon: isCa ? Icons.camera_alt : Icons.photo,
+        text: isCa
+            ? context.tr.permissionsBodyCamera
+            : context.tr.permissionsBodyGallery,
+        action: (BuildContext con) {},
       );
-      return a ?? false;
     }
 
     onPress(ImageSource s) async {
@@ -94,21 +89,25 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
     }
 
     onPressed(ImageSource source) async {
-      PermissionStatus status = PermissionStatus.denied;
-      switch (source) {
-        case ImageSource.camera:
-          status = await Permission.camera.status;
-        case ImageSource.gallery:
-          status = Platform.isIOS
-              ? await Permission.photos.status
-              : await Permission.mediaLibrary.status;
-      }
-      if (status.isDenied || status.isPermanentlyDenied) {
-        final a = await askPermission(source);
-        if (!a) {
-          return;
-        }
-      }
+      // askPermissionDialog(context, (c) {});
+      // return;
+      // PermissionStatus status = PermissionStatus.denied;
+      // switch (source) {
+      //   case ImageSource.camera:
+      //     status = await Permission.camera.status;
+      //   case ImageSource.gallery:
+      //     status = Platform.isIOS
+      //         ? await Permission.photos.status
+      //         : await Permission.mediaLibrary.status;
+      // }
+      // final a = await askPermission(source);
+
+      // if (status.isDenied || status.isPermanentlyDenied) {
+      //   print('aaaaaaaaa $a');
+      //   if (!a) {
+      //     return;
+      //   }
+      // }
       onPress(source);
       // _onPress(source);
     }

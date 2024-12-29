@@ -7,6 +7,7 @@ import 'package:sanad/ui/providers/home_provider/p.dart';
 import 'package:sanad/ui/providers/index.dart';
 import 'package:sanad/ui/providers/tasks/accetpt/accept.dart';
 import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
+import 'package:sanad/ui/widgets/ask_permission_dialog.dart';
 // import 'package:sanad/ui/providers/home_provider/task_provider.dart';
 
 class ItemPage extends ConsumerWidget {
@@ -20,6 +21,17 @@ class ItemPage extends ConsumerWidget {
     // go() {
     //   Navigator.of(context).pushNamed(Routes.task);
     // }
+    accept() => callActionDialog(
+          context,
+          acceptProvider(taskEntity.id),
+          yesAction: () {
+            ref.invalidate(homeProvider);
+            ref.invalidate(localTasksProvider);
+          },
+          action: (BuildContext c_) {
+            Navigator.of(context).pop();
+          },
+        );
 
     return SafeArea(
       child: Scaffold(
@@ -54,41 +66,34 @@ class ItemPage extends ConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            callActionDialog(
-                              context,
-                              acceptProvider(taskEntity.id),
-                              yesAction: () {
-                                ref.invalidate(homeProvider);
-                                ref.invalidate(localTasksProvider);
-                              },
-                              action: (BuildContext c_) {
-                                Navigator.of(context).pop();
-                              },
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'قبول',
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                          ),
-                        ),
+                        // TextButton(
+                        //   onPressed: () {},
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(8.0),
+                        //     child: Text(
+                        //       context.tr.accept,
+                        //       style: TextStyle(color: Colors.blue),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                   Expanded(
                     child: FloatingActionButton(
                       shape: CircleBorder(),
-                      onPressed: () {
-                        // MapsLauncher.launchCoordinates(
-                        //   // taskEntity.location.lat,
-                        //   // taskEntity.location.lng,
-                        //   37.4220041, -122.0862462,
-                        // );
-                      },
+                      onPressed: accept,
+                      //
+                      // () {
+
+                      // },
+                      // () {
+                      //   // MapsLauncher.launchCoordinates(
+                      //   //   // taskEntity.location.lat,
+                      //   //   // taskEntity.location.lng,
+                      //   //   37.4220041, -122.0862462,
+                      //   // );
+                      // },
                       child: Icon(
                         Icons.reply_all,
                       ),

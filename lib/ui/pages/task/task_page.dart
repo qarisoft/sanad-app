@@ -9,6 +9,7 @@ import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
 import 'package:sanad/ui/providers/tasks/upload/upload.dart';
+import 'package:sanad/ui/widgets/ask_permission_dialog.dart';
 import 'package:sanad/ui/widgets/with_refresh.dart';
 import 'package:uuid/uuid.dart';
 import 'package:image_picker/image_picker.dart';

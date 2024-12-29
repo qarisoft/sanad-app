@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sanad/app/errors/failure.dart'; // import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sanad/common.dart';
 import 'package:sanad/ui/providers/ex.dart';
+import 'package:sanad/ui/widgets/ask_permission_dialog.dart';
 
 import '../../providers/home_provider/task_provider.dart';
 import 'home_page.dart';
@@ -58,7 +59,6 @@ class MainPage extends HookConsumerWidget {
               color: index.value == 1 ? AppColor.primary : Colors.grey,
             ),
             label: context.tr.bottomNavLocalTasks,
-
           ),
         ],
         index: index.value,

@@ -4,6 +4,10 @@
   "@sanad": {
 
   },
+  "permissionsTitle":"السماح للتطبيق بالتالي",
+  "permissionsBodyCamera":"التطبيق يحتاج الموافقة على استخدام الكاميرا",
+  "permissionsBodyGallery":"التطبيق يحتاج الموافقة للوصول للمعرض  ",
+  
   "authLoginFailer":"كلمة السر او الايميل غلط!",
   "taskPageUploaddialogConfirmation":"'هل تريد اغلاق المعاينة الأن ؟'",
   "taskPageUploadTitle":"التسليم",

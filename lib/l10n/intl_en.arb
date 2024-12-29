@@ -4,6 +4,10 @@
   "@sanad": {
     
   },
+  "permissionsTitle":"the app needs permissions",
+  "permissionsBodyCamera":"allow the app to use the camera",
+  "permissionsBodyGallery":"allow the app to use the gallery",
+  
   "authLoginFailer":"invalid credintials",
   "taskPageUploaddialogConfirmation":"Are you sure you want to close the task now ?",
   "taskPageUploadTitle":"Upload",

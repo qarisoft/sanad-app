@@ -15,14 +15,22 @@ void main() async {
   }
 
   await init();
-  runApp(
-    ProviderScope(
-      child: const MyApp(),
-    ),
-  );
+  // ignore: missing_provider_scope
+  runApp(di<_App>());
 
   if (!kIsWeb) {
     FlutterNativeSplash.remove();
+  }
+}
+
+class _App extends StatelessWidget {
+  const _App();
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      child: const MyApp(),
+    );
   }
 }
 
@@ -41,11 +49,13 @@ class MyApp extends ConsumerWidget {
       title: 'Sanad',
       scrollBehavior: const MaterialScrollBehavior()
           .copyWith(dragDevices: PointerDeviceKind.values.toSet()),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       localizationsDelegates: SL.localizationsDelegates,
       supportedLocales: SL.supportedLocales,
       theme: _buildReplyLightTheme(),
-      darkTheme: _buildReplyDarkTheme(),
+      // darkTheme: _buildReplyLightTheme(),
+
+      // darkTheme: _buildReplyDarkTheme(),
       locale: Locale(local),
       showSemanticsDebugger: false,
       debugShowCheckedModeBanner: false,
@@ -57,7 +67,9 @@ class MyApp extends ConsumerWidget {
 
 Future<void> init() async {
   await registerSingletons();
+
   SL.delegate.load(Locale('ar'));
+  di.registerLazySingleton<_App>(() => _App());
 }
 
 ThemeData _buildReplyLightTheme() {

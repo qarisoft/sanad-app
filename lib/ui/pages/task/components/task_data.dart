@@ -55,56 +55,62 @@ class _TaskItemDataPage extends HookConsumerWidget {
       (i) => i.key.startsWith('total'),
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Table(
-              columnWidths: {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(0.5),
-                2: FlexColumnWidth(0.5),
-                3: FlexColumnWidth(1)
-              },
-              defaultVerticalAlignment:
-                  TableCellVerticalAlignment.intrinsicHeight,
-              children: <TableRow>[
-                TableRow(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(context.tr.taskPageDataTitle),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Table(
+                columnWidths: {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(0.5),
+                  2: FlexColumnWidth(0.5),
+                  3: FlexColumnWidth(1)
+                },
+                defaultVerticalAlignment:
+                    TableCellVerticalAlignment.intrinsicHeight,
+                children: <TableRow>[
+                  TableRow(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                    ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(context.tr.taskPricingName,
+                            style: Theme.of(context).textTheme.labelLarge),
+                      ),
+                      _Head(
+                        title: context.tr.taskPricingMeterArea,
+                        subTitle: context.tr.taskPricingMeterArea2,
+                      ),
+                      _Head(
+                        title: context.tr.taskPricingMeterPrice,
+                        subTitle: context.tr.taskPricingMeterPrice2,
+                      ),
+                      _Head(
+                        title: context.tr.taskPricingTotalPrice,
+                        subTitle: context.tr.taskPricingTotalPrice2,
+                      ),
+                    ],
                   ),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(context.tr.taskPricingName,
-                          style: Theme.of(context).textTheme.labelLarge),
-                    ),
-                    _Head(
-                      title: context.tr.taskPricingMeterArea,
-                      subTitle: context.tr.taskPricingMeterArea2,
-                    ),
-                    _Head(
-                      title: context.tr.taskPricingMeterPrice,
-                      subTitle: context.tr.taskPricingMeterPrice2,
-                    ),
-                    _Head(
-                      title: context.tr.taskPricingTotalPrice,
-                      subTitle: context.tr.taskPricingTotalPrice2,
-                    ),
-                  ],
-                ),
-                ...instance.pricing
-                    .where((i) => !i.key.startsWith('total'))
-                    .map((TaskPricingEntity p) {
-                  final row = p;
-                  return _TR(row);
-                }),
-                if (total != null) _TR(total)
-              ],
-            ),
-            50.vSpace
-          ],
+                  ...instance.pricing
+                      .where((i) => !i.key.startsWith('total'))
+                      .map((TaskPricingEntity p) {
+                    final row = p;
+                    return _TR(row);
+                  }),
+                  if (total != null) _TR(total)
+                ],
+              ),
+              50.vSpace
+            ],
+          ),
         ),
       ),
     );
@@ -130,18 +136,23 @@ class _EditingDialog extends ConsumerWidget {
       Navigator.of(context).pop();
     }
 
-    validator(String? s) {
-      final area = ma.text.toDouble();
-      final price = mp.text.toDouble();
-      if (area != 0.0 || price != 0.0) {
-        final d = s?.toDouble();
-        if (d == 0.0) {
-          return 'Hello baby ';
+    priceValidator(String? s) {
+      if (mp.text.toDouble() != 0.0) {
+        if (s?.toDouble() == 0.0) {
+          return context.tr.taskPricingPriceValidator;
         }
       }
-      // }
     }
 
+    areaValidator(String? s) {
+      if (ma.text.toDouble() != 0.0) {
+        if (s?.toDouble() == 0.0) {
+          return context.tr.taskPricingAreaValidator;
+        }
+      }
+    }
+
+    final style = Theme.of(context).textTheme.bodySmall;
     final k = GlobalKey<FormState>();
     return AlertDialog(
       title: Text(row.name),
@@ -153,21 +164,17 @@ class _EditingDialog extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
-                validator: validator,
+                validator: areaValidator,
                 controller: ma,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text(
-                    'meter Area',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    context.tr.taskPricingMeterArea,
+                    style: style,
                   ),
-                  // suffixText: ' Area ',
                   suffix: Text(
-                    'Area',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.grey),
+                    context.tr.taskPricingMeterArea2,
+                    style: style?.copyWith(color: Colors.grey),
                   ),
                 ),
                 keyboardType: TextInputType.number,
@@ -175,20 +182,16 @@ class _EditingDialog extends ConsumerWidget {
               30.vSpace,
               TextFormField(
                 controller: mp,
-                validator: validator,
+                validator: priceValidator,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text(
-                    'meter Price',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    context.tr.taskPricingMeterPrice,
+                    style: style,
                   ),
-                  // suffixText: ' RS ',
                   suffix: Text(
-                    'RS',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.grey),
+                    context.tr.taskPricingMeterPrice2,
+                    style: style?.copyWith(color: Colors.grey),
                   ),
                 ),
                 keyboardType: TextInputType.number,
@@ -201,7 +204,7 @@ class _EditingDialog extends ConsumerWidget {
         Row(
           children: [
             TextButton(
-              child: Text('buttonText'),
+              child: Text(context.tr.agree),
               onPressed: () {
                 if (!k.currentState!.validate()) {
                   return;
@@ -264,16 +267,6 @@ class _Head extends StatelessWidget {
     );
   }
 }
-
-// class _TRow extends StatelessWidget {
-//   const _TRow({super.key, required this.row});
-//   final TaskPricingEntity row;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ;
-//   }
-// }
 
 class _TCel extends StatelessWidget {
   const _TCel(this.text);

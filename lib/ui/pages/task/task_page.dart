@@ -33,7 +33,6 @@ class TaskPage extends StatelessWidget {
       length: 3,
       initialIndex: 0,
       child: Scaffold(
-        appBar: AppBar(),
         backgroundColor: Colors.white,
         bottomNavigationBar: SafeArea(
           child: TabBar(

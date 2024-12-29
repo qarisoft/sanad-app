@@ -20,6 +20,7 @@ _$UploadTaskStateImpl _$$UploadTaskStateImplFromJson(
               ?.map((e) => MediaItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      fraction: (json['fraction'] as num?)?.toDouble() ?? 0.0,
     );
 
 Map<String, dynamic> _$$UploadTaskStateImplToJson(
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$UploadTaskStateImplToJson(
       'mediaCount': instance.mediaCount,
       'isUploaded': instance.isUploaded,
       'media': instance.media.map((e) => e.toJson()).toList(),
+      'fraction': instance.fraction,
     };
 
 _$UploadAttemtsImpl _$$UploadAttemtsImplFromJson(Map<String, dynamic> json) =>
@@ -54,7 +56,7 @@ Map<String, dynamic> _$$UploadAttemtsImplToJson(_$UploadAttemtsImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$uploadTaskAttemtsHash() => r'903b430461e3b09c8933e83fae916c1be3d19fe3';
+String _$uploadTaskAttemtsHash() => r'fb0b19b677059f369e102b272dd473e59004b8fc';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -77,7 +79,8 @@ class _SystemHash {
   }
 }
 
-abstract class _$UploadTaskAttemts extends BuildlessNotifier<UploadAttemts> {
+abstract class _$UploadTaskAttemts
+    extends BuildlessAutoDisposeNotifier<UploadAttemts> {
   late final int taskId;
 
   UploadAttemts build(
@@ -112,12 +115,18 @@ class UploadTaskAttemtsFamily extends Family<UploadAttemts> {
     );
   }
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  static final Iterable<ProviderOrFamily> _dependencies = <ProviderOrFamily>[
+    localTasksProvider
+  ];
 
   @override
   Iterable<ProviderOrFamily>? get dependencies => _dependencies;
 
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+  static final Iterable<ProviderOrFamily> _allTransitiveDependencies =
+      <ProviderOrFamily>{
+    localTasksProvider,
+    ...?localTasksProvider.allTransitiveDependencies
+  };
 
   @override
   Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
@@ -129,7 +138,7 @@ class UploadTaskAttemtsFamily extends Family<UploadAttemts> {
 
 /// See also [UploadTaskAttemts].
 class UploadTaskAttemtsProvider
-    extends NotifierProviderImpl<UploadTaskAttemts, UploadAttemts> {
+    extends AutoDisposeNotifierProviderImpl<UploadTaskAttemts, UploadAttemts> {
   /// See also [UploadTaskAttemts].
   UploadTaskAttemtsProvider(
     int taskId,
@@ -185,7 +194,8 @@ class UploadTaskAttemtsProvider
   }
 
   @override
-  NotifierProviderElement<UploadTaskAttemts, UploadAttemts> createElement() {
+  AutoDisposeNotifierProviderElement<UploadTaskAttemts, UploadAttemts>
+      createElement() {
     return _UploadTaskAttemtsProviderElement(this);
   }
 
@@ -205,13 +215,13 @@ class UploadTaskAttemtsProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin UploadTaskAttemtsRef on NotifierProviderRef<UploadAttemts> {
+mixin UploadTaskAttemtsRef on AutoDisposeNotifierProviderRef<UploadAttemts> {
   /// The parameter `taskId` of this provider.
   int get taskId;
 }
 
 class _UploadTaskAttemtsProviderElement
-    extends NotifierProviderElement<UploadTaskAttemts, UploadAttemts>
+    extends AutoDisposeNotifierProviderElement<UploadTaskAttemts, UploadAttemts>
     with UploadTaskAttemtsRef {
   _UploadTaskAttemtsProviderElement(super.provider);
 

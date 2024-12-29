@@ -4,6 +4,12 @@
   "@sanad": {
     
   },
+  "authLoginFailer":"invalid credintials",
+  "taskPageUploaddialogConfirmation":"Are you sure you want to close the task now ?",
+  "taskPageUploadTitle":"Upload",
+  "taskPageDataTitle":"Data",
+  "taskPagePhotosTitle":"Pictures",
+
   "deleteLocalTaskTitle":"Cancel the Task",
   "deleteLocalTaskMsg":"Are you sure, you want to cancel this task?",
 
@@ -31,7 +37,8 @@
   "userdetailsInfoTitle":"details",
   "userdetailsEditLabelText":"edit",
   "userdetailsCompanyLabel":"companies",
-
+  "taskPricingPriceValidator":"price is required",
+  "taskPricingAreaValidator":"area is required",
   "taskPricingName":"name",
   "taskPricingMeterArea":"area",
   "taskPricingMeterArea2":"M2",

@@ -1,3 +1,5 @@
+// import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -64,7 +66,7 @@ class LocalTasksPage extends ConsumerWidget {
               tasks: localTasks.tasks.where((i) => !i.isClosed).toList(),
             ),
             _Tasks(
-              onDismiss: onDismiss,
+              onDismiss: null,
               tasks: localTasks.tasks.where((i) => i.isClosed).toList(),
             ),
           ],
@@ -81,7 +83,7 @@ class _Tasks extends ConsumerWidget {
   });
 
   final List<TaskItemEntity> tasks;
-  final Function(int id) onDismiss;
+  final Function(int id)? onDismiss;
 
   @override
   Widget build(BuildContext context, ref) {
@@ -148,16 +150,20 @@ class _Tasks extends ConsumerWidget {
                       child: Dismissible(
                         key: Key(lTask.id.toString()),
                         direction: DismissDirection.startToEnd,
-                        confirmDismiss: (d) => confirmDismiss(d, lTask.id),
-                        onDismissed: (dir) {
-                          onDismiss(lTask.id);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('${lTask.id} dismissed'),
-                              duration: Duration(milliseconds: 500),
-                            ),
-                          );
-                        },
+                        confirmDismiss: onDismiss == null
+                            ? (d) async => false
+                            : (d) => confirmDismiss(d, lTask.id),
+                        onDismissed: onDismiss == null
+                            ? null
+                            : (dir) {
+                                onDismiss?.call(lTask.id);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${lTask.id} dismissed'),
+                                    duration: Duration(milliseconds: 500),
+                                  ),
+                                );
+                              },
                         child: ListTile(
                           onTap: () {
                             Navigator.of(context)

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sanad/app/constants.dart';
@@ -7,16 +8,40 @@ import 'package:sanad/common.dart';
 import 'package:sanad/data/error_handeler.dart';
 import 'package:sanad/domain/service/storage.dart';
 import 'package:sanad/ui/providers/auth_provider/auth_provider.dart';
+import 'package:sanad/ui/providers/home_provider/p.dart';
 import 'package:sanad/ui/providers/index.dart';
 
 import 'tasks/local_tasks/local_tasks.dart';
+
 // import 'package:connectivity_plus/connectivity_plus.dart';
 // import 'package:sanad/ui/providers/app/app.dart';
+class DioClass {
+  final Dio dio;
+  final String path;
+  final Object? data;
+  final Options? options;
+
+  const DioClass({
+    required this.dio,
+    required this.path,
+    this.data,
+    this.options,
+  });
+}
+
+Future<Response> _dioCaller(DioClass dioclass) async {
+  return await dioclass.dio.get(
+    dioclass.path,
+    data: dioclass.data,
+    options: dioclass.options,
+  );
+}
 
 extension WidgetRefExt on WidgetRef {
   logOut_() async {
     await di<Storage>().logOut();
     invalidate(authProvider);
+    read(homeProvider.notifier).die();
     // invalidate(homeDataProvider);
     invalidate(localTasksProvider);
   }
@@ -31,7 +56,8 @@ extension DebounceAndCancelExtension on Ref {
   logOut() async {
     await di<Storage>().logOut();
     invalidate(authProvider);
-    invalidate(homeDataProvider);
+    // invalidate(homeProvider);
+    read(homeProvider.notifier).die();
     invalidate(localTasksProvider);
   }
 
@@ -88,6 +114,26 @@ extension DebounceAndCancelExtension on Ref {
 
     // Finally, we return the client to allow our provider to make the request.
     return client;
+  }
+
+  Future<Response<T>> tryCaller<T>(DioClass params) async {
+    try {
+      return await compute((DioClass p) async {
+        return await p.dio.request(
+          p.path,
+          data: p.data,
+          // options: p.options,
+        );
+      }, params);
+    } catch (e) {
+      if (e is DioException) {
+        final res = hadelDioException(e);
+        if (res != null) {
+          throw ServerErrorsWithMsg(res);
+        }
+      }
+    }
+    throw ServerError();
   }
 
   Future<T> tryCall<T>(Future<T> Function() action) async {

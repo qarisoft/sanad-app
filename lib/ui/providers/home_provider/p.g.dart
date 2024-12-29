@@ -8,12 +8,12 @@ part of 'p.dart';
 
 _$PageDataImpl _$$PageDataImplFromJson(Map<String, dynamic> json) =>
     _$PageDataImpl(
-      path: json['path'] as String,
-      id: (json['id'] as num).toInt(),
+      path: json['path'] as String?,
+      id: (json['id'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>?)
               ?.map((e) => TaskEntity.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+              .toSet() ??
+          const {},
     );
 
 Map<String, dynamic> _$$PageDataImplToJson(_$PageDataImpl instance) =>
@@ -26,25 +26,35 @@ Map<String, dynamic> _$$PageDataImplToJson(_$PageDataImpl instance) =>
 _$HomeStateImpl _$$HomeStateImplFromJson(Map<String, dynamic> json) =>
     _$HomeStateImpl(
       total: (json['total'] as num?)?.toInt() ?? 0,
-      isLoading: json['isLoading'] as bool? ?? true,
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => PageData.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+      version: (json['version'] as num?)?.toInt() ?? 0,
+      page: (json['page'] as num?)?.toInt() ?? 1,
+      serverTotal: (json['serverTotal'] as num?)?.toInt() ?? 0,
+      lastPage: (json['lastPage'] as num?)?.toInt() ?? 1,
+      time: DateTime.parse(json['time'] as String),
+      isLoading: json['isLoading'] as bool? ?? false,
+      tasks: (json['tasks'] as List<dynamic>?)
+              ?.map((e) => TaskEntity.fromJson(e as Map<String, dynamic>))
+              .toSet() ??
+          const {},
     );
 
 Map<String, dynamic> _$$HomeStateImplToJson(_$HomeStateImpl instance) =>
     <String, dynamic>{
       'total': instance.total,
+      'version': instance.version,
+      'page': instance.page,
+      'serverTotal': instance.serverTotal,
+      'lastPage': instance.lastPage,
+      'time': instance.time.toIso8601String(),
       'isLoading': instance.isLoading,
-      'data': instance.data.map((e) => e.toJson()).toList(),
+      'tasks': instance.tasks.map((e) => e.toJson()).toList(),
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeHash() => r'346fb342f722fb58ffde168c2b32ffc717c74636';
+String _$homeHash() => r'36b60daf237bdee33bf2af5c69594047ee3d4431';
 
 /// See also [Home].
 @ProviderFor(Home)

@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import './storage/storage_service.dart' show StorageImpl;
 
-
 final di = GetIt.instance;
 
 Future<void> registerSingletons() async {

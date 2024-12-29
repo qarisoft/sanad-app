@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -87,44 +88,39 @@ class DeletAccount extends _$DeletAccount {
   }
 }
 
-class DioClassWithData extends DioClass {
-  final String email;
-  final String password;
+// class DioClassWithData extends DioClass {
+//   final String email;
+//   final String password;
 
-  DioClassWithData({
-    required super.dio,
-    required super.path,
-    required this.email,
-    required this.password,
-  });
-}
+//   DioClassWithData({
+//     required super.dio,
+//     required super.path,
+//     required this.email,
+//     required this.password,
+//   });
+// }
 
-_cal(DioClassWithData params) {
+_cal(DioClass params) {
   return params.dio.post(
     '$baseUrl/login',
-    data: {
-      'email': params.email,
-      'password': params.password,
-    },
+    data: params.data,
   );
 }
 
 @riverpod
 Future<bool> loginCall(Ref ref, LoginRequest params) async {
   final dio = await ref.getDebouncedDio();
-
-  final res = await ref.tryCall(
-    () => compute(
-      _cal,
-      DioClassWithData(
-        dio: dio,
-        path: '$baseUrl/login',
-        email: params.email,
-        password: params.password,
-      ),
+  dio.options.method = 'Post';
+  final res = await ref.tryCaller(
+    DioClass(
+      dio: dio,
+      path: '$baseUrl/login',
+      data: {
+        'email': params.email,
+        'password': params.password,
+      },
     ),
   );
-
   final a = AuthResponse.fromJson(res.data);
 
   if (a.user.id != 0 && a.user.email != '' && a.user.username != '') {
@@ -143,18 +139,31 @@ Future<bool> loginCall(Ref ref, LoginRequest params) async {
 @riverpod
 Future<bool> registerCall(Ref ref, RegisterRequest params) async {
   final dio = await ref.getDebouncedDio();
-  final res = await ref.tryCall(
-    () => dio.post(
-      '$baseUrl/register',
-      data: {
-        'email': params.email,
-        'username': params.username,
-        'name': params.name,
-        'password': params.password,
-        'password_confirmation': params.passwordConfirmation,
-      },
-    ),
-  );
+  // final res = await ref.tryCall(
+  //   () => dio.post(
+  //     '$baseUrl/register',
+  //     data: {
+  //       'email': params.email,
+  //       'username': params.username,
+  //       'name': params.name,
+  //       'password': params.password,
+  //       'password_confirmation': params.passwordConfirmation,
+  //     },
+  //   ),
+  // );
+  dio.options.method = 'Post';
+  final res = await ref.tryCaller(DioClass(
+    dio: dio,
+    path: '$baseUrl/register',
+    data: {
+      'email': params.email,
+      'username': params.username,
+      'name': params.name,
+      'password': params.password,
+      'password_confirmation': params.passwordConfirmation,
+    },
+    // options: dio.options.copyWith(method: 'Post')
+  ));
 
   final status = res.data['status'];
   if (status != null && status == 1) {

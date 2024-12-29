@@ -6,7 +6,7 @@ part of 'accept.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$acceptHash() => r'69bf39c12338b5fac38b6152453680b766998af6';
+String _$acceptHash() => r'9babd4eec9271cd0df87eb01cca1f5fe4d0739fa';
 
 /// Copied from Dart SDK
 class _SystemHash {

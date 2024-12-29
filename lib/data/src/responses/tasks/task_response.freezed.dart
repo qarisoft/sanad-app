@@ -28,6 +28,8 @@ mixin _$PaginatedData {
   String? get nextPageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: "per_page")
   int get perPage => throw _privateConstructorUsedError;
+  @JsonKey(name: "last_page")
+  int get lastPage => throw _privateConstructorUsedError;
   @JsonKey(name: "prev_page_url")
   String? get prevPageUrl => throw _privateConstructorUsedError;
   int get to => throw _privateConstructorUsedError;
@@ -55,6 +57,7 @@ abstract class $PaginatedDataCopyWith<$Res> {
       List<TaskEntity> data,
       @JsonKey(name: "next_page_url") String? nextPageUrl,
       @JsonKey(name: "per_page") int perPage,
+      @JsonKey(name: "last_page") int lastPage,
       @JsonKey(name: "prev_page_url") String? prevPageUrl,
       int to,
       int total});
@@ -80,6 +83,7 @@ class _$PaginatedDataCopyWithImpl<$Res, $Val extends PaginatedData>
     Object? data = null,
     Object? nextPageUrl = freezed,
     Object? perPage = null,
+    Object? lastPage = null,
     Object? prevPageUrl = freezed,
     Object? to = null,
     Object? total = null,
@@ -104,6 +108,10 @@ class _$PaginatedDataCopyWithImpl<$Res, $Val extends PaginatedData>
       perPage: null == perPage
           ? _value.perPage
           : perPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
               as int,
       prevPageUrl: freezed == prevPageUrl
           ? _value.prevPageUrl
@@ -135,6 +143,7 @@ abstract class _$$PaginatedDataImplCopyWith<$Res>
       List<TaskEntity> data,
       @JsonKey(name: "next_page_url") String? nextPageUrl,
       @JsonKey(name: "per_page") int perPage,
+      @JsonKey(name: "last_page") int lastPage,
       @JsonKey(name: "prev_page_url") String? prevPageUrl,
       int to,
       int total});
@@ -158,6 +167,7 @@ class __$$PaginatedDataImplCopyWithImpl<$Res>
     Object? data = null,
     Object? nextPageUrl = freezed,
     Object? perPage = null,
+    Object? lastPage = null,
     Object? prevPageUrl = freezed,
     Object? to = null,
     Object? total = null,
@@ -182,6 +192,10 @@ class __$$PaginatedDataImplCopyWithImpl<$Res>
       perPage: null == perPage
           ? _value.perPage
           : perPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
               as int,
       prevPageUrl: freezed == prevPageUrl
           ? _value.prevPageUrl
@@ -208,6 +222,7 @@ class _$PaginatedDataImpl implements _PaginatedData {
       final List<TaskEntity> data = const [],
       @JsonKey(name: "next_page_url") this.nextPageUrl,
       @JsonKey(name: "per_page") this.perPage = 1,
+      @JsonKey(name: "last_page") this.lastPage = 1,
       @JsonKey(name: "prev_page_url") this.prevPageUrl,
       this.to = 0,
       this.total = 0})
@@ -237,6 +252,9 @@ class _$PaginatedDataImpl implements _PaginatedData {
   @JsonKey(name: "per_page")
   final int perPage;
   @override
+  @JsonKey(name: "last_page")
+  final int lastPage;
+  @override
   @JsonKey(name: "prev_page_url")
   final String? prevPageUrl;
   @override
@@ -248,7 +266,7 @@ class _$PaginatedDataImpl implements _PaginatedData {
 
   @override
   String toString() {
-    return 'PaginatedData(currentPage: $currentPage, path: $path, data: $data, nextPageUrl: $nextPageUrl, perPage: $perPage, prevPageUrl: $prevPageUrl, to: $to, total: $total)';
+    return 'PaginatedData(currentPage: $currentPage, path: $path, data: $data, nextPageUrl: $nextPageUrl, perPage: $perPage, lastPage: $lastPage, prevPageUrl: $prevPageUrl, to: $to, total: $total)';
   }
 
   @override
@@ -263,6 +281,8 @@ class _$PaginatedDataImpl implements _PaginatedData {
             (identical(other.nextPageUrl, nextPageUrl) ||
                 other.nextPageUrl == nextPageUrl) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
+            (identical(other.lastPage, lastPage) ||
+                other.lastPage == lastPage) &&
             (identical(other.prevPageUrl, prevPageUrl) ||
                 other.prevPageUrl == prevPageUrl) &&
             (identical(other.to, to) || other.to == to) &&
@@ -278,6 +298,7 @@ class _$PaginatedDataImpl implements _PaginatedData {
       const DeepCollectionEquality().hash(_data),
       nextPageUrl,
       perPage,
+      lastPage,
       prevPageUrl,
       to,
       total);
@@ -305,6 +326,7 @@ abstract class _PaginatedData implements PaginatedData {
       final List<TaskEntity> data,
       @JsonKey(name: "next_page_url") final String? nextPageUrl,
       @JsonKey(name: "per_page") final int perPage,
+      @JsonKey(name: "last_page") final int lastPage,
       @JsonKey(name: "prev_page_url") final String? prevPageUrl,
       final int to,
       final int total}) = _$PaginatedDataImpl;
@@ -325,6 +347,9 @@ abstract class _PaginatedData implements PaginatedData {
   @override
   @JsonKey(name: "per_page")
   int get perPage;
+  @override
+  @JsonKey(name: "last_page")
+  int get lastPage;
   @override
   @JsonKey(name: "prev_page_url")
   String? get prevPageUrl;
@@ -349,7 +374,7 @@ HomeResponse _$HomeResponseFromJson(Map<String, dynamic> json) {
 mixin _$HomeResponse {
   int get status => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  PaginatedData get data => throw _privateConstructorUsedError;
+  PaginatedData? get data => throw _privateConstructorUsedError;
 
   /// Serializes this HomeResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -367,9 +392,9 @@ abstract class $HomeResponseCopyWith<$Res> {
           HomeResponse value, $Res Function(HomeResponse) then) =
       _$HomeResponseCopyWithImpl<$Res, HomeResponse>;
   @useResult
-  $Res call({int status, String message, PaginatedData data});
+  $Res call({int status, String message, PaginatedData? data});
 
-  $PaginatedDataCopyWith<$Res> get data;
+  $PaginatedDataCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -389,7 +414,7 @@ class _$HomeResponseCopyWithImpl<$Res, $Val extends HomeResponse>
   $Res call({
     Object? status = null,
     Object? message = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -400,10 +425,10 @@ class _$HomeResponseCopyWithImpl<$Res, $Val extends HomeResponse>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: null == data
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as PaginatedData,
+              as PaginatedData?,
     ) as $Val);
   }
 
@@ -411,8 +436,12 @@ class _$HomeResponseCopyWithImpl<$Res, $Val extends HomeResponse>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PaginatedDataCopyWith<$Res> get data {
-    return $PaginatedDataCopyWith<$Res>(_value.data, (value) {
+  $PaginatedDataCopyWith<$Res>? get data {
+    if (_value.data == null) {
+      return null;
+    }
+
+    return $PaginatedDataCopyWith<$Res>(_value.data!, (value) {
       return _then(_value.copyWith(data: value) as $Val);
     });
   }
@@ -426,10 +455,10 @@ abstract class _$$HomeResponseImplCopyWith<$Res>
       __$$HomeResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int status, String message, PaginatedData data});
+  $Res call({int status, String message, PaginatedData? data});
 
   @override
-  $PaginatedDataCopyWith<$Res> get data;
+  $PaginatedDataCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -447,7 +476,7 @@ class __$$HomeResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? message = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_$HomeResponseImpl(
       status: null == status
@@ -458,10 +487,10 @@ class __$$HomeResponseImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: null == data
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as PaginatedData,
+              as PaginatedData?,
     ));
   }
 }
@@ -469,10 +498,7 @@ class __$$HomeResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HomeResponseImpl implements _HomeResponse {
-  const _$HomeResponseImpl(
-      {this.status = 1010,
-      this.message = '',
-      this.data = const PaginatedData()});
+  const _$HomeResponseImpl({this.status = 1010, this.message = '', this.data});
 
   factory _$HomeResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeResponseImplFromJson(json);
@@ -484,8 +510,7 @@ class _$HomeResponseImpl implements _HomeResponse {
   @JsonKey()
   final String message;
   @override
-  @JsonKey()
-  final PaginatedData data;
+  final PaginatedData? data;
 
   @override
   String toString() {
@@ -526,7 +551,7 @@ abstract class _HomeResponse implements HomeResponse {
   const factory _HomeResponse(
       {final int status,
       final String message,
-      final PaginatedData data}) = _$HomeResponseImpl;
+      final PaginatedData? data}) = _$HomeResponseImpl;
 
   factory _HomeResponse.fromJson(Map<String, dynamic> json) =
       _$HomeResponseImpl.fromJson;
@@ -536,7 +561,7 @@ abstract class _HomeResponse implements HomeResponse {
   @override
   String get message;
   @override
-  PaginatedData get data;
+  PaginatedData? get data;
 
   /// Create a copy of HomeResponse
   /// with the given fields replaced by the non-null parameter values.

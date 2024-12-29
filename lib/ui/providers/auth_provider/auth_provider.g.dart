@@ -32,7 +32,7 @@ Map<String, dynamic> _$$AuthInitialImplToJson(_$AuthInitialImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginCallHash() => r'7e9afc4f3667195a8198f281df19a3f753c28760';
+String _$loginCallHash() => r'6811836b20c0bfd50ed501c7d5ec9acf5cd7166f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -182,7 +182,7 @@ class _LoginCallProviderElement extends AutoDisposeFutureProviderElement<bool>
   LoginRequest get params => (origin as LoginCallProvider).params;
 }
 
-String _$registerCallHash() => r'41e8f73c4a002130432ae845c6da79e43f9a2b10';
+String _$registerCallHash() => r'cb1e6a8ff009036836830fbafa83063e1874b59f';
 
 /// See also [registerCall].
 @ProviderFor(registerCall)

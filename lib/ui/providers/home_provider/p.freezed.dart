@@ -20,9 +20,9 @@ PageData _$PageDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PageData {
-  String get path => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
-  List<TaskEntity> get data => throw _privateConstructorUsedError;
+  String? get path => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  Set<TaskEntity> get data => throw _privateConstructorUsedError;
 
   /// Serializes this PageData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $PageDataCopyWith<$Res> {
   factory $PageDataCopyWith(PageData value, $Res Function(PageData) then) =
       _$PageDataCopyWithImpl<$Res, PageData>;
   @useResult
-  $Res call({String path, int id, List<TaskEntity> data});
+  $Res call({String? path, int? id, Set<TaskEntity> data});
 }
 
 /// @nodoc
@@ -57,23 +57,23 @@ class _$PageDataCopyWithImpl<$Res, $Val extends PageData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? path = null,
-    Object? id = null,
+    Object? path = freezed,
+    Object? id = freezed,
     Object? data = null,
   }) {
     return _then(_value.copyWith(
-      path: null == path
+      path: freezed == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
+              as String?,
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<TaskEntity>,
+              as Set<TaskEntity>,
     ) as $Val);
   }
 }
@@ -86,7 +86,7 @@ abstract class _$$PageDataImplCopyWith<$Res>
       __$$PageDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String path, int id, List<TaskEntity> data});
+  $Res call({String? path, int? id, Set<TaskEntity> data});
 }
 
 /// @nodoc
@@ -102,23 +102,23 @@ class __$$PageDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? path = null,
-    Object? id = null,
+    Object? path = freezed,
+    Object? id = freezed,
     Object? data = null,
   }) {
     return _then(_$PageDataImpl(
-      path: null == path
+      path: freezed == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
+              as String?,
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<TaskEntity>,
+              as Set<TaskEntity>,
     ));
   }
 }
@@ -128,25 +128,23 @@ class __$$PageDataImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$PageDataImpl with DiagnosticableTreeMixin implements _PageData {
   const _$PageDataImpl(
-      {required this.path,
-      required this.id,
-      final List<TaskEntity> data = const []})
+      {this.path, this.id, final Set<TaskEntity> data = const {}})
       : _data = data;
 
   factory _$PageDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$PageDataImplFromJson(json);
 
   @override
-  final String path;
+  final String? path;
   @override
-  final int id;
-  final List<TaskEntity> _data;
+  final int? id;
+  final Set<TaskEntity> _data;
   @override
   @JsonKey()
-  List<TaskEntity> get data {
-    if (_data is EqualUnmodifiableListView) return _data;
+  Set<TaskEntity> get data {
+    if (_data is EqualUnmodifiableSetView) return _data;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_data);
+    return EqualUnmodifiableSetView(_data);
   }
 
   @override
@@ -197,19 +195,19 @@ class _$PageDataImpl with DiagnosticableTreeMixin implements _PageData {
 
 abstract class _PageData implements PageData {
   const factory _PageData(
-      {required final String path,
-      required final int id,
-      final List<TaskEntity> data}) = _$PageDataImpl;
+      {final String? path,
+      final int? id,
+      final Set<TaskEntity> data}) = _$PageDataImpl;
 
   factory _PageData.fromJson(Map<String, dynamic> json) =
       _$PageDataImpl.fromJson;
 
   @override
-  String get path;
+  String? get path;
   @override
-  int get id;
+  int? get id;
   @override
-  List<TaskEntity> get data;
+  Set<TaskEntity> get data;
 
   /// Create a copy of PageData
   /// with the given fields replaced by the non-null parameter values.
@@ -226,8 +224,14 @@ HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HomeState {
   int get total => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
-  List<PageData> get data => throw _privateConstructorUsedError;
+  int get version => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
+  int get serverTotal => throw _privateConstructorUsedError;
+  int get lastPage => throw _privateConstructorUsedError;
+  DateTime get time => throw _privateConstructorUsedError;
+  bool get isLoading =>
+      throw _privateConstructorUsedError; // @Default({}) Set<PageData> data,
+  Set<TaskEntity> get tasks => throw _privateConstructorUsedError;
 
   /// Serializes this HomeState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -244,7 +248,15 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({int total, bool isLoading, List<PageData> data});
+  $Res call(
+      {int total,
+      int version,
+      int page,
+      int serverTotal,
+      int lastPage,
+      DateTime time,
+      bool isLoading,
+      Set<TaskEntity> tasks});
 }
 
 /// @nodoc
@@ -263,22 +275,47 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @override
   $Res call({
     Object? total = null,
+    Object? version = null,
+    Object? page = null,
+    Object? serverTotal = null,
+    Object? lastPage = null,
+    Object? time = null,
     Object? isLoading = null,
-    Object? data = null,
+    Object? tasks = null,
   }) {
     return _then(_value.copyWith(
       total: null == total
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as int,
+      version: null == version
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      serverTotal: null == serverTotal
+          ? _value.serverTotal
+          : serverTotal // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      time: null == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<PageData>,
+      tasks: null == tasks
+          ? _value.tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as Set<TaskEntity>,
     ) as $Val);
   }
 }
@@ -291,7 +328,15 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int total, bool isLoading, List<PageData> data});
+  $Res call(
+      {int total,
+      int version,
+      int page,
+      int serverTotal,
+      int lastPage,
+      DateTime time,
+      bool isLoading,
+      Set<TaskEntity> tasks});
 }
 
 /// @nodoc
@@ -308,22 +353,47 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? total = null,
+    Object? version = null,
+    Object? page = null,
+    Object? serverTotal = null,
+    Object? lastPage = null,
+    Object? time = null,
     Object? isLoading = null,
-    Object? data = null,
+    Object? tasks = null,
   }) {
     return _then(_$HomeStateImpl(
       total: null == total
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as int,
+      version: null == version
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      serverTotal: null == serverTotal
+          ? _value.serverTotal
+          : serverTotal // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      time: null == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      data: null == data
-          ? _value._data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<PageData>,
+      tasks: null == tasks
+          ? _value._tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as Set<TaskEntity>,
     ));
   }
 }
@@ -334,9 +404,14 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
   const _$HomeStateImpl(
       {this.total = 0,
-      this.isLoading = true,
-      final List<PageData> data = const []})
-      : _data = data;
+      this.version = 0,
+      this.page = 1,
+      this.serverTotal = 0,
+      this.lastPage = 1,
+      required this.time,
+      this.isLoading = false,
+      final Set<TaskEntity> tasks = const {}})
+      : _tasks = tasks;
 
   factory _$HomeStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeStateImplFromJson(json);
@@ -346,19 +421,35 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
   final int total;
   @override
   @JsonKey()
-  final bool isLoading;
-  final List<PageData> _data;
+  final int version;
   @override
   @JsonKey()
-  List<PageData> get data {
-    if (_data is EqualUnmodifiableListView) return _data;
+  final int page;
+  @override
+  @JsonKey()
+  final int serverTotal;
+  @override
+  @JsonKey()
+  final int lastPage;
+  @override
+  final DateTime time;
+  @override
+  @JsonKey()
+  final bool isLoading;
+// @Default({}) Set<PageData> data,
+  final Set<TaskEntity> _tasks;
+// @Default({}) Set<PageData> data,
+  @override
+  @JsonKey()
+  Set<TaskEntity> get tasks {
+    if (_tasks is EqualUnmodifiableSetView) return _tasks;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_data);
+    return EqualUnmodifiableSetView(_tasks);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeState(total: $total, isLoading: $isLoading, data: $data)';
+    return 'HomeState(total: $total, version: $version, page: $page, serverTotal: $serverTotal, lastPage: $lastPage, time: $time, isLoading: $isLoading, tasks: $tasks)';
   }
 
   @override
@@ -367,8 +458,13 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
     properties
       ..add(DiagnosticsProperty('type', 'HomeState'))
       ..add(DiagnosticsProperty('total', total))
+      ..add(DiagnosticsProperty('version', version))
+      ..add(DiagnosticsProperty('page', page))
+      ..add(DiagnosticsProperty('serverTotal', serverTotal))
+      ..add(DiagnosticsProperty('lastPage', lastPage))
+      ..add(DiagnosticsProperty('time', time))
       ..add(DiagnosticsProperty('isLoading', isLoading))
-      ..add(DiagnosticsProperty('data', data));
+      ..add(DiagnosticsProperty('tasks', tasks));
   }
 
   @override
@@ -377,15 +473,30 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
             (identical(other.total, total) || other.total == total) &&
+            (identical(other.version, version) || other.version == version) &&
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.serverTotal, serverTotal) ||
+                other.serverTotal == serverTotal) &&
+            (identical(other.lastPage, lastPage) ||
+                other.lastPage == lastPage) &&
+            (identical(other.time, time) || other.time == time) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            const DeepCollectionEquality().equals(other._tasks, _tasks));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, total, isLoading,
-      const DeepCollectionEquality().hash(_data));
+  int get hashCode => Object.hash(
+      runtimeType,
+      total,
+      version,
+      page,
+      serverTotal,
+      lastPage,
+      time,
+      isLoading,
+      const DeepCollectionEquality().hash(_tasks));
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -406,8 +517,13 @@ class _$HomeStateImpl with DiagnosticableTreeMixin implements _HomeState {
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {final int total,
+      final int version,
+      final int page,
+      final int serverTotal,
+      final int lastPage,
+      required final DateTime time,
       final bool isLoading,
-      final List<PageData> data}) = _$HomeStateImpl;
+      final Set<TaskEntity> tasks}) = _$HomeStateImpl;
 
   factory _HomeState.fromJson(Map<String, dynamic> json) =
       _$HomeStateImpl.fromJson;
@@ -415,9 +531,19 @@ abstract class _HomeState implements HomeState {
   @override
   int get total;
   @override
-  bool get isLoading;
+  int get version;
   @override
-  List<PageData> get data;
+  int get page;
+  @override
+  int get serverTotal;
+  @override
+  int get lastPage;
+  @override
+  DateTime get time;
+  @override
+  bool get isLoading; // @Default({}) Set<PageData> data,
+  @override
+  Set<TaskEntity> get tasks;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

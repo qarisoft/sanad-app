@@ -6,7 +6,7 @@ part of 'local_tasks.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$localTasksHash() => r'368da7e5392614cc7aab52a0aa0e664839aefe40';
+String _$localTasksHash() => r'e92c049abd82ca82345e3b285db66e9ffaf2adfe';
 
 /// See also [LocalTasks].
 @ProviderFor(LocalTasks)

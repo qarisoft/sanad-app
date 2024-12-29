@@ -6,7 +6,7 @@ import 'package:sanad/ui/pages/auth/login.dart';
 import 'package:sanad/ui/pages/home/main_page.dart';
 // import 'package:sanad/ui/pages/auth/auth/auth_provider.dart';
 
-class SplashPage extends HookConsumerWidget {
+class SplashPage extends ConsumerWidget {
   const SplashPage({super.key});
 
   @override

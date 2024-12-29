@@ -30,7 +30,8 @@ class HomePage extends StatelessWidget {
       body: Consumer(builder: (context, ref, c) {
         // final data_ = ref.watch(homeDataProvider);
         final internet = ref.watch(interNetProvider);
-        final tasks_ = ref.watch(homeProvider);
+        final tasks = ref.watch(homeProvider.select((s) => s.tasks));
+        final isLoading = ref.watch(homeProvider.select((s) => s.isLoading));
         if (internet.contains(ConnectivityResult.none)) {
           return StateR(
             sType: StateType.fullScreenEmptyState,
@@ -39,12 +40,8 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        // final tasks = data_.whenOrNull(
-        //       data: (d) => d,
-        //     ) ??
-        //     [];
-        final tasks = tasks_.data;
-        if (tasks_.isLoading) {
+        // final tasks = tasks_.data;
+        if (isLoading) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -62,20 +59,27 @@ class HomePage extends StatelessWidget {
           children: [
             // ...tasks.reversed.map((t) =>
             if (tasks.isNotEmpty)
-              ...List.generate(
-                tasks.length,
-                (index) {
-                  final t = tasks.reversed.toList()[index];
-
-                  return Column(
-                    children: [
-                      ...t.data.map(
-                        (t2) => _IW(t: t2),
-                      ),
-                    ],
-                  );
-                },
+              Column(
+                children: [
+                  ...tasks.map(
+                    (t2) => _IW(t: t2),
+                  ),
+                ],
               )
+            // ...List.generate(
+            //   tasks.length,
+            //   (index) {
+            //     final t = tasks.reversed.toList()[index];
+
+            //     // return Column(
+            //     //   children: [
+            //     //     ...t.data.map(
+            //     //       (t2) => _IW(t: t2),
+            //     //     ),
+            //     //   ],
+            //     // );
+            //   },
+            // )
             // )
           ],
         );

@@ -26,6 +26,7 @@ mixin _$UploadTaskState {
   int get mediaCount => throw _privateConstructorUsedError;
   bool get isUploaded => throw _privateConstructorUsedError;
   List<MediaItem> get media => throw _privateConstructorUsedError;
+  double get fraction => throw _privateConstructorUsedError;
 
   /// Serializes this UploadTaskState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +50,8 @@ abstract class $UploadTaskStateCopyWith<$Res> {
       int id,
       int mediaCount,
       bool isUploaded,
-      List<MediaItem> media});
+      List<MediaItem> media,
+      double fraction});
 }
 
 /// @nodoc
@@ -73,6 +75,7 @@ class _$UploadTaskStateCopyWithImpl<$Res, $Val extends UploadTaskState>
     Object? mediaCount = null,
     Object? isUploaded = null,
     Object? media = null,
+    Object? fraction = null,
   }) {
     return _then(_value.copyWith(
       taskId: null == taskId
@@ -99,6 +102,10 @@ class _$UploadTaskStateCopyWithImpl<$Res, $Val extends UploadTaskState>
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>,
+      fraction: null == fraction
+          ? _value.fraction
+          : fraction // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -117,7 +124,8 @@ abstract class _$$UploadTaskStateImplCopyWith<$Res>
       int id,
       int mediaCount,
       bool isUploaded,
-      List<MediaItem> media});
+      List<MediaItem> media,
+      double fraction});
 }
 
 /// @nodoc
@@ -139,6 +147,7 @@ class __$$UploadTaskStateImplCopyWithImpl<$Res>
     Object? mediaCount = null,
     Object? isUploaded = null,
     Object? media = null,
+    Object? fraction = null,
   }) {
     return _then(_$UploadTaskStateImpl(
       taskId: null == taskId
@@ -165,6 +174,10 @@ class __$$UploadTaskStateImplCopyWithImpl<$Res>
           ? _value._media
           : media // ignore: cast_nullable_to_non_nullable
               as List<MediaItem>,
+      fraction: null == fraction
+          ? _value.fraction
+          : fraction // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -181,7 +194,8 @@ class _$UploadTaskStateImpl
       this.id = 0,
       this.mediaCount = 0,
       this.isUploaded = false,
-      final List<MediaItem> media = const []})
+      final List<MediaItem> media = const [],
+      this.fraction = 0.0})
       : _media = media;
 
   factory _$UploadTaskStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -210,8 +224,12 @@ class _$UploadTaskStateImpl
   }
 
   @override
+  @JsonKey()
+  final double fraction;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UploadTaskState(taskId: $taskId, uploadedAt: $uploadedAt, id: $id, mediaCount: $mediaCount, isUploaded: $isUploaded, media: $media)';
+    return 'UploadTaskState(taskId: $taskId, uploadedAt: $uploadedAt, id: $id, mediaCount: $mediaCount, isUploaded: $isUploaded, media: $media, fraction: $fraction)';
   }
 
   @override
@@ -224,7 +242,8 @@ class _$UploadTaskStateImpl
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('mediaCount', mediaCount))
       ..add(DiagnosticsProperty('isUploaded', isUploaded))
-      ..add(DiagnosticsProperty('media', media));
+      ..add(DiagnosticsProperty('media', media))
+      ..add(DiagnosticsProperty('fraction', fraction));
   }
 
   @override
@@ -240,13 +259,22 @@ class _$UploadTaskStateImpl
                 other.mediaCount == mediaCount) &&
             (identical(other.isUploaded, isUploaded) ||
                 other.isUploaded == isUploaded) &&
-            const DeepCollectionEquality().equals(other._media, _media));
+            const DeepCollectionEquality().equals(other._media, _media) &&
+            (identical(other.fraction, fraction) ||
+                other.fraction == fraction));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, taskId, uploadedAt, id,
-      mediaCount, isUploaded, const DeepCollectionEquality().hash(_media));
+  int get hashCode => Object.hash(
+      runtimeType,
+      taskId,
+      uploadedAt,
+      id,
+      mediaCount,
+      isUploaded,
+      const DeepCollectionEquality().hash(_media),
+      fraction);
 
   /// Create a copy of UploadTaskState
   /// with the given fields replaced by the non-null parameter values.
@@ -272,7 +300,8 @@ abstract class _UploadTaskState implements UploadTaskState {
       final int id,
       final int mediaCount,
       final bool isUploaded,
-      final List<MediaItem> media}) = _$UploadTaskStateImpl;
+      final List<MediaItem> media,
+      final double fraction}) = _$UploadTaskStateImpl;
 
   factory _UploadTaskState.fromJson(Map<String, dynamic> json) =
       _$UploadTaskStateImpl.fromJson;
@@ -289,6 +318,8 @@ abstract class _UploadTaskState implements UploadTaskState {
   bool get isUploaded;
   @override
   List<MediaItem> get media;
+  @override
+  double get fraction;
 
   /// Create a copy of UploadTaskState
   /// with the given fields replaced by the non-null parameter values.

@@ -4,6 +4,12 @@
   "@sanad": {
 
   },
+  "authLoginFailer":"كلمة السر او الايميل غلط!",
+  "taskPageUploaddialogConfirmation":"'هل تريد اغلاق المعاينة الأن ؟'",
+  "taskPageUploadTitle":"التسليم",
+  "taskPageDataTitle":"البيانات",
+  "taskPagePhotosTitle":"الصور",
+
   "deleteLocalTaskTitle":"الغاء المهمة",
   "deleteLocalTaskMsg":"هل تريد حذف المهمة التالية أو الغائها ؟",
 
@@ -32,6 +38,8 @@
   "userdetailsEditLabelText":"تعديل",
   "userdetailsCompanyLabel":"الشركات",
   "taskPricingName":"الأستعمال",
+  "taskPricingPriceValidator":"السعر مطلوب",
+  "taskPricingAreaValidator":"المساحة مطلوبة",
   "taskPricingMeterArea":"المساحة",
   "taskPricingMeterArea2":"متر مربع",
   "taskPricingMeterPrice":"السعر",

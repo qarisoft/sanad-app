@@ -20,8 +20,6 @@ class ErrorObject {
 List<String>? hadelDioException(DioException e) {
   switch (e.type) {
     case DioExceptionType.badResponse:
-      // if(e.error)
-
       final er = Errors.fromJson(e.response?.data);
       final values = er.errors?.values;
       final error = er.error;
@@ -29,10 +27,10 @@ List<String>? hadelDioException(DioException e) {
         return er.getMessage();
       }
       final statusCode = e.response?.statusCode;
-
       if (statusCode == HttpStatus.unauthorized) {
-        return [e.error.toString()];
+        throw UnAuthorized();
       }
+
     case DioExceptionType.connectionTimeout:
     case DioExceptionType.sendTimeout:
     case DioExceptionType.receiveTimeout:
@@ -61,7 +59,7 @@ List<String> handelError(BuildContext context, e) {
       return e.messages;
     }
     if (e is UnAuthorized) {
-      // return
+      return [context.tr.authLoginFailer];
     }
   }
   return [m];

@@ -17,6 +17,7 @@ class PaginatedData with _$PaginatedData {
     @Default([]) List<TaskEntity> data,
     @JsonKey(name: "next_page_url") String? nextPageUrl,
     @Default(1) @JsonKey(name: "per_page") int perPage,
+    @Default(1) @JsonKey(name: "last_page") int lastPage,
     @JsonKey(name: "prev_page_url") String? prevPageUrl,
     @Default(0) int to,
     @Default(0) int total,
@@ -31,7 +32,7 @@ class HomeResponse with _$HomeResponse {
   const factory HomeResponse({
     @Default(1010) int status,
     @Default('') String message,
-    @Default(PaginatedData()) PaginatedData data,
+    PaginatedData? data,
   }) = _HomeResponse;
 
   factory HomeResponse.fromJson(Map<String, dynamic> json) =>

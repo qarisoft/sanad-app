@@ -22,6 +22,7 @@ class UploadTaskState with _$UploadTaskState {
     @Default(0) int mediaCount,
     @Default(false) bool isUploaded,
     @Default([]) List<MediaItem> media,
+    @Default(0.0) double fraction,
   }) = _UploadTaskState;
 
   factory UploadTaskState.fromJson(Map<String, dynamic> json) =>
@@ -45,11 +46,12 @@ class UploadAttemts with _$UploadAttemts {
       _$UploadAttemtsFromJson(json);
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod(dependencies: [LocalTasks])
 class UploadTaskAttemts extends _$UploadTaskAttemts {
   String getKey(int taskIdd) => 'UploadAttemts1_$taskIdd';
   @override
   UploadAttemts build(int taskId) {
+    ref.keepAlive();
     final a = appStorage().getData(getKey(taskId));
     if (a != null) {
       return UploadAttemts.fromJson(a);
@@ -57,21 +59,15 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
     return UploadAttemts();
   }
 
-  Future<bool> create(TaskItemEntity item) async {
-    final current = UploadTaskState.fromItem(item);
-    _updateCurrent(current);
-
+  Future<int?> createUpload(TaskItemEntity item) async {
     final dio = ref.dioFactory();
     final res = await dio.post('$baseUrl/tasks/$taskId/upload/create/');
-    final uploadId = res.data['data']['id'] as int?;
-    if (uploadId == null) {
-      print(
-          'object................................$uploadId.............................................');
-      _onDone(false);
-      return false;
-    }
-    // return true;
+    return res.data['data']['id'] as int?;
+  }
 
+  Future<bool> create(TaskItemEntity item, int uploadId) async {
+    final current = UploadTaskState.fromItem(item);
+    _updateCurrent(current);
     try {
       final dio = ref.dioFactory();
       for (var i = 0; i < current.mediaCount; i++) {
@@ -92,16 +88,19 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
           '/tasks/uploads/$uploadId',
           data: data,
           onSendProgress: (count, total) {
-            if (kDebugMode) {
-              print('total:$total | count:$count');
-            }
+            // _updateFraction(count, total);
+            _updateCurrentMediaItem(
+                media.uuid, UploadState.uploadin, count / total);
+            // if (kDebugMode) {
+            //   print('total:$total | count:$count');
+            // }
           },
         );
         final status = res.data['status'];
         if (status != null && status == 1) {
-          _updateCurrentMediaItem(media.uuid, UploadState.uploaded);
+          _updateCurrentMediaItem(media.uuid, UploadState.uploaded, 0);
         } else {
-          _updateCurrentMediaItem(media.uuid, UploadState.faild);
+          _updateCurrentMediaItem(media.uuid, UploadState.faild, 0);
         }
       }
       ref.read(localTasksProvider.notifier).closeItem(taskId);
@@ -114,7 +113,12 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
     }
   }
 
+  // _updateFraction(int count, int total) {
+  //   // state = state.copyWith(fraction: count / total);
+  // }
+
   _onDone([a = true]) async {
+    a;
     _onUploadDone();
     await appStorage().setData(getKey(taskId), state);
   }
@@ -137,7 +141,7 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
     );
   }
 
-  _updateCurrentMediaItem(String uuid, UploadState status) {
+  _updateCurrentMediaItem(String uuid, UploadState status, double fr) {
     _setCurrentState(
       (s) {
         return s.copyWith(

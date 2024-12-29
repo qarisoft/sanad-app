@@ -16,6 +16,7 @@ _$PaginatedDataImpl _$$PaginatedDataImplFromJson(Map<String, dynamic> json) =>
           const [],
       nextPageUrl: json['next_page_url'] as String?,
       perPage: (json['per_page'] as num?)?.toInt() ?? 1,
+      lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
       prevPageUrl: json['prev_page_url'] as String?,
       to: (json['to'] as num?)?.toInt() ?? 0,
       total: (json['total'] as num?)?.toInt() ?? 0,
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$PaginatedDataImplToJson(_$PaginatedDataImpl instance) =>
       'data': instance.data,
       'next_page_url': instance.nextPageUrl,
       'per_page': instance.perPage,
+      'last_page': instance.lastPage,
       'prev_page_url': instance.prevPageUrl,
       'to': instance.to,
       'total': instance.total,
@@ -38,7 +40,7 @@ _$HomeResponseImpl _$$HomeResponseImplFromJson(Map<String, dynamic> json) =>
       status: (json['status'] as num?)?.toInt() ?? 1010,
       message: json['message'] as String? ?? '',
       data: json['data'] == null
-          ? const PaginatedData()
+          ? null
           : PaginatedData.fromJson(json['data'] as Map<String, dynamic>),
     );
 

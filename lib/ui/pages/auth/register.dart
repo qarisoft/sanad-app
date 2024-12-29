@@ -72,7 +72,7 @@ class RegisterPage extends HookWidget {
       key: k,
       child: AuthLayout(
         title: context.tr.registerAction,
-        children: [
+        child: [
           10.vSpace,
           InputContainer(
             label: context.tr.name,

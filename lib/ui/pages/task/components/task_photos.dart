@@ -123,6 +123,10 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
+      appBar: AppBar(
+        title: Text(context.tr.taskPagePhotosTitle),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(3),
@@ -145,9 +149,11 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
                           onTap: isSelection.value
                               ? () => toggolSelectImg(i.uuid)
                               : null,
-                          onLongPress: !isSelection.value
-                              ? () => onLongePres(i.uuid)
-                              : null,
+                          onLongPress: instance.isClosed
+                              ? null
+                              : isSelection.value
+                                  ? null
+                                  : () => onLongePres(i.uuid),
                           child: Container(
                             // padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -190,16 +196,18 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: isSelection.value
-          ? _FloatingSelectionDelet(
-              close: close,
-              selectAll: selectAll,
-              delete: delete,
-              canDelete: canDelete,
-              isSelectedAll:
-                  selectedImages.value.length == instance.media.length,
-            )
-          : _FloatingAddImage(onPressed),
+      floatingActionButton: instance.isClosed
+          ? null
+          : isSelection.value
+              ? _FloatingSelectionDelet(
+                  close: close,
+                  selectAll: selectAll,
+                  delete: delete,
+                  canDelete: canDelete,
+                  isSelectedAll:
+                      selectedImages.value.length == instance.media.length,
+                )
+              : _FloatingAddImage(onPressed),
     );
   }
 }

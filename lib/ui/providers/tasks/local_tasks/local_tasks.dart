@@ -67,7 +67,7 @@ class LocalTasks extends _$LocalTasks {
           return item.copyWith(
             pricing: item.pricing.map(
               (i_) {
-                if (i_.key == totalK) {
+                if (i_.key.startsWith('total')) {
                   return i_.copyWith(
                     totalPrice: totalP,
                     meterSquarePrice: price,
@@ -82,6 +82,14 @@ class LocalTasks extends _$LocalTasks {
         return i;
       },
     ).toList();
+    // item.pricing.map(
+    //   (p) {
+    //     if (p.key == totalK) {
+    //       return p.copyWith(meterSquareArea: s.fold(0, (a,b)=>a+b.m),);
+    //     }
+    //     return p;
+    //   },
+    // );
 
     return await _updateTasks(s);
   }

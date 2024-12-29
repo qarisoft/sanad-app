@@ -27,7 +27,7 @@ class RouteGenerator {
           builder: (_) {
             final taskId = settings.arguments as int?;
             if (taskId is int) {
-                return TaskPage(taskId);
+              return TaskPage(taskId);
             }
             return const Placeholder();
           },
@@ -39,11 +39,11 @@ class RouteGenerator {
       case Routes.companiesPage:
         return MaterialPageRoute(builder: (_) => const CompaniesPage());
       case Routes.loginRoute:
-        return MaterialPageRoute(builder: (_) => const LoginPage());
+        return MaterialPageRoute(builder: (_) => LoginPage());
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterPage());
-    // case Routes.mainRoute:
-    //   return MaterialPageRoute(builder: (_) => const MainView());
+      // case Routes.mainRoute:
+      //   return MaterialPageRoute(builder: (_) => const MainView());
       default:
         return unDefinedRoute();
     }
@@ -51,13 +51,12 @@ class RouteGenerator {
 
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
-      builder: (_) =>
-          Scaffold(
-            appBar: AppBar(
-              title: Text(''),
-            ),
-            body: Center(child: Text('unDefinedRoute')),
-          ),
+      builder: (_) => Scaffold(
+        appBar: AppBar(
+          title: Text(''),
+        ),
+        body: Center(child: Text('unDefinedRoute')),
+      ),
     );
   }
 }

@@ -7,7 +7,12 @@ class _TaskItemUploadPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final task = ref.watch(curentTaskItemProvider(taskId));
     return Scaffold(
+      appBar: AppBar(
+        title: Text(context.tr.taskPageUploadTitle),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(4.0),
         child: WithRefreshWidget(
@@ -31,7 +36,6 @@ class _TaskItemUploadPage extends HookConsumerWidget {
 
                 return Column(children: [
                   ...uploads.reversed.map(
-                    // /swapfile none swap sw 0 0
                     (up) => _UploadCard(up),
                   ),
                 ]);
@@ -40,20 +44,92 @@ class _TaskItemUploadPage extends HookConsumerWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed:
-            // uploadeState.current == null
-            // ?
-            () {
-          final item = ref.read(curentTaskItemProvider(taskId));
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: task.isClosed
+          ? null
+          : HookConsumer(
+              builder: (context, ref, child) {
+                closeDialog() {
+                  Navigator.of(context).maybePop();
+                }
 
-          ref.read(uploadTaskAttemtsProvider(taskId).notifier).create(item);
-        }
-        // : null
-        ,
-        shape: CircleBorder(),
-        child: Icon(Icons.add),
-      ),
+                final current = ref.watch(
+                    uploadTaskAttemtsProvider(taskId).select((s) => s.current));
+
+                final onClick = useCallback(
+                  () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return HookConsumer(
+                          builder: (context, ref, child) {
+                            final isLoading = useState(false);
+
+                            final onConfirm = useCallback(
+                              () async {
+                                isLoading.value = true;
+                                final item =
+                                    ref.read(curentTaskItemProvider(taskId));
+                                final uploadId = await ref
+                                    .read(uploadTaskAttemtsProvider(taskId)
+                                        .notifier)
+                                    .createUpload(item);
+                                if (uploadId != null) {
+                                  ref
+                                      .read(uploadTaskAttemtsProvider(taskId)
+                                          .notifier)
+                                      .create(
+                                        item,
+                                        uploadId,
+                                      );
+                                }
+                                closeDialog();
+                              },
+                              [closeDialog],
+                            );
+                            return AlertDialog(
+                              title: Text(
+                                  context.tr.taskPageUploaddialogConfirmation),
+                              actionsAlignment: MainAxisAlignment.start,
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (isLoading.value)
+                                    Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: onConfirm,
+                                  child: Text(
+                                    context.tr.agree,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: onConfirm,
+                                  child: Text(
+                                    context.tr.dialogCancel,
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                  [current],
+                );
+
+                return FloatingActionButton(
+                  onPressed: current == null ? onClick : null,
+                  shape: CircleBorder(),
+                  child: Icon(Icons.add),
+                );
+              },
+            ),
     );
   }
 }
@@ -66,7 +142,8 @@ class _UploadCard extends StatelessWidget {
   bool _isUploaded(MediaItem m) => m.status == UploadState.uploaded;
 
   double _precentage() =>
-      state.media.where(_isUploaded).length / state.media.length;
+      (state.media.where(_isUploaded).length / state.media.length) +
+      state.fraction;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +170,7 @@ class _UploadCard extends StatelessWidget {
                     Text('الحالة'),
                     10.hSpace,
                     Text(
-                      state.isUploaded ? "closed" : 'جاري الرفع',
+                      state.isUploaded ? "تم الرفع" : 'جاري الرفع',
                       style: TextStyle(
                         color: Colors.blue,
                       ),

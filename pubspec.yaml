@@ -53,7 +53,7 @@ dev_dependencies:
   icons_launcher: ^3.0.0
 
 icons_launcher:
-  image_path: "assets/marketing/logo.png"
+  image_path: "assets/marketing/app-logo.png"
   # image_path: "assets/marketing/app-icon-1024.png"
   platforms:
     # web:

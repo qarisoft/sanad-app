@@ -55,11 +55,11 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
       addImage(mediaPath);
     }
 
-    askPermission(ImageSource s, Function() action) {
-      showDialog(
+    Future<bool> askPermission(ImageSource s, [Function()? action]) async {
+      final a = await showDialog<bool>(
         context: context,
         builder: (context) {
-          close() => Navigator.of(context).maybePop();
+          close(bool b) => Navigator.of(context).maybePop(b);
           return AlertDialog(
             title: Text('ask camera permission'),
             actions: [
@@ -67,12 +67,13 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
                 onPressed: () async {
                   final a = s == ImageSource.camera
                       ? await Permission.camera.request()
-                      : await Permission.mediaLibrary.request();
+                      : await Permission.photos.request();
                   if (a.isDenied || a.isPermanentlyDenied) {
+                    close(false);
                   } else {
-                    action();
+                    // action();
+                    close(true);
                   }
-                  close();
                 },
                 child: Text('ask'),
               )
@@ -80,9 +81,10 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
           );
         },
       );
+      return a ?? false;
     }
 
-    _onPress(ImageSource s) async {
+    onPress(ImageSource s) async {
       final res = await _picker.pickImage(source: s);
       if (res != null) {
         await saveImage(res);
@@ -90,22 +92,21 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
     }
 
     onPressed(ImageSource source) async {
-      // if (source is Camer) {}
+      PermissionStatus status = PermissionStatus.denied;
       switch (source) {
         case ImageSource.camera:
-          var status = await Permission.camera.status;
-          if (status.isDenied || status.isPermanentlyDenied) {
-            return askPermission(source, () => onPressed(source));
-          }
-          _onPress(source);
-
+          status = await Permission.camera.status;
         case ImageSource.gallery:
-          var status = await Permission.mediaLibrary.status;
-          if (status.isDenied || status.isPermanentlyDenied) {
-            return askPermission(source, () => onPressed(source));
-          }
-          _onPress(source);
+          status = await Permission.photos.status;
       }
+      if (status.isDenied || status.isPermanentlyDenied) {
+        final a = await askPermission(source);
+        if (!a) {
+          return;
+        }
+      }
+      onPress(source);
+      // _onPress(source);
     }
 
     // ////////////////////////////////////////

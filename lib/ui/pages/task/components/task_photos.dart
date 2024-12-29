@@ -55,10 +55,56 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
       addImage(mediaPath);
     }
 
-    onPressed(ImageSource source) async {
-      final res = await _picker.pickImage(source: source);
+    askPermission(ImageSource s, Function() action) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          close() => Navigator.of(context).maybePop();
+          return AlertDialog(
+            title: Text('ask camera permission'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  final a = s == ImageSource.camera
+                      ? await Permission.camera.request()
+                      : await Permission.mediaLibrary.request();
+                  if (a.isDenied || a.isPermanentlyDenied) {
+                  } else {
+                    action();
+                  }
+                  close();
+                },
+                child: Text('ask'),
+              )
+            ],
+          );
+        },
+      );
+    }
+
+    _onPress(ImageSource s) async {
+      final res = await _picker.pickImage(source: s);
       if (res != null) {
         await saveImage(res);
+      }
+    }
+
+    onPressed(ImageSource source) async {
+      // if (source is Camer) {}
+      switch (source) {
+        case ImageSource.camera:
+          var status = await Permission.camera.status;
+          if (status.isDenied || status.isPermanentlyDenied) {
+            return askPermission(source, () => onPressed(source));
+          }
+          _onPress(source);
+
+        case ImageSource.gallery:
+          var status = await Permission.mediaLibrary.status;
+          if (status.isDenied || status.isPermanentlyDenied) {
+            return askPermission(source, () => onPressed(source));
+          }
+          _onPress(source);
       }
     }
 

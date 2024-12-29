@@ -67,7 +67,9 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
                 onPressed: () async {
                   final a = s == ImageSource.camera
                       ? await Permission.camera.request()
-                      : await Permission.photos.request();
+                      : Platform.isIOS
+                          ? await Permission.photos.request()
+                          : await Permission.mediaLibrary.request();
                   if (a.isDenied || a.isPermanentlyDenied) {
                     close(false);
                   } else {
@@ -97,7 +99,9 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
         case ImageSource.camera:
           status = await Permission.camera.status;
         case ImageSource.gallery:
-          status = await Permission.photos.status;
+          status = Platform.isIOS
+              ? await Permission.photos.status
+              : await Permission.mediaLibrary.status;
       }
       if (status.isDenied || status.isPermanentlyDenied) {
         final a = await askPermission(source);

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sanad/common.dart';
@@ -18,11 +20,11 @@ class RegisterPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userName = useTextEditingController(text: 'a');
-    final name = useTextEditingController(text: 'a');
-    final email = useTextEditingController(text: 'a@a.a');
-    final password = useTextEditingController(text: 'password');
-    final passwordConfirmation = useTextEditingController(text: 'password');
+    final userName = useTextEditingController();
+    final name = useTextEditingController();
+    final email = useTextEditingController();
+    final password = useTextEditingController();
+    final passwordConfirmation = useTextEditingController();
 
     // final hide = useState<bool>(false);
     final isLoading = useState<bool>(false);
@@ -48,7 +50,7 @@ class RegisterPage extends HookWidget {
           return RegisterRequest(
             email: email.text,
             password: password.text,
-            device: '',
+            device: Platform.isIOS ? 'os' : 'android',
             deviceToken: '',
             username: userName.text,
             passwordConfirmation: passwordConfirmation.text,

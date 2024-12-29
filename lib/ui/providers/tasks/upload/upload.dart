@@ -9,17 +9,20 @@ import 'package:sanad/data/src/index.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/providers/ex.dart';
 import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
-part 'upload.g.dart';
+
 part 'upload.freezed.dart';
+part 'upload.g.dart';
 
 @freezed
 class UploadTaskState with _$UploadTaskState {
   @JsonSerializable(explicitToJson: true)
   const factory UploadTaskState({
     required int taskId,
+    @Default(0) int uploadId,
     DateTime? uploadedAt,
     @Default(0) int id,
     @Default(0) int mediaCount,
+    @Default(UploadState.initail) UploadState status,
     @Default(false) bool isUploaded,
     @Default([]) List<MediaItem> media,
     @Default(0.0) double fraction,
@@ -27,10 +30,13 @@ class UploadTaskState with _$UploadTaskState {
 
   factory UploadTaskState.fromJson(Map<String, dynamic> json) =>
       _$UploadTaskStateFromJson(json);
-  factory UploadTaskState.fromItem(TaskItemEntity item) => UploadTaskState(
+
+  factory UploadTaskState.fromItem(TaskItemEntity item, int _uploadId) =>
+      UploadTaskState(
         taskId: item.task.id,
         media: item.media,
         mediaCount: item.media.length,
+        uploadId: _uploadId,
       );
 }
 
@@ -40,6 +46,7 @@ class UploadAttemts with _$UploadAttemts {
   const factory UploadAttemts({
     @Default([]) List<UploadTaskState> uploads,
     UploadTaskState? current,
+    @Default(0.0) double fraction,
   }) = _UploadAttemts;
 
   factory UploadAttemts.fromJson(Map<String, dynamic> json) =>
@@ -49,6 +56,8 @@ class UploadAttemts with _$UploadAttemts {
 @Riverpod(dependencies: [LocalTasks])
 class UploadTaskAttemts extends _$UploadTaskAttemts {
   String getKey(int taskIdd) => 'UploadAttemts1_$taskIdd';
+  CancelToken? cancelToken;
+
   @override
   UploadAttemts build(int taskId) {
     ref.keepAlive();
@@ -66,13 +75,23 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
   }
 
   Future<bool> create(TaskItemEntity item, int uploadId) async {
-    final current = UploadTaskState.fromItem(item);
+    final current = UploadTaskState.fromItem(item, uploadId);
     _updateCurrent(current);
+
+    // cancelToken!.whenCancel()
+    return await _upload(current, uploadId);
+  }
+
+  Future<bool> _upload(UploadTaskState current, int uploadId) async {
+    cancelToken = CancelToken();
+    _setCurrentState((c) => c.copyWith(status: UploadState.uploadin));
     try {
-      final dio = ref.dioFactory();
+      final dio = ref.dioFactory(method: 'POST');
       for (var i = 0; i < current.mediaCount; i++) {
+        if ((cancelToken?.isCancelled) ?? false) continue;
         final data = FormData();
         final media = current.media[i];
+        if (media.status == UploadState.uploaded) continue;
 
         final img = File(media.path);
         data.files.add(
@@ -84,18 +103,21 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
             ),
           ),
         );
+        final p = '/tasks/uploads/$uploadId';
+
+        up(int c, int t) {
+          state = state.copyWith(
+            fraction: c / t,
+          );
+        }
+
         final res = await dio.post(
-          '/tasks/uploads/$uploadId',
+          p,
           data: data,
-          onSendProgress: (count, total) {
-            // _updateFraction(count, total);
-            _updateCurrentMediaItem(
-                media.uuid, UploadState.uploadin, count / total);
-            // if (kDebugMode) {
-            //   print('total:$total | count:$count');
-            // }
-          },
+          cancelToken: cancelToken,
+          onSendProgress: up,
         );
+
         final status = res.data['status'];
         if (status != null && status == 1) {
           _updateCurrentMediaItem(media.uuid, UploadState.uploaded, 0);
@@ -103,13 +125,24 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
           _updateCurrentMediaItem(media.uuid, UploadState.faild, 0);
         }
       }
-      ref.read(localTasksProvider.notifier).closeItem(taskId);
-      _onDone();
-
-      return true;
+      // cancelToken = null;
+      // _onDone();
+      // return true;
     } catch (e) {
-      state = state.copyWith(current: null);
-      return false;
+      // _onDone();
+      // return false;
+    }
+    return await _onDone();
+  }
+
+  cancelUpload() {
+    cancelToken?.cancel();
+  }
+
+  reTry() {
+    final current = state.current;
+    if (current != null && current.uploadId != 0) {
+      _upload(current, current.uploadId);
     }
   }
 
@@ -117,28 +150,47 @@ class UploadTaskAttemts extends _$UploadTaskAttemts {
   //   // state = state.copyWith(fraction: count / total);
   // }
 
-  _onDone([a = true]) async {
+  Future<bool> _onDone([a = true]) async {
     a;
     _onUploadDone();
+
     await appStorage().setData(getKey(taskId), state);
+    if (state.current == null) {
+      return false;
+    }
+    return true;
   }
 
   _onUploadDone() {
-    _setCurrentState(
-      (c) {
-        state = state.copyWith(
-          uploads: [
-            ...state.uploads,
-            c.copyWith(
-              isUploaded: true,
-              uploadedAt: DateTime.now(),
-              id: state.uploads.length + 1,
-            ),
-          ],
-        );
-        return null;
-      },
-    );
+    final current = state.current;
+    if (current != null) {
+      final a =
+          current.media.where((i) => i.status == UploadState.uploaded).length ==
+              current.media.length;
+
+      if (!a) {
+        _setCurrentState((c) => c.copyWith(status: UploadState.faild));
+        return;
+      }
+      ref.read(localTasksProvider.notifier).closeItem(taskId);
+
+      _setCurrentState(
+        (c) {
+          state = state.copyWith(
+            uploads: [
+              ...state.uploads,
+              c.copyWith(
+                isUploaded: a ? true : false,
+                status: a ? UploadState.uploaded : UploadState.faild,
+                uploadedAt: DateTime.now(),
+                id: state.uploads.length + 1,
+              ),
+            ],
+          );
+          return null;
+        },
+      );
+    }
   }
 
   _updateCurrentMediaItem(String uuid, UploadState status, double fr) {

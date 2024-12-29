@@ -9,7 +9,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sanad/common.dart';
 import 'package:sanad/domain/repos/repo.dart';
 import 'package:sanad/ui/providers/auth_provider/auth_provider.dart';
-import 'package:sanad/ui/providers/home_provider/task_provider.dart';
+import 'package:sanad/ui/providers/index.dart';
+
 // import 'package:sanad/ui/providers/index.dart';
 
 // import 'package:sanad/ui/pages/auth/auth/auth_provider.dart';
@@ -30,6 +31,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   get provider => loginCallProvider;
+
   @override
   Widget build(BuildContext context) {
     //
@@ -57,11 +59,14 @@ class _LoginPageState extends State<LoginPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(context.tr.rallyLoginLabelLogin,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontWeight: FontWeight.w500)),
+              Text(
+                context.tr.rallyLoginLabelLogin,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontWeight: FontWeight.w500),
+              ),
+              // 5.hSpace,
             ],
           ),
           space,

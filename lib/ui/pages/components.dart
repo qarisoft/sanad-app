@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sanad/common.dart';
@@ -6,6 +7,7 @@ import 'package:sanad/domain/entities/auth/auth.dart';
 import 'package:sanad/domain/entities/auth/user.dart';
 import 'package:sanad/ui/providers/ex.dart';
 import 'package:sanad/ui/widgets/delete_dialog.dart';
+
 import '../providers/auth_provider/auth_provider.dart';
 
 class HLine extends StatelessWidget {
@@ -90,10 +92,9 @@ class DrawerPage extends ConsumerWidget {
   }
 }
 
-
-
 class _DrawerBody extends ConsumerWidget {
   const _DrawerBody(this.auth);
+
   final AuthEntity auth;
 
   @override
@@ -105,10 +106,10 @@ class _DrawerBody extends ConsumerWidget {
           // title: Text(context.tr.drawerLogoutTitle),
           return DeleteDialog(
             onPressed: () {
-            Navigator.of(dContext).maybePop();
-            ref.logOut_();
-          },
-            textBody: context.tr.drawerLogoutTitle,
+              Navigator.of(dContext).maybePop();
+              ref.logOut_();
+            },
+            textBody: context.tr.drawerLogoutMessage,
             title: Text(context.tr.drawerLogoutTitle),
             withIcon: true,
           );
@@ -148,15 +149,31 @@ class _DrawerBody extends ConsumerWidget {
                 ],
               ),
             ),
-            ListTile(
-              onTap: logOut,
-              leading: Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Icon(
-                  Icons.logout_rounded,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: logOut,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(context.tr.logOutLabel),
+                    ),
+                    Icon(
+                      Icons.logout_rounded,
+                    )
+                  ],
+                  // onTap: logOut,
+                  // leading: Padding(
+                  //   padding: const EdgeInsets.only(bottom: 5),
+                  //   child: Icon(
+                  //     Icons.logout_rounded,
+                  //   ),
+                  // ),
+                  // titleAlignment: ListTileTitleAlignment.bottom,
                 ),
               ),
-              titleAlignment: ListTileTitleAlignment.bottom,
             )
           ],
         ),

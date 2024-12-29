@@ -11,6 +11,7 @@ class DeleteDialog extends StatelessWidget {
     this.isLoading = false,
     this.errors,
   });
+
   final void Function()? onPressed;
   final bool withIcon;
   final String textBody;
@@ -34,10 +35,10 @@ class DeleteDialog extends StatelessWidget {
               Icons.warning_rounded,
               color: Theme.of(context).colorScheme.tertiary,
             ),
-      actionsAlignment: MainAxisAlignment.start,
+      actionsAlignment: MainAxisAlignment.center,
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (errors == null)
             Text(
@@ -79,12 +80,12 @@ class DeleteDialog extends StatelessWidget {
                         color: Theme.of(context).colorScheme.error,
                       ),
                 ),
-                if (withIcon) 5.hSpace,
-                if (withIcon)
-                  Icon(
-                    Icons.delete_forever,
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+                // if (withIcon) 5.hSpace,
+                // if (withIcon)
+                //   Icon(
+                //     Icons.delete_forever,
+                //     color: Theme.of(context).colorScheme.error,
+                //   ),
               ],
             ),
           ),
@@ -93,7 +94,10 @@ class DeleteDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).maybePop();
           },
-          child: Text(context.tr.dialogCancel,style: TextStyle(color: Colors.grey),),
+          child: Text(
+            context.tr.dialogCancel,
+            style: TextStyle(color: Colors.grey),
+          ),
         )
       ],
     );

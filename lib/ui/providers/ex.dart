@@ -20,12 +20,14 @@ class DioClass {
   final String path;
   final Object? data;
   final Options? options;
+  final CancelToken? cancelToken;
 
   const DioClass({
     required this.dio,
     required this.path,
     this.data,
     this.options,
+    this.cancelToken,
   });
 }
 
@@ -45,7 +47,7 @@ extension WidgetRefExt on WidgetRef {
     // invalidate(homeDataProvider);
     invalidate(localTasksProvider);
   }
-  // callApi
+// callApi
 }
 
 extension DebounceAndCancelExtension on Ref {
@@ -61,7 +63,7 @@ extension DebounceAndCancelExtension on Ref {
     invalidate(localTasksProvider);
   }
 
-  Dio dioFactory() {
+  Dio dioFactory({String? method}) {
     final client = Dio();
     const String applicationJson = "application/json";
     const String contentType = "content-type";
@@ -71,16 +73,20 @@ extension DebounceAndCancelExtension on Ref {
     Map<String, String> headers = {
       contentType: applicationJson,
       accept: applicationJson,
-      a: 'ar'
+      a: read(localProvider)
     };
+    final method_ = method ?? 'GET';
 
     //
     final auth = appStorage.getAuth();
     if (auth != null) {
       headers['Authorization'] = 'Bearer ${auth.token}';
     }
-    client.options =
-        client.options.copyWith(headers: headers, baseUrl: baseUrl);
+    client.options = client.options.copyWith(
+      headers: headers,
+      baseUrl: baseUrl,
+      method: method_,
+    );
     // client.interceptors.add();
     client.interceptors.add(PrettyDioLogger(
         // requestHeader: true,
@@ -119,11 +125,10 @@ extension DebounceAndCancelExtension on Ref {
   Future<Response<T>> tryCaller<T>(DioClass params) async {
     try {
       return await compute((DioClass p) async {
-        return await p.dio.request(
-          p.path,
-          data: p.data,
-          // options: p.options,
-        );
+        return await p.dio
+            .request(p.path, data: p.data, cancelToken: params.cancelToken
+                // options: p.options,
+                );
       }, params);
     } catch (e) {
       if (e is DioException) {

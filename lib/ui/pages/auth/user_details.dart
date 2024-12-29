@@ -11,11 +11,13 @@ import 'package:sanad/domain/entities/auth/auth.dart';
 import 'package:sanad/ui/pages/components.dart';
 import 'package:sanad/ui/providers/auth_provider/auth_provider.dart';
 import 'package:sanad/ui/providers/ex.dart';
+import 'package:sanad/ui/providers/index.dart';
 // import 'package:flutter/widgets.dart';
 
 class _DeleteDialog extends HookWidget {
   const _DeleteDialog(
       {required this.action, required this.isLoading, this.errorText});
+
   final bool isLoading;
   final String? errorText;
   final Function(String p) action;
@@ -225,6 +227,51 @@ class UserDetailsPage extends ConsumerWidget {
               HLine(),
               20.vSpace,
               _UserDetailsTable(auth_),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(context.tr.lang),
+                        10.hSpace,
+                        Consumer(
+                          builder: (context, ref, child) {
+                            final local = ref.watch(localProvider);
+
+                            return GestureDetector(
+                              onTap: () {
+                                ref.read(localProvider.notifier).toggole();
+                              },
+                              child: Text(
+                                local != 'ar' ? 'english' : 'عربي',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.blue),
+                              ),
+                            );
+                          },
+                        )
+                      ],
+                    ),
+                    10.vSpace,
+                    Row(
+                      children: [
+                        Text(
+                          context.tr.userdetailsCompanyLabel,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey.shade600),
+                        ),
+                        // 10.hSpace,
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: ListView.separated(
                   itemBuilder: (c, index) => ListTile(
@@ -252,6 +299,7 @@ class UserDetailsPage extends ConsumerWidget {
 
 class _UserAvatar extends ConsumerWidget {
   const _UserAvatar(this.auth);
+
   final AuthEntity auth;
 
   _getImg() {
@@ -315,7 +363,9 @@ class _UserAvatar extends ConsumerWidget {
 
 class _UserDetailsTable extends StatelessWidget {
   const _UserDetailsTable(this.auth);
+
   final AuthEntity auth;
+
   @override
   Widget build(BuildContext context) {
     final user = auth.user;
@@ -384,7 +434,7 @@ class _UserDetailsTable extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -431,24 +481,6 @@ class _UserDetailsTable extends StatelessWidget {
             ],
           ),
           20.vSpace,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    context.tr.userdetailsCompanyLabel,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.grey.shade600),
-                  ),
-                  10.hSpace,
-                ],
-              ),
-              10.vSpace,
-            ],
-          )
         ],
       ),
     );
@@ -457,8 +489,10 @@ class _UserDetailsTable extends StatelessWidget {
 
 class _TitleSection extends StatelessWidget {
   const _TitleSection({required this.children, required this.title});
+
   final List<Widget> children;
   final String title;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -489,7 +523,9 @@ class _TitleSection extends StatelessWidget {
 
 class _Cel extends StatelessWidget {
   const _Cel(this.child);
+
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Padding(

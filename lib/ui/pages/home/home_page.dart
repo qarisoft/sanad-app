@@ -9,7 +9,6 @@ import 'package:sanad/ui/pages/components.dart';
 import 'package:sanad/ui/pages/home/item_page.dart';
 import 'package:sanad/ui/providers/home_provider/p.dart';
 import 'package:sanad/ui/providers/index.dart';
-import 'package:sanad/ui/widgets/ask_permission_dialog.dart';
 import 'package:sanad/ui/widgets/with_refresh.dart';
 
 // import '../../providers/home_provider/task_provider.dart';
@@ -125,6 +124,7 @@ class Home extends ConsumerWidget {
 
 class _IW extends StatelessWidget {
   const _IW({required this.t});
+
   final TaskEntity t;
 
   @override
@@ -172,7 +172,7 @@ class _IW extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'العنوان',
+                          context.tr.address,
                           style: smStyl,
                         ),
                         10.hSpace,

@@ -1,7 +1,8 @@
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sanad/common.dart';
-import 'package:sanad/ui/pages/auth/components/auth_hero.dart';
+import 'package:sanad/ui/providers/index.dart';
 
 class AuthLayout extends StatelessWidget {
   const AuthLayout({
@@ -42,6 +43,24 @@ class AuthLayout extends StatelessWidget {
                   // AppStrings.loginPhrase.tr()
                   style: const TextStyle(color: Colors.white),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final local = ref.watch(localProvider);
+
+                        return GestureDetector(
+                          onTap: () {
+                            ref.read(localProvider.notifier).toggole();
+                          },
+                          child: Text(local == 'ar' ? 'english' : 'عربي'),
+                        );
+                      },
+                    )
+                  ],
+                ),
+                // 10.vSpace,
               ],
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../common.dart';
+
 part 'provider.g.dart';
 
 const arabic = 'ar';
@@ -12,13 +13,13 @@ const english = 'en';
 class Local extends _$Local {
   @override
   String build() {
-    return arabic;
-    // return appStorage.getLocal() ?? arabic;
+    // return arabic;
+    return appStorage.getLocal() ?? arabic;
   }
 
   setLocal(String local) async {
     state = local;
-    //  await appStorage.setLocal(local);
+    await appStorage.setLocal(local);
   }
 
   toggole() {

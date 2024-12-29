@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/pages/components.dart';
@@ -20,6 +21,9 @@ class ItemPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // go() {
     //   Navigator.of(context).pushNamed(Routes.task);
+    // }
+    // accept(){
+    //   ImagePicker().pickImage(source: ImageSource.camera);
     // }
     accept() => callActionDialog(
           context,

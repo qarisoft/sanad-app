@@ -21,9 +21,22 @@ class _TaskItemUploadPage extends HookConsumerWidget {
             Consumer(
               builder: (context, ref, child) {
                 final current = ref.watch(
-                    uploadTaskAttemtsProvider(taskId).select((s) => s.current));
+                  uploadTaskAttemtsProvider(taskId).select((s) => s.current),
+                );
+                final fr = ref.watch(
+                  uploadTaskAttemtsProvider(taskId).select((s) => s.fraction),
+                );
                 if (current != null) {
-                  return _UploadCard(current);
+                  return _UploadCard(
+                    state: current,
+                    fr: fr,
+                    onCancel: () => ref
+                        .read(uploadTaskAttemtsProvider(taskId).notifier)
+                        .cancelUpload(),
+                    onRetry: () => ref
+                        .read(uploadTaskAttemtsProvider(taskId).notifier)
+                        .reTry(),
+                  );
                 }
 
                 return 1.hSpace;
@@ -36,7 +49,9 @@ class _TaskItemUploadPage extends HookConsumerWidget {
 
                 return Column(children: [
                   ...uploads.reversed.map(
-                    (up) => _UploadCard(up),
+                    (up) => _UploadCard(
+                      state: up,
+                    ),
                   ),
                 ]);
               },
@@ -88,18 +103,22 @@ class _TaskItemUploadPage extends HookConsumerWidget {
                               [closeDialog],
                             );
                             return AlertDialog(
-                              title: Text(
-                                  context.tr.taskPageUploaddialogConfirmation),
-                              actionsAlignment: MainAxisAlignment.start,
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
+                              title: Column(
                                 children: [
                                   if (isLoading.value)
-                                    Center(
-                                      child: CircularProgressIndicator(),
-                                    )
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  Text(context
+                                      .tr.taskPageUploaddialogConfirmation)
                                 ],
                               ),
+                              icon: Icon(Icons.cloud_download),
+                              actionsAlignment: MainAxisAlignment.start,
                               actions: [
                                 TextButton(
                                   onPressed: onConfirm,
@@ -135,18 +154,41 @@ class _TaskItemUploadPage extends HookConsumerWidget {
 }
 
 class _UploadCard extends StatelessWidget {
-  const _UploadCard(this.state);
+  const _UploadCard({
+    required this.state,
+    this.onCancel,
+    this.onRetry,
+    this.fr = 0.0,
+  });
 
   final UploadTaskState state;
+  final double fr;
+  final Function()? onCancel;
+
+  final Function()? onRetry;
 
   bool _isUploaded(MediaItem m) => m.status == UploadState.uploaded;
 
   double _precentage() =>
-      (state.media.where(_isUploaded).length / state.media.length) +
-      state.fraction;
+      // state.fraction;
+
+      (state.media.where(_isUploaded).length + fr) / state.media.length;
 
   @override
   Widget build(BuildContext context) {
+    getStatus() {
+      switch (state.status) {
+        case UploadState.initail:
+          return '';
+        case UploadState.uploadin:
+          return context.tr.uploadStatusUploading;
+        case UploadState.uploaded:
+          return context.tr.uploadStatusDone;
+        case UploadState.faild:
+          return context.tr.uploadStatusFail;
+      }
+    }
+
     final uploadedAt = state.uploadedAt;
     final dateStyle = Theme.of(context).textTheme.bodySmall;
     return Card(
@@ -161,16 +203,16 @@ class _UploadCard extends StatelessWidget {
                   children: [
                     if (state.id != 0)
                       Text(
-                        state.id.toString(),
+                        "${state.id} -",
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: Colors.grey,
                             ),
                       ),
                     5.hSpace,
-                    Text('الحالة'),
+                    Text(context.tr.status),
                     10.hSpace,
                     Text(
-                      state.isUploaded ? "تم الرفع" : 'جاري الرفع',
+                      getStatus(),
                       style: TextStyle(
                         color: Colors.blue,
                       ),
@@ -179,7 +221,23 @@ class _UploadCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    // Text('عدد الصور'),
+                    if (state.status == UploadState.uploadin)
+                      IconButton(
+                        onPressed: onCancel,
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.red.shade400,
+                        ),
+                      ),
+                    if (state.status == UploadState.faild)
+                      IconButton(
+                        onPressed: onRetry,
+                        icon: Icon(
+                          Icons.refresh,
+                          color: Colors.blue.shade600,
+                        ),
+                      ),
+                    5.hSpace,
                     Icon(
                       Icons.perm_media_outlined,
                       size: 15,
@@ -203,7 +261,10 @@ class _UploadCard extends StatelessWidget {
             if (!state.isUploaded)
               Row(
                 children: [
-                  Text("${(_precentage() * 100).toStringAsFixed(1)}%"),
+                  Text(
+                      "${state.media.where(_isUploaded).length} / ${state.media.length}"),
+                  10.hSpace,
+                  Text("${(_precentage() * 100).toStringAsFixed(0)}%"),
                   10.hSpace,
                   Expanded(
                     child: LinearProgressIndicator(
@@ -214,18 +275,21 @@ class _UploadCard extends StatelessWidget {
                 ],
               ),
             if (uploadedAt != null)
-              Row(
-                children: [
-                  Text(
-                    DateFormat('', 'ar').add_E().add_jm().format(uploadedAt),
-                    style: dateStyle,
-                  ),
-                  Text(
-                    "  |  ${DateFormat('d', 'ar').add_LLL().add_y().format(uploadedAt)}",
-                    style: dateStyle,
-                  )
-                ],
-              )
+              Consumer(builder: (context, ref, c) {
+                final local = ref.watch(localProvider);
+                return Row(
+                  children: [
+                    Text(
+                      DateFormat('', local).add_E().add_jm().format(uploadedAt),
+                      style: dateStyle,
+                    ),
+                    Text(
+                      "  |  ${DateFormat('d', local).add_LLL().add_y().format(uploadedAt)}",
+                      style: dateStyle,
+                    )
+                  ],
+                );
+              })
           ],
         ),
       ),

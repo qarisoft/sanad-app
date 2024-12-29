@@ -1,18 +1,19 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
+import 'package:sanad/ui/providers/index.dart';
 import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
 import 'package:sanad/ui/providers/tasks/upload/upload.dart';
 import 'package:sanad/ui/widgets/ask_permission_dialog.dart';
 import 'package:sanad/ui/widgets/with_refresh.dart';
 import 'package:uuid/uuid.dart';
-import 'package:image_picker/image_picker.dart';
 
 part 'components/task_data.dart';
 part 'components/task_photos.dart';
@@ -27,6 +28,7 @@ final curentTaskItemProvider =
 
 class TaskPage extends StatelessWidget {
   const TaskPage(this.taskId, {super.key});
+
   final int taskId;
 
   @override

@@ -2,87 +2,87 @@
   "@@locale": "en",
   "sanad": "Sanad",
   "@sanad": {
-    
   },
-  "permissionsTitle":"the app needs permissions",
-  "permissionsBodyCamera":"allow the app to use the camera",
-  "permissionsBodyGallery":"allow the app to use the gallery",
-  
-  "authLoginFailer":"invalid credintials",
-  "taskPageUploaddialogConfirmation":"Are you sure you want to close the task now ?",
-  "taskPageUploadTitle":"Upload",
-  "taskPageDataTitle":"Data",
-  "taskPagePhotosTitle":"Pictures",
-
-  "deleteLocalTaskTitle":"Cancel the Task",
-  "deleteLocalTaskMsg":"Are you sure, you want to cancel this task?",
-
-  "archiveTeasksClosed":"Done",
-  "archiveTasksWaiting":"Waitting",
-  "bottomNavLocalTasks":"Saved",
-  "bottomNavOnlineTasks":"Tasks",
-  
-  "drawerLogoutTitle":"Log out",
-  "drawerLogoutMessage":"Log out will destroy all data saved in your phone, are you sure you want to continue?",
-  "deleteAccount":"Delete the account completely.",
-  "deleteAccountMessage":"Complete delete of the account from the company server !!",
-  "deleteAccountMessage2":"You can not redo this operation !!, are you sure?",
-  "companies":"companies",
-  "company":"company",
-  "theCompany":"the Company",
-  "theCompanyNameLabel":"the company name",
-  "edit":"edit",
-  "create":"create",
-  "confirm":"confirm",
-  "sure":"sure",
-  "delete":"delete",
-  "open":"open",
-  "agree":"agree",
-  "userdetailsInfoTitle":"details",
-  "userdetailsEditLabelText":"edit",
-  "userdetailsCompanyLabel":"companies",
-  "taskPricingPriceValidator":"price is required",
-  "taskPricingAreaValidator":"area is required",
-  "taskPricingName":"name",
-  "taskPricingMeterArea":"area",
-  "taskPricingMeterArea2":"M2",
-  "taskPricingMeterPrice":"price",
-  "taskPricingMeterPrice2":"K",
-  "taskPricingTotalPrice":"total price",
-  "taskPricingTotalPrice2":"K/m2",
-  "taskPricingReal":"RS",
-  "taskPricingK":"K",
-  "taskPricingMeter":"M",
-  "taskPricingMeterSquare":"M2",
-  "homeTitle":"Tasks",
-  "homeEmptyText":"No Data at the moment!",
-  "serverError":"something went wrong, please try later.",
-  "homeTasksTitle":"Tasks",
-  "noInternet":"no internet connection",
-  "or":"or",
+  "address": "Address",
+  "status": "status",
+  "uploadStatusUploading": "uploading ...",
+  "uploadStatusFail": "fail",
+  "uploadStatusDone": "Done",
+  "lang": "language",
+  "permissionsTitle": "the app needs permissions",
+  "permissionsBodyCamera": "allow the app to use the camera",
+  "permissionsBodyGallery": "allow the app to use the gallery",
+  "authLoginFailer": "invalid credintials",
+  "taskPageUploaddialogConfirmation": "Are you sure you want to close the task now ?",
+  "taskPageUploadTitle": "Upload",
+  "taskPageDataTitle": "Data",
+  "taskPagePhotosTitle": "Pictures",
+  "deleteLocalTaskTitle": "Cancel the Task",
+  "deleteLocalTaskMsg": "Are you sure, you want to cancel this task?",
+  "archiveTeasksClosed": "Done",
+  "archiveTasksWaiting": "Waitting",
+  "bottomNavLocalTasks": "Saved",
+  "bottomNavOnlineTasks": "Tasks",
+  "drawerLogoutTitle": "Log out",
+  "drawerLogoutMessage": "Log out will destroy all data saved in your phone, are you sure you want to continue?",
+  "deleteAccount": "Delete the account completely.",
+  "deleteAccountMessage": "Complete delete of the account from the company server !!",
+  "deleteAccountMessage2": "You can not redo this operation !!, are you sure?",
+  "companies": "companies",
+  "company": "company",
+  "theCompany": "the Company",
+  "theCompanyNameLabel": "the company name",
+  "edit": "edit",
+  "create": "create",
+  "confirm": "confirm",
+  "sure": "sure",
+  "delete": "delete",
+  "open": "open",
+  "agree": "agree",
+  "userdetailsInfoTitle": "details",
+  "userdetailsEditLabelText": "edit",
+  "userdetailsCompanyLabel": "companies",
+  "taskPricingPriceValidator": "price is required",
+  "taskPricingAreaValidator": "area is required",
+  "taskPricingName": "name",
+  "taskPricingMeterArea": "area",
+  "taskPricingMeterArea2": "M2",
+  "taskPricingMeterPrice": "price",
+  "taskPricingMeterPrice2": "K",
+  "taskPricingTotalPrice": "total price",
+  "taskPricingTotalPrice2": "K/m2",
+  "taskPricingReal": "RS",
+  "taskPricingK": "K",
+  "taskPricingMeter": "M",
+  "taskPricingMeterSquare": "M2",
+  "homeTitle": "Tasks",
+  "homeEmptyText": "No Data at the moment!",
+  "serverError": "something went wrong, please try later.",
+  "homeTasksTitle": "Tasks",
+  "noInternet": "no internet connection",
+  "or": "or",
   "success": "Done !!",
   "empty": "empty",
   "error": "error",
-  "retryAgain":"retry Again",
-    "username":"user Name",
-  "@username":{},
-  "email":"Email",
-  "@email":{},
-  "password":"Password",
-  "@password":{},
-  "passwordConfirmation":"Password Confirmation",
-  "@passwordConfirmation":{},
-  "loginAction":"login",
-  "@loginAction":{},
-    "registerAction":"Register",
-  "@registerAction":{},
-  "theLogin":"login",
-  "@theLogin":{},
-  "loginPage":"login Page",
-  "@loginPage":{},
-  "name":"name",
-  "@name":{},
-
+  "retryAgain": "retry Again",
+  "username": "user Name",
+  "@username": {},
+  "email": "Email",
+  "@email": {},
+  "password": "Password",
+  "@password": {},
+  "passwordConfirmation": "Password Confirmation",
+  "@passwordConfirmation": {},
+  "loginAction": "login",
+  "@loginAction": {},
+  "registerAction": "Register",
+  "@registerAction": {},
+  "theLogin": "login",
+  "@theLogin": {},
+  "loginPage": "login Page",
+  "@loginPage": {},
+  "name": "name",
+  "@name": {},
   "githubRepo": "{repoName} GitHub repository",
   "@githubRepo": {
     "description": "Represents a link to a GitHub repository.",
@@ -140,7 +140,7 @@
   "bannerDemoLeadingText": "Leading Icon",
   "@bannerDemoLeadingText": {
     "description": "If user clicks this button the leading icon in the Banner will disappear"
-   },
+  },
   "dismiss": "DISMISS",
   "@dismiss": {
     "description": "When text is pressed the banner widget will be removed from the screen."
@@ -158,7 +158,7 @@
     "description": "Semantics label for Explore. Label tells user to explore the destinationName to the user. Example Explore Tamil",
     "placeholders": {
       "destinationName": {
-       "example": "Tamil"
+        "example": "Tamil"
       }
     }
   },
@@ -440,7 +440,7 @@
     "description": "Text if the user wants to stay logged in."
   },
   "rallyLoginButtonLogin": "LOGIN",
-  "logOutLabel":"Log out",
+  "logOutLabel": "Log out",
   "@rallyLoginButtonLogin": {
     "description": "Text for login button."
   },
@@ -457,36 +457,36 @@
   "@rallyAlertsMessageSpentOnRestaurants": {
     "description": "Alert message shown when for example, user has spent $120 on Restaurants this week.",
     "placeholders": {
-       "amount": {
-         "example": "$120"
-       }
+      "amount": {
+        "example": "$120"
+      }
     }
   },
   "rallyAlertsMessageATMFees": "You've spent {amount} in ATM fees this month",
   "@rallyAlertsMessageATMFees": {
     "description": "Alert message shown when for example, the user has spent $24 in ATM fees this month.",
     "placeholders": {
-       "amount": {
-         "example": "24"
-       }
+      "amount": {
+        "example": "24"
+      }
     }
   },
   "rallyAlertsMessageCheckingAccount": "Good work! Your checking account is {percent} higher than last month.",
   "@rallyAlertsMessageCheckingAccount": {
     "description": "Alert message shown when for example, the checking account is 1% higher than last month.",
     "placeholders": {
-       "percent": {
-         "example": "1%"
-       }
+      "percent": {
+        "example": "1%"
+      }
     }
   },
   "rallyAlertsMessageUnassignedTransactions": "{count, plural, =1{Increase your potential tax deduction! Assign categories to 1 unassigned transaction.}other{Increase your potential tax deduction! Assign categories to {count} unassigned transactions.}}",
   "@rallyAlertsMessageUnassignedTransactions": {
     "description": "Alert message shown when you have unassigned transactions.",
     "placeholders": {
-       "count": {
-         "example": "2"
-       }
+      "count": {
+        "example": "2"
+      }
     }
   },
   "rallySeeAllAccounts": "See all accounts",

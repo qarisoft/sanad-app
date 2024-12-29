@@ -10,11 +10,14 @@ _$UploadTaskStateImpl _$$UploadTaskStateImplFromJson(
         Map<String, dynamic> json) =>
     _$UploadTaskStateImpl(
       taskId: (json['taskId'] as num).toInt(),
+      uploadId: (json['uploadId'] as num?)?.toInt() ?? 0,
       uploadedAt: json['uploadedAt'] == null
           ? null
           : DateTime.parse(json['uploadedAt'] as String),
       id: (json['id'] as num?)?.toInt() ?? 0,
       mediaCount: (json['mediaCount'] as num?)?.toInt() ?? 0,
+      status: $enumDecodeNullable(_$UploadStateEnumMap, json['status']) ??
+          UploadState.uploadin,
       isUploaded: json['isUploaded'] as bool? ?? false,
       media: (json['media'] as List<dynamic>?)
               ?.map((e) => MediaItem.fromJson(e as Map<String, dynamic>))
@@ -27,13 +30,22 @@ Map<String, dynamic> _$$UploadTaskStateImplToJson(
         _$UploadTaskStateImpl instance) =>
     <String, dynamic>{
       'taskId': instance.taskId,
+      'uploadId': instance.uploadId,
       'uploadedAt': instance.uploadedAt?.toIso8601String(),
       'id': instance.id,
       'mediaCount': instance.mediaCount,
+      'status': _$UploadStateEnumMap[instance.status]!,
       'isUploaded': instance.isUploaded,
       'media': instance.media.map((e) => e.toJson()).toList(),
       'fraction': instance.fraction,
     };
+
+const _$UploadStateEnumMap = {
+  UploadState.initail: 'initail',
+  UploadState.uploadin: 'uploadin',
+  UploadState.uploaded: 'uploaded',
+  UploadState.faild: 'faild',
+};
 
 _$UploadAttemtsImpl _$$UploadAttemtsImplFromJson(Map<String, dynamic> json) =>
     _$UploadAttemtsImpl(
@@ -44,19 +56,21 @@ _$UploadAttemtsImpl _$$UploadAttemtsImplFromJson(Map<String, dynamic> json) =>
       current: json['current'] == null
           ? null
           : UploadTaskState.fromJson(json['current'] as Map<String, dynamic>),
+      fraction: (json['fraction'] as num?)?.toDouble() ?? 0.0,
     );
 
 Map<String, dynamic> _$$UploadAttemtsImplToJson(_$UploadAttemtsImpl instance) =>
     <String, dynamic>{
       'uploads': instance.uploads.map((e) => e.toJson()).toList(),
       'current': instance.current?.toJson(),
+      'fraction': instance.fraction,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$uploadTaskAttemtsHash() => r'fb0b19b677059f369e102b272dd473e59004b8fc';
+String _$uploadTaskAttemtsHash() => r'b8a52b737a2a6f235d8d04087fbb7becb11f9cd0';
 
 /// Copied from Dart SDK
 class _SystemHash {

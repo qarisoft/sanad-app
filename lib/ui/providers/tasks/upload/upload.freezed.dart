@@ -21,9 +21,11 @@ UploadTaskState _$UploadTaskStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UploadTaskState {
   int get taskId => throw _privateConstructorUsedError;
+  int get uploadId => throw _privateConstructorUsedError;
   DateTime? get uploadedAt => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
   int get mediaCount => throw _privateConstructorUsedError;
+  UploadState get status => throw _privateConstructorUsedError;
   bool get isUploaded => throw _privateConstructorUsedError;
   List<MediaItem> get media => throw _privateConstructorUsedError;
   double get fraction => throw _privateConstructorUsedError;
@@ -46,9 +48,11 @@ abstract class $UploadTaskStateCopyWith<$Res> {
   @useResult
   $Res call(
       {int taskId,
+      int uploadId,
       DateTime? uploadedAt,
       int id,
       int mediaCount,
+      UploadState status,
       bool isUploaded,
       List<MediaItem> media,
       double fraction});
@@ -70,9 +74,11 @@ class _$UploadTaskStateCopyWithImpl<$Res, $Val extends UploadTaskState>
   @override
   $Res call({
     Object? taskId = null,
+    Object? uploadId = null,
     Object? uploadedAt = freezed,
     Object? id = null,
     Object? mediaCount = null,
+    Object? status = null,
     Object? isUploaded = null,
     Object? media = null,
     Object? fraction = null,
@@ -81,6 +87,10 @@ class _$UploadTaskStateCopyWithImpl<$Res, $Val extends UploadTaskState>
       taskId: null == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
+              as int,
+      uploadId: null == uploadId
+          ? _value.uploadId
+          : uploadId // ignore: cast_nullable_to_non_nullable
               as int,
       uploadedAt: freezed == uploadedAt
           ? _value.uploadedAt
@@ -94,6 +104,10 @@ class _$UploadTaskStateCopyWithImpl<$Res, $Val extends UploadTaskState>
           ? _value.mediaCount
           : mediaCount // ignore: cast_nullable_to_non_nullable
               as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as UploadState,
       isUploaded: null == isUploaded
           ? _value.isUploaded
           : isUploaded // ignore: cast_nullable_to_non_nullable
@@ -120,9 +134,11 @@ abstract class _$$UploadTaskStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {int taskId,
+      int uploadId,
       DateTime? uploadedAt,
       int id,
       int mediaCount,
+      UploadState status,
       bool isUploaded,
       List<MediaItem> media,
       double fraction});
@@ -142,9 +158,11 @@ class __$$UploadTaskStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? taskId = null,
+    Object? uploadId = null,
     Object? uploadedAt = freezed,
     Object? id = null,
     Object? mediaCount = null,
+    Object? status = null,
     Object? isUploaded = null,
     Object? media = null,
     Object? fraction = null,
@@ -153,6 +171,10 @@ class __$$UploadTaskStateImplCopyWithImpl<$Res>
       taskId: null == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
+              as int,
+      uploadId: null == uploadId
+          ? _value.uploadId
+          : uploadId // ignore: cast_nullable_to_non_nullable
               as int,
       uploadedAt: freezed == uploadedAt
           ? _value.uploadedAt
@@ -166,6 +188,10 @@ class __$$UploadTaskStateImplCopyWithImpl<$Res>
           ? _value.mediaCount
           : mediaCount // ignore: cast_nullable_to_non_nullable
               as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as UploadState,
       isUploaded: null == isUploaded
           ? _value.isUploaded
           : isUploaded // ignore: cast_nullable_to_non_nullable
@@ -190,9 +216,11 @@ class _$UploadTaskStateImpl
     implements _UploadTaskState {
   const _$UploadTaskStateImpl(
       {required this.taskId,
+      this.uploadId = 0,
       this.uploadedAt,
       this.id = 0,
       this.mediaCount = 0,
+      this.status = UploadState.uploadin,
       this.isUploaded = false,
       final List<MediaItem> media = const [],
       this.fraction = 0.0})
@@ -204,6 +232,9 @@ class _$UploadTaskStateImpl
   @override
   final int taskId;
   @override
+  @JsonKey()
+  final int uploadId;
+  @override
   final DateTime? uploadedAt;
   @override
   @JsonKey()
@@ -211,6 +242,9 @@ class _$UploadTaskStateImpl
   @override
   @JsonKey()
   final int mediaCount;
+  @override
+  @JsonKey()
+  final UploadState status;
   @override
   @JsonKey()
   final bool isUploaded;
@@ -229,7 +263,7 @@ class _$UploadTaskStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UploadTaskState(taskId: $taskId, uploadedAt: $uploadedAt, id: $id, mediaCount: $mediaCount, isUploaded: $isUploaded, media: $media, fraction: $fraction)';
+    return 'UploadTaskState(taskId: $taskId, uploadId: $uploadId, uploadedAt: $uploadedAt, id: $id, mediaCount: $mediaCount, status: $status, isUploaded: $isUploaded, media: $media, fraction: $fraction)';
   }
 
   @override
@@ -238,9 +272,11 @@ class _$UploadTaskStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'UploadTaskState'))
       ..add(DiagnosticsProperty('taskId', taskId))
+      ..add(DiagnosticsProperty('uploadId', uploadId))
       ..add(DiagnosticsProperty('uploadedAt', uploadedAt))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('mediaCount', mediaCount))
+      ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('isUploaded', isUploaded))
       ..add(DiagnosticsProperty('media', media))
       ..add(DiagnosticsProperty('fraction', fraction));
@@ -252,11 +288,14 @@ class _$UploadTaskStateImpl
         (other.runtimeType == runtimeType &&
             other is _$UploadTaskStateImpl &&
             (identical(other.taskId, taskId) || other.taskId == taskId) &&
+            (identical(other.uploadId, uploadId) ||
+                other.uploadId == uploadId) &&
             (identical(other.uploadedAt, uploadedAt) ||
                 other.uploadedAt == uploadedAt) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.mediaCount, mediaCount) ||
                 other.mediaCount == mediaCount) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.isUploaded, isUploaded) ||
                 other.isUploaded == isUploaded) &&
             const DeepCollectionEquality().equals(other._media, _media) &&
@@ -269,9 +308,11 @@ class _$UploadTaskStateImpl
   int get hashCode => Object.hash(
       runtimeType,
       taskId,
+      uploadId,
       uploadedAt,
       id,
       mediaCount,
+      status,
       isUploaded,
       const DeepCollectionEquality().hash(_media),
       fraction);
@@ -296,9 +337,11 @@ class _$UploadTaskStateImpl
 abstract class _UploadTaskState implements UploadTaskState {
   const factory _UploadTaskState(
       {required final int taskId,
+      final int uploadId,
       final DateTime? uploadedAt,
       final int id,
       final int mediaCount,
+      final UploadState status,
       final bool isUploaded,
       final List<MediaItem> media,
       final double fraction}) = _$UploadTaskStateImpl;
@@ -309,11 +352,15 @@ abstract class _UploadTaskState implements UploadTaskState {
   @override
   int get taskId;
   @override
+  int get uploadId;
+  @override
   DateTime? get uploadedAt;
   @override
   int get id;
   @override
   int get mediaCount;
+  @override
+  UploadState get status;
   @override
   bool get isUploaded;
   @override
@@ -337,6 +384,7 @@ UploadAttemts _$UploadAttemtsFromJson(Map<String, dynamic> json) {
 mixin _$UploadAttemts {
   List<UploadTaskState> get uploads => throw _privateConstructorUsedError;
   UploadTaskState? get current => throw _privateConstructorUsedError;
+  double get fraction => throw _privateConstructorUsedError;
 
   /// Serializes this UploadAttemts to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -354,7 +402,10 @@ abstract class $UploadAttemtsCopyWith<$Res> {
           UploadAttemts value, $Res Function(UploadAttemts) then) =
       _$UploadAttemtsCopyWithImpl<$Res, UploadAttemts>;
   @useResult
-  $Res call({List<UploadTaskState> uploads, UploadTaskState? current});
+  $Res call(
+      {List<UploadTaskState> uploads,
+      UploadTaskState? current,
+      double fraction});
 
   $UploadTaskStateCopyWith<$Res>? get current;
 }
@@ -376,6 +427,7 @@ class _$UploadAttemtsCopyWithImpl<$Res, $Val extends UploadAttemts>
   $Res call({
     Object? uploads = null,
     Object? current = freezed,
+    Object? fraction = null,
   }) {
     return _then(_value.copyWith(
       uploads: null == uploads
@@ -386,6 +438,10 @@ class _$UploadAttemtsCopyWithImpl<$Res, $Val extends UploadAttemts>
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
               as UploadTaskState?,
+      fraction: null == fraction
+          ? _value.fraction
+          : fraction // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 
@@ -412,7 +468,10 @@ abstract class _$$UploadAttemtsImplCopyWith<$Res>
       __$$UploadAttemtsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<UploadTaskState> uploads, UploadTaskState? current});
+  $Res call(
+      {List<UploadTaskState> uploads,
+      UploadTaskState? current,
+      double fraction});
 
   @override
   $UploadTaskStateCopyWith<$Res>? get current;
@@ -433,6 +492,7 @@ class __$$UploadAttemtsImplCopyWithImpl<$Res>
   $Res call({
     Object? uploads = null,
     Object? current = freezed,
+    Object? fraction = null,
   }) {
     return _then(_$UploadAttemtsImpl(
       uploads: null == uploads
@@ -443,6 +503,10 @@ class __$$UploadAttemtsImplCopyWithImpl<$Res>
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
               as UploadTaskState?,
+      fraction: null == fraction
+          ? _value.fraction
+          : fraction // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -454,7 +518,9 @@ class _$UploadAttemtsImpl
     with DiagnosticableTreeMixin
     implements _UploadAttemts {
   const _$UploadAttemtsImpl(
-      {final List<UploadTaskState> uploads = const [], this.current})
+      {final List<UploadTaskState> uploads = const [],
+      this.current,
+      this.fraction = 0.0})
       : _uploads = uploads;
 
   factory _$UploadAttemtsImpl.fromJson(Map<String, dynamic> json) =>
@@ -471,10 +537,13 @@ class _$UploadAttemtsImpl
 
   @override
   final UploadTaskState? current;
+  @override
+  @JsonKey()
+  final double fraction;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UploadAttemts(uploads: $uploads, current: $current)';
+    return 'UploadAttemts(uploads: $uploads, current: $current, fraction: $fraction)';
   }
 
   @override
@@ -483,7 +552,8 @@ class _$UploadAttemtsImpl
     properties
       ..add(DiagnosticsProperty('type', 'UploadAttemts'))
       ..add(DiagnosticsProperty('uploads', uploads))
-      ..add(DiagnosticsProperty('current', current));
+      ..add(DiagnosticsProperty('current', current))
+      ..add(DiagnosticsProperty('fraction', fraction));
   }
 
   @override
@@ -492,13 +562,15 @@ class _$UploadAttemtsImpl
         (other.runtimeType == runtimeType &&
             other is _$UploadAttemtsImpl &&
             const DeepCollectionEquality().equals(other._uploads, _uploads) &&
-            (identical(other.current, current) || other.current == current));
+            (identical(other.current, current) || other.current == current) &&
+            (identical(other.fraction, fraction) ||
+                other.fraction == fraction));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_uploads), current);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_uploads), current, fraction);
 
   /// Create a copy of UploadAttemts
   /// with the given fields replaced by the non-null parameter values.
@@ -519,7 +591,8 @@ class _$UploadAttemtsImpl
 abstract class _UploadAttemts implements UploadAttemts {
   const factory _UploadAttemts(
       {final List<UploadTaskState> uploads,
-      final UploadTaskState? current}) = _$UploadAttemtsImpl;
+      final UploadTaskState? current,
+      final double fraction}) = _$UploadAttemtsImpl;
 
   factory _UploadAttemts.fromJson(Map<String, dynamic> json) =
       _$UploadAttemtsImpl.fromJson;
@@ -528,6 +601,8 @@ abstract class _UploadAttemts implements UploadAttemts {
   List<UploadTaskState> get uploads;
   @override
   UploadTaskState? get current;
+  @override
+  double get fraction;
 
   /// Create a copy of UploadAttemts
   /// with the given fields replaced by the non-null parameter values.

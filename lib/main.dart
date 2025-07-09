@@ -107,56 +107,56 @@ ThemeData _buildReplyLightTheme() {
   );
 }
 
-ThemeData _buildReplyDarkTheme() {
-  final base = ThemeData(fontFamily: 'Tajawal');
-  return base.copyWith(
-    brightness: Brightness.dark,
-    bottomSheetTheme: BottomSheetThemeData(
-      backgroundColor: AppColor.darkDrawerBackground,
-      modalBackgroundColor: Colors.black.withOpacity(0.7),
-    ),
-    cardColor: AppColor.darkCardBackground,
-    chipTheme: _buildChipTheme(
-      AppColor.blue200,
-      AppColor.darkChipBackground,
-      Brightness.dark,
-    ),
-    colorScheme: const ColorScheme.dark(
-      primary: AppColor.primary,
-      secondary: AppColor.orange300,
-      surface: AppColor.black800,
-      error: AppColor.red200,
-      onPrimary: AppColor.black900,
-      onSecondary: AppColor.black900,
-      onSurface: AppColor.white50,
-      onError: AppColor.black900,
-    ),
-    // textTheme: _buildReplyDarkTextTheme(base.textTheme),
-    scaffoldBackgroundColor: AppColor.black900,
-    bottomAppBarTheme: const BottomAppBarTheme(
-      color: AppColor.darkBottomAppBarBackground,
-    ),
-  );
-}
+// ThemeData _buildReplyDarkTheme() {
+//   final base = ThemeData(fontFamily: 'Tajawal');
+//   return base.copyWith(
+//     brightness: Brightness.dark,
+//     bottomSheetTheme: BottomSheetThemeData(
+//       backgroundColor: AppColor.darkDrawerBackground,
+//       modalBackgroundColor: Colors.black.withOpacity(0.7),
+//     ),
+//     cardColor: AppColor.darkCardBackground,
+//     chipTheme: _buildChipTheme(
+//       AppColor.blue200,
+//       AppColor.darkChipBackground,
+//       Brightness.dark,
+//     ),
+//     colorScheme: const ColorScheme.dark(
+//       primary: AppColor.primary,
+//       secondary: AppColor.orange300,
+//       surface: AppColor.black800,
+//       error: AppColor.red200,
+//       onPrimary: AppColor.black900,
+//       onSecondary: AppColor.black900,
+//       onSurface: AppColor.white50,
+//       onError: AppColor.black900,
+//     ),
+//     // textTheme: _buildReplyDarkTextTheme(base.textTheme),
+//     scaffoldBackgroundColor: AppColor.black900,
+//     bottomAppBarTheme: const BottomAppBarTheme(
+//       color: AppColor.darkBottomAppBarBackground,
+//     ),
+//   );
+// }
 
-ChipThemeData _buildChipTheme(
-  Color primaryColor,
-  Color chipBackground,
-  Brightness brightness,
-) {
-  return ChipThemeData(
-    backgroundColor: primaryColor.withOpacity(0.12),
-    disabledColor: primaryColor.withOpacity(0.87),
-    selectedColor: primaryColor.withOpacity(0.05),
-    secondarySelectedColor: chipBackground,
-    padding: const EdgeInsets.all(4),
-    shape: const StadiumBorder(),
-    // labelStyle: GoogleFonts.workSansTextTheme().bodyMedium!.copyWith(
-    //       color: brightness == Brightness.dark
-    //           ? AppColor.white50
-    //           : AppColor.black900,
-    //     ),
-    // secondaryLabelStyle: GoogleFonts.workSansTextTheme().bodyMedium!,
-    brightness: brightness,
-  );
-}
+// ChipThemeData _buildChipTheme(
+//   Color primaryColor,
+//   Color chipBackground,
+//   Brightness brightness,
+// ) {
+//   return ChipThemeData(
+//     backgroundColor: primaryColor.withOpacity(0.12),
+//     disabledColor: primaryColor.withOpacity(0.87),
+//     selectedColor: primaryColor.withOpacity(0.05),
+//     secondarySelectedColor: chipBackground,
+//     padding: const EdgeInsets.all(4),
+//     shape: const StadiumBorder(),
+//     // labelStyle: GoogleFonts.workSansTextTheme().bodyMedium!.copyWith(
+//     //       color: brightness == Brightness.dark
+//     //           ? AppColor.white50
+//     //           : AppColor.black900,
+//     //     ),
+//     // secondaryLabelStyle: GoogleFonts.workSansTextTheme().bodyMedium!,
+//     brightness: brightness,
+//   );
+// }

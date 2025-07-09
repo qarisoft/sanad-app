@@ -487,39 +487,39 @@ class _UserDetailsTable extends StatelessWidget {
   }
 }
 
-class _TitleSection extends StatelessWidget {
-  const _TitleSection({required this.children, required this.title});
-
-  final List<Widget> children;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-            // bottom: BorderSide(
-            //   width: 1,
-            //   color: Colors.grey.shade300,
-            // ),
-            ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-          ),
-          ...children
-        ],
-      ),
-    );
-  }
-}
+// class _TitleSection extends StatelessWidget {
+//   const _TitleSection({required this.children, required this.title});
+//
+//   final List<Widget> children;
+//   final String title;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         border: Border(
+//             // bottom: BorderSide(
+//             //   width: 1,
+//             //   color: Colors.grey.shade300,
+//             // ),
+//             ),
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.only(bottom: 4),
+//             child: Text(
+//               title,
+//               style: Theme.of(context).textTheme.labelMedium,
+//             ),
+//           ),
+//           ...children
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _Cel extends StatelessWidget {
   const _Cel(this.child);

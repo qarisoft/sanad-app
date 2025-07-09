@@ -31,13 +31,13 @@ class DioClass {
   });
 }
 
-Future<Response> _dioCaller(DioClass dioclass) async {
-  return await dioclass.dio.get(
-    dioclass.path,
-    data: dioclass.data,
-    options: dioclass.options,
-  );
-}
+// Future<Response> _dioCaller(DioClass dioclass) async {
+//   return await dioclass.dio.get(
+//     dioclass.path,
+//     data: dioclass.data,
+//     options: dioclass.options,
+//   );
+// }
 
 extension WidgetRefExt on WidgetRef {
   logOut_() async {
@@ -88,13 +88,13 @@ extension DebounceAndCancelExtension on Ref {
       method: method_,
     );
     // client.interceptors.add();
-    client.interceptors.add(PrettyDioLogger(
-        // requestHeader: true,
-        // requestBody: true,
+    // client.interceptors.add(PrettyDioLogger(
+    //     // requestHeader: true,
+    //     // requestBody: true,
 
-        responseHeader: true,
-        error: true,
-        responseBody: true));
+    //     responseHeader: true,
+    //     error: true,
+    //     responseBody: true));
     return client;
   }
 
@@ -122,14 +122,14 @@ extension DebounceAndCancelExtension on Ref {
     return client;
   }
 
-  Future<Response<T>> tryCaller<T>(DioClass params) async {
+  Future<Response<T>> tryCaller<T>(DioClass p) async {
     try {
-      return await compute((DioClass p) async {
-        return await p.dio
-            .request(p.path, data: p.data, cancelToken: params.cancelToken
-                // options: p.options,
-                );
-      }, params);
+      // return await compute((DioClass p) async {
+      return await p.dio
+          .request(p.path, data: p.data, cancelToken: p.cancelToken
+              // options: p.options,
+              );
+      // }, params);
     } catch (e) {
       if (e is DioException) {
         final res = hadelDioException(e);

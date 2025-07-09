@@ -12,6 +12,7 @@ class AuthEntity with _$AuthEntity {
   const factory AuthEntity({
     required User user,
     required String token,
+    @Default(false) bool expired,
     @Default([]) List<Company> companies,
     Employee? employee,
   }) = _AuthEntity;

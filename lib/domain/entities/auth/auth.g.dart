@@ -10,6 +10,7 @@ _$AuthEntityImpl _$$AuthEntityImplFromJson(Map<String, dynamic> json) =>
     _$AuthEntityImpl(
       user: User.fromJson(json['user'] as Map<String, dynamic>),
       token: json['token'] as String,
+      expired: json['expired'] as bool? ?? false,
       companies: (json['companies'] as List<dynamic>?)
               ?.map((e) => Company.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -23,6 +24,7 @@ Map<String, dynamic> _$$AuthEntityImplToJson(_$AuthEntityImpl instance) =>
     <String, dynamic>{
       'user': instance.user.toJson(),
       'token': instance.token,
+      'expired': instance.expired,
       'companies': instance.companies.map((e) => e.toJson()).toList(),
       'employee': instance.employee?.toJson(),
     };

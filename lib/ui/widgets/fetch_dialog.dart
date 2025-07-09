@@ -1,3 +1,4 @@
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,13 +12,13 @@ callActionDialog<T>(
   context,
   ProviderListenable<AsyncValue<T>> p, {
   void Function()? yesAction,
-  void Function(BuildContext c)? action,
+  void Function(BuildContext? c)? action,
 }) {
   // a(BuildContext _){}
   // FutureOr<void> Function([BuildContext? c]) action = action_ ?? a;
   showDialog(
     context: context,
-    builder: (context) {
+    builder: (ctx) {
       return Dialog(
         backgroundColor: Colors.white,
         child: Column(
@@ -44,6 +45,7 @@ callActionDialog<T>(
                         yesAction?.call();
                         return StateR(
                           sType: StateType.popupSuccess,
+                          // retryActionFunction: action,
                         );
                       },
                       error: (e, s) {

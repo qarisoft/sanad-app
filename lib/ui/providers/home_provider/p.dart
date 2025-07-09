@@ -52,13 +52,13 @@ class HomeState with _$HomeState {
 
 @riverpod
 class Home extends _$Home {
-  KeepAliveLink? _k;
+  // KeepAliveLink? _k;
   final _url = '$baseUrl/home';
   @override
   HomeState build() {
-    _k = ref.keepAlive();
+    // _k = ref.keepAlive();
 
-    ref.onResume(_onResume);
+    // ref.onResume(_onResume);
     _init();
     return HomeState(
       time: DateTime.now(),
@@ -66,25 +66,34 @@ class Home extends _$Home {
     );
   }
 
-  _onResume() {
-    if (DateTime.now().difference(state.time).inMinutes > 5) {}
+  // _onResume() {
+  //   if (DateTime.now().difference(state.time).inMinutes > 5) {}
+  // }
+
+  void die() {
+    return;
+    // _k?.close();
   }
 
-  die() {
-    _k?.close();
+  Future<void> load() async {
+    await _refresh(state.tasks.length + 10);
   }
 
   Future<void> refresh() async {
+    await _refresh();
+  }
+
+  Future<void> _refresh([int n = 20]) async {
     final dio = await ref.getDebouncedDio();
     dio.options = dio.options.copyWith(
       queryParameters: {
-        'per_page': state.tasks.length + 20,
+        'per_page': n,
       },
     );
     await _getFetch(1, dio);
   }
 
-  _init() async {
+  Future<void> _init() async {
     try {
       await _getFetch(1);
     } catch (e) {
@@ -104,7 +113,10 @@ class Home extends _$Home {
     final data = res.data;
 
     if (data == null) return;
-    final tasks = {...data.data.reversed};
+    print(
+      'data.total ${data.total}\n' 'data.data.length ${data.data.length}',
+    );
+    final tasks = {...data.data};
     state = HomeState(
       time: DateTime.now(),
       tasks: tasks,

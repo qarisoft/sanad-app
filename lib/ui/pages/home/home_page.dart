@@ -31,6 +31,8 @@ class HomePage extends StatelessWidget {
         // final data_ = ref.watch(homeDataProvider);
         final internet = ref.watch(interNetProvider);
         final tasks = ref.watch(homeProvider.select((s) => s.tasks));
+        final sTotal = ref.watch(homeProvider.select((s) => s.serverTotal));
+        final total = ref.watch(homeProvider.select((s) => s.total));
         final isLoading = ref.watch(homeProvider.select((s) => s.isLoading));
         if (internet.contains(ConnectivityResult.none)) {
           return StateR(
@@ -52,10 +54,14 @@ class HomePage extends StatelessWidget {
           );
         }
 
+        // print('${total} ${sTotal}');
+
         return WithRefreshWidget(
+          showLoader: sTotal != total,
           onRefresh: () async {
             await ref.read(homeProvider.notifier).refresh();
           },
+          onLoad: () => ref.read(homeProvider.notifier).load(),
           children: [
             // ...tasks.reversed.map((t) =>
             if (tasks.isNotEmpty)
@@ -66,21 +72,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               )
-            // ...List.generate(
-            //   tasks.length,
-            //   (index) {
-            //     final t = tasks.reversed.toList()[index];
-
-            //     // return Column(
-            //     //   children: [
-            //     //     ...t.data.map(
-            //     //       (t2) => _IW(t: t2),
-            //     //     ),
-            //     //   ],
-            //     // );
-            //   },
-            // )
-            // )
           ],
         );
       }),
@@ -163,7 +154,7 @@ class _IW extends StatelessWidget {
                     ),
                     10.vSpace,
                     Text(
-                      t.customer,
+                      ' ${t.customer}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w500,
                           ),

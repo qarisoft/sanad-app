@@ -27,7 +27,7 @@ class _TaskItemDataPage extends HookConsumerWidget {
       );
     }
 
-    TableRow _TR(TaskPricingEntity row) => TableRow(
+    TableRow tR(TaskPricingEntity row) => TableRow(
           decoration: _boxDecoration,
           children: [
             InkWell(
@@ -103,9 +103,9 @@ class _TaskItemDataPage extends HookConsumerWidget {
                       .where((i) => !i.key.startsWith('total'))
                       .map((TaskPricingEntity p) {
                     final row = p;
-                    return _TR(row);
+                    return tR(row);
                   }),
-                  if (total != null) _TR(total)
+                  if (total != null) tR(total)
                 ],
               ),
               50.vSpace

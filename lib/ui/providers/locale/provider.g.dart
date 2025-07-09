@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loadedHash() => r'eaa3b87027e5c8a68d87810546cbea93258ebb49';
+String _$loadedHash() => r'420552acfc2f3643bb5d98b28f44f838acdf3353';
 
 /// See also [loaded].
 @ProviderFor(loaded)
@@ -22,7 +22,7 @@ final loadedProvider = AutoDisposeFutureProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef LoadedRef = AutoDisposeFutureProviderRef<bool>;
-String _$localHash() => r'0cae97ed8ead4a66f77bf5fa93c8c6fed681eb4f';
+String _$localHash() => r'595a2b79cdb8e83e4bfb9112b646aa3e7371b90a';
 
 /// See also [Local].
 @ProviderFor(Local)

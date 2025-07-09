@@ -17,7 +17,7 @@ _$UploadTaskStateImpl _$$UploadTaskStateImplFromJson(
       id: (json['id'] as num?)?.toInt() ?? 0,
       mediaCount: (json['mediaCount'] as num?)?.toInt() ?? 0,
       status: $enumDecodeNullable(_$UploadStateEnumMap, json['status']) ??
-          UploadState.uploadin,
+          UploadState.initail,
       isUploaded: json['isUploaded'] as bool? ?? false,
       media: (json['media'] as List<dynamic>?)
               ?.map((e) => MediaItem.fromJson(e as Map<String, dynamic>))
@@ -70,7 +70,7 @@ Map<String, dynamic> _$$UploadAttemtsImplToJson(_$UploadAttemtsImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$uploadTaskAttemtsHash() => r'b8a52b737a2a6f235d8d04087fbb7becb11f9cd0';
+String _$uploadTaskAttemtsHash() => r'96f4c2b8c16ec57b297e215d57e6cea9b0d4a48f';
 
 /// Copied from Dart SDK
 class _SystemHash {

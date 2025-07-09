@@ -34,7 +34,8 @@ class Local extends _$Local {
 
 @riverpod
 Future<bool> loaded(Ref ref) async {
-  final a = SL.delegate.load(Locale('ar'));
+  // final a =
+  SL.delegate.load(Locale('ar'));
   ref.keepAlive();
   return true;
 }

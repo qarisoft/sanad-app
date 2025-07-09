@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/task/task_entity.dart';
 import 'package:sanad/ui/pages/components.dart';
 import 'package:sanad/ui/providers/home_provider/p.dart';
-import 'package:sanad/ui/providers/index.dart';
 import 'package:sanad/ui/providers/tasks/accetpt/accept.dart';
 import 'package:sanad/ui/providers/tasks/local_tasks/local_tasks.dart';
-import 'package:sanad/ui/widgets/ask_permission_dialog.dart';
 // import 'package:sanad/ui/providers/home_provider/task_provider.dart';
 
 class ItemPage extends ConsumerWidget {
@@ -19,12 +16,6 @@ class ItemPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // go() {
-    //   Navigator.of(context).pushNamed(Routes.task);
-    // }
-    // accept(){
-    //   ImagePicker().pickImage(source: ImageSource.camera);
-    // }
     accept() => callActionDialog(
           context,
           acceptProvider(taskEntity.id),
@@ -32,8 +23,11 @@ class ItemPage extends ConsumerWidget {
             ref.invalidate(homeProvider);
             ref.invalidate(localTasksProvider);
           },
-          action: (BuildContext c_) {
-            Navigator.of(context).pop();
+          action: (BuildContext? c_) {
+            if(c_!=null) {
+              Navigator.of(context)
+                  .popAndPushNamed(Routes.task, arguments: taskEntity.id);
+            }
           },
         );
 
@@ -87,17 +81,6 @@ class ItemPage extends ConsumerWidget {
                     child: FloatingActionButton(
                       shape: CircleBorder(),
                       onPressed: accept,
-                      //
-                      // () {
-
-                      // },
-                      // () {
-                      //   // MapsLauncher.launchCoordinates(
-                      //   //   // taskEntity.location.lat,
-                      //   //   // taskEntity.location.lng,
-                      //   //   37.4220041, -122.0862462,
-                      //   // );
-                      // },
                       child: Icon(
                         Icons.reply_all,
                       ),
@@ -113,21 +96,6 @@ class ItemPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Column(
-              //       children: [
-              //         // Text(taskEntity.code),
-              //         // 2.vSpace,
-              //         Text(
-              //           taskEntity.publishedAtH,
-              //           style: Theme.of(context).textTheme.labelSmall,
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

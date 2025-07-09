@@ -312,7 +312,7 @@ class _RegisterCallProviderElement
   RegisterRequest get params => (origin as RegisterCallProvider).params;
 }
 
-String _$authHash() => r'8bffe68d9f5d9837843e9c1541fea555a6652e57';
+String _$authHash() => r'f58cb180082790a684e749277e1c99da2a9a5d5a';
 
 /// See also [Auth].
 @ProviderFor(Auth)

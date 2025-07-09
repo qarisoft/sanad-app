@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'data/data.dart';
 import 'domain/service/storage.dart';
 export './ui/common/ex.dart';
-export 'package:flutter_gen/gen_l10n/sanad_localizations.dart';
+export 'package:sanad/l10n/sanad_localizations.dart';
 export './ui/common/router.dart';
 export 'package:sanad/data/data.dart';
 export 'package:sanad/ui/widgets/ex.dart';

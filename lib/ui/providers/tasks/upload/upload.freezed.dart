@@ -220,7 +220,7 @@ class _$UploadTaskStateImpl
       this.uploadedAt,
       this.id = 0,
       this.mediaCount = 0,
-      this.status = UploadState.uploadin,
+      this.status = UploadState.initail,
       this.isUploaded = false,
       final List<MediaItem> media = const [],
       this.fraction = 0.0})

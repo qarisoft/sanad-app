@@ -21,6 +21,7 @@ class LocationEntity with _$LocationEntity {
 }
 
 double convertJ(Map<dynamic, dynamic> json, String name) {
+  // if()
   try {
     return double.parse(json[name]);
   } catch (e) {

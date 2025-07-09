@@ -68,18 +68,18 @@ class _TaskItemPhotosPage extends HookConsumerWidget {
     //     close(true);
     //   }
     // }
-    Future<bool> askPermission(ImageSource s) async {
-      final isCa = s == ImageSource.camera;
-      return await askPermissionDialog(
-        context: context,
-        // icon: Icons.photo,
-        icon: isCa ? Icons.camera_alt : Icons.photo,
-        text: isCa
-            ? context.tr.permissionsBodyCamera
-            : context.tr.permissionsBodyGallery,
-        action: (BuildContext con) {},
-      );
-    }
+    // Future<bool> askPermission(ImageSource s) async {
+    //   final isCa = s == ImageSource.camera;
+    //   return await askPermissionDialog(
+    //     context: context,
+    //     // icon: Icons.photo,
+    //     icon: isCa ? Icons.camera_alt : Icons.photo,
+    //     text: isCa
+    //         ? context.tr.permissionsBodyCamera
+    //         : context.tr.permissionsBodyGallery,
+    //     action: (BuildContext con) {},
+    //   );
+    // }
 
     onPress(ImageSource s) async {
       final res = await _picker.pickImage(source: s);

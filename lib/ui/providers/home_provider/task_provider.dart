@@ -51,7 +51,8 @@ class HomeData extends _$HomeData {
   }
 
   Future<void> init() async {
-    final a = ref.keepAlive();
+    // final a =
+    ref.keepAlive();
     // Future.delayed(Duration(minutes: 1)).then(
     //   (_) {
     //     a.close();

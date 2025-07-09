@@ -22,6 +22,7 @@ AuthEntity _$AuthEntityFromJson(Map<String, dynamic> json) {
 mixin _$AuthEntity {
   User get user => throw _privateConstructorUsedError;
   String get token => throw _privateConstructorUsedError;
+  bool get expired => throw _privateConstructorUsedError;
   List<Company> get companies => throw _privateConstructorUsedError;
   Employee? get employee => throw _privateConstructorUsedError;
 
@@ -42,7 +43,11 @@ abstract class $AuthEntityCopyWith<$Res> {
       _$AuthEntityCopyWithImpl<$Res, AuthEntity>;
   @useResult
   $Res call(
-      {User user, String token, List<Company> companies, Employee? employee});
+      {User user,
+      String token,
+      bool expired,
+      List<Company> companies,
+      Employee? employee});
 
   $UserCopyWith<$Res> get user;
   $EmployeeCopyWith<$Res>? get employee;
@@ -65,6 +70,7 @@ class _$AuthEntityCopyWithImpl<$Res, $Val extends AuthEntity>
   $Res call({
     Object? user = null,
     Object? token = null,
+    Object? expired = null,
     Object? companies = null,
     Object? employee = freezed,
   }) {
@@ -77,6 +83,10 @@ class _$AuthEntityCopyWithImpl<$Res, $Val extends AuthEntity>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      expired: null == expired
+          ? _value.expired
+          : expired // ignore: cast_nullable_to_non_nullable
+              as bool,
       companies: null == companies
           ? _value.companies
           : companies // ignore: cast_nullable_to_non_nullable
@@ -122,7 +132,11 @@ abstract class _$$AuthEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {User user, String token, List<Company> companies, Employee? employee});
+      {User user,
+      String token,
+      bool expired,
+      List<Company> companies,
+      Employee? employee});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -145,6 +159,7 @@ class __$$AuthEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? token = null,
+    Object? expired = null,
     Object? companies = null,
     Object? employee = freezed,
   }) {
@@ -157,6 +172,10 @@ class __$$AuthEntityImplCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      expired: null == expired
+          ? _value.expired
+          : expired // ignore: cast_nullable_to_non_nullable
+              as bool,
       companies: null == companies
           ? _value._companies
           : companies // ignore: cast_nullable_to_non_nullable
@@ -176,6 +195,7 @@ class _$AuthEntityImpl implements _AuthEntity {
   const _$AuthEntityImpl(
       {required this.user,
       required this.token,
+      this.expired = false,
       final List<Company> companies = const [],
       this.employee})
       : _companies = companies;
@@ -187,6 +207,9 @@ class _$AuthEntityImpl implements _AuthEntity {
   final User user;
   @override
   final String token;
+  @override
+  @JsonKey()
+  final bool expired;
   final List<Company> _companies;
   @override
   @JsonKey()
@@ -201,7 +224,7 @@ class _$AuthEntityImpl implements _AuthEntity {
 
   @override
   String toString() {
-    return 'AuthEntity(user: $user, token: $token, companies: $companies, employee: $employee)';
+    return 'AuthEntity(user: $user, token: $token, expired: $expired, companies: $companies, employee: $employee)';
   }
 
   @override
@@ -211,6 +234,7 @@ class _$AuthEntityImpl implements _AuthEntity {
             other is _$AuthEntityImpl &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.token, token) || other.token == token) &&
+            (identical(other.expired, expired) || other.expired == expired) &&
             const DeepCollectionEquality()
                 .equals(other._companies, _companies) &&
             (identical(other.employee, employee) ||
@@ -219,7 +243,7 @@ class _$AuthEntityImpl implements _AuthEntity {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, user, token,
+  int get hashCode => Object.hash(runtimeType, user, token, expired,
       const DeepCollectionEquality().hash(_companies), employee);
 
   /// Create a copy of AuthEntity
@@ -242,6 +266,7 @@ abstract class _AuthEntity implements AuthEntity {
   const factory _AuthEntity(
       {required final User user,
       required final String token,
+      final bool expired,
       final List<Company> companies,
       final Employee? employee}) = _$AuthEntityImpl;
 
@@ -252,6 +277,8 @@ abstract class _AuthEntity implements AuthEntity {
   User get user;
   @override
   String get token;
+  @override
+  bool get expired;
   @override
   List<Company> get companies;
   @override

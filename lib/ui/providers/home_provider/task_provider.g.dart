@@ -58,7 +58,7 @@ final messageProvider = AutoDisposeNotifierProvider<Message, Failure?>.internal(
 );
 
 typedef _$Message = AutoDisposeNotifier<Failure?>;
-String _$homeDataHash() => r'b45a076fff1173fe29d31f919c2b6e789815bc01';
+String _$homeDataHash() => r'3c7f4e56f06eb17a0afc336667f3691da35c950c';
 
 /// See also [HomeData].
 @ProviderFor(HomeData)

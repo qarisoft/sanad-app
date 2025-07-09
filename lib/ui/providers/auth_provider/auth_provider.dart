@@ -9,7 +9,6 @@ import 'package:sanad/common.dart';
 import 'package:sanad/domain/entities/auth/auth.dart';
 import 'package:sanad/domain/repos/repo.dart';
 import 'package:sanad/domain/service/storage.dart';
-import 'package:sanad/ui/providers/home_provider/p.dart';
 // import 'package:sanad/ui/providers/index.dart';
 import '../ex.dart';
 
@@ -29,12 +28,14 @@ class Auth extends _$Auth {
     return AuthState.initial();
   }
 
-  Future<void> updateUser({String? name, String? photo}) async {
+  Future<void> updateUser(
+      {String? name, String? photo, bool expired = false}) async {
     final auth = state.whenOrNull(authenticated: (a) => a);
 
     if (auth != null) {
       await appStorage.setAuth(
         auth.copyWith(
+          expired: expired,
           user: auth.user.copyWith(
             photo: photo ?? auth.user.photo,
             name: name ?? auth.user.name,
@@ -46,8 +47,28 @@ class Auth extends _$Auth {
     return;
   }
 
-  //
+  Future<void> ping() async {
+    final dio = await ref.getDebouncedDio();
+    // dio.options.method = 'Post';
+    try {
+      final res = await dio.get('$baseUrl/ping');
+      print(res.data);
+    } catch (e) {
+      if (e is DioException) {
+        if (e.response?.statusCode == 401) {
+          await updateUser(expired: true);
+        }
+        // print(e.response?.statusCode ?? '');
+        // print(e.response?.statusMessage ?? '');
+        // print(e.response?.data ?? '');
+      }
+    }
+  }
 }
+// @riverpod
+//  (Ref ref) {
+//   return ;
+// }
 
 @freezed
 class DeleteAccountState with _$DeleteAccountState {
@@ -100,12 +121,12 @@ class DeletAccount extends _$DeletAccount {
 //   });
 // }
 
-_cal(DioClass params) {
-  return params.dio.post(
-    '$baseUrl/login',
-    data: params.data,
-  );
-}
+// _cal(DioClass params) {
+//   return params.dio.post(
+//     '$baseUrl/login',
+//     data: params.data,
+//   );
+// }
 
 @riverpod
 Future<bool> loginCall(Ref ref, LoginRequest params) async {
@@ -121,6 +142,7 @@ Future<bool> loginCall(Ref ref, LoginRequest params) async {
       },
     ),
   );
+  // print(res.data);
   final a = AuthResponse.fromJson(res.data);
 
   if (a.user.id != 0 && a.user.email != '' && a.user.username != '') {
@@ -178,6 +200,7 @@ class AuthState with _$AuthState {
   @JsonSerializable(explicitToJson: true)
   const factory AuthState.authenticated({
     required AuthEntity auth,
+    // @Default(false) bool expire,
   }) = Authinticated;
   //
   const factory AuthState.initial() = AuthInitial;

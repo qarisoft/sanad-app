@@ -50,45 +50,39 @@ class ItemPage extends ConsumerWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Padding(
           padding: const EdgeInsets.all(1),
-          child: Container(
-            // decoration: BoxDecoration(
-            //   border: Border.all(color: Colors.grey.shade300),
-            // ),
-
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.all(8.0),
-                        //     child: Text(
-                        //       context.tr.accept,
-                        //       style: TextStyle(color: Colors.blue),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // TextButton(
+                      //   onPressed: () {},
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: Text(
+                      //       context.tr.accept,
+                      //       style: TextStyle(color: Colors.blue),
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: FloatingActionButton(
+                    shape: CircleBorder(),
+                    onPressed: accept,
+                    child: Icon(
+                      Icons.reply_all,
                     ),
                   ),
-                  Expanded(
-                    child: FloatingActionButton(
-                      shape: CircleBorder(),
-                      onPressed: accept,
-                      child: Icon(
-                        Icons.reply_all,
-                      ),
-                    ),
-                  ),
-                  Expanded(child: SizedBox()),
-                ],
-              ),
+                ),
+                Expanded(child: SizedBox()),
+              ],
             ),
           ),
         ),

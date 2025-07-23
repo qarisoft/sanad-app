@@ -38,8 +38,10 @@ class _LoginPageState extends State<LoginPage> {
     final k = GlobalKey<FormState>();
 
     const space = SizedBox(height: 10);
-    final email = TextEditingController(text: 'a');
-    final password = TextEditingController(text: 'password');
+    final email = TextEditingController();
+    // final email = TextEditingController(text: 'a');
+    final password = TextEditingController();
+    // final password = TextEditingController(text: 'password');
     return Form(
       key: k,
       child: AuthLayout(
@@ -122,22 +124,22 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 4,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Text(context.tr.or),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(Routes.registerRoute);
-                    },
-                    child: Text(context.tr.registerAction),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Column(
+          //       children: [
+          //         Text(context.tr.or),
+          //         TextButton(
+          //           onPressed: () {
+          //             Navigator.of(context).pushNamed(Routes.registerRoute);
+          //           },
+          //           child: Text(context.tr.registerAction),
+          //         ),
+          //       ],
+          //     ),
+          //   ],
+          // ),
         ],
 
         // child: Column(

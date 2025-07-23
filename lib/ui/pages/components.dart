@@ -78,7 +78,7 @@ class DrawerPage extends ConsumerWidget {
     final auth = ref.watch(authProvider);
     return auth.when(
       authenticated: (auth) {
-        print(auth);
+        // print(auth);
         return Column(
           children: [
             _DarwerHead(auth.user),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sanad/common.dart';
 
+// ignore: constant_identifier_names
 const ENGLISH_LOCAL = Locale('en');
 
 class InputContainer extends StatelessWidget {
